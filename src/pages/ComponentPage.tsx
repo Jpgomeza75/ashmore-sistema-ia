@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Copy, Check, Sparkles, AlertTriangle, Layers, Link2 } from "lucide-react";
 import { useState } from "react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import {
   getComponentById,
   getAdjacentComponents,
@@ -212,6 +213,7 @@ const ComponentPage = () => {
           ) : <div />}
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

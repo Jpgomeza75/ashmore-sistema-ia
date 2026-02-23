@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import logoBanicol from "@/assets/logo-banicol.png";
 
 const Header = () => {
   const location = useLocation();
@@ -19,12 +20,10 @@ const Header = () => {
             </Link>
           )}
           <Link to="/" className="flex items-center gap-3">
-            <span className="font-serif text-xl font-bold tracking-tight text-foreground">
-              BANICOL
-            </span>
+            <img src={logoBanicol} alt="Banicol — Banca de Inversión" className="h-8 w-auto" />
             <span className="hidden sm:block h-5 w-px bg-border" />
             <span className="hidden sm:block text-xs font-sans text-muted-foreground tracking-wide uppercase">
-              Sistema Operativo · Banca de Inversión
+              Sistema Operativo · IA
             </span>
           </Link>
         </div>
