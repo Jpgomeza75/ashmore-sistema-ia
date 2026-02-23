@@ -44,10 +44,10 @@ const ComponentNode = ({ component, isSelected, isDimmed, connectionBadge, onSel
           {badgeSymbol}
         </span>
       )}
-      <p className={`font-sans font-semibold uppercase tracking-[0.15em] mb-0.5 text-copper ${compact ? "text-[9px]" : "text-[10px]"}`}>
+      <p className={`font-sans font-semibold uppercase tracking-[0.15em] mb-0.5 text-copper ${compact ? "text-[9px]" : "text-[11px]"}`}>
         {component.type}
       </p>
-      <h3 className={`font-sans font-bold leading-tight ${compact ? "text-xs" : "text-[15px]"}`}>
+      <h3 className={`font-sans font-bold leading-tight ${compact ? "text-sm" : "text-base"}`}>
         {component.name}
       </h3>
     </div>

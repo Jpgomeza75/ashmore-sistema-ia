@@ -116,7 +116,7 @@ const SystemMap = () => {
   const rowLabel = (label: string) => (
     <div className="flex items-center gap-2 mb-1">
       <div className="h-px flex-1 bg-border" />
-      <span className="text-[8px] font-sans font-medium uppercase tracking-[0.2em] text-muted-foreground">
+      <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-muted-foreground">
         {label}
       </span>
       <div className="h-px flex-1 bg-border" />
