@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deal Spotter | Avidanti → Patria — BANICOL</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080e1a;
+    --surface: #0d1525;
+    --surface-2: #131d33;
+    --surface-3: #1a2744;
+    --border: #1e2d4a;
+    --border-light: #2a3f66;
+    --copper: #c17832;
+    --copper-light: #d4944d;
+    --copper-dim: rgba(193,120,50,0.12);
+    --gold: #e8b866;
+    --text: #e2e8f0;
+    --text-2: #94a3b8;
+    --text-3: #64748b;
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.10);
+    --red: #ef4444;
+    --red-dim: rgba(239,68,68,0.10);
+    --orange: #f97316;
+    --orange-dim: rgba(249,115,22,0.10);
+    --yellow: #eab308;
+    --yellow-dim: rgba(234,179,8,0.10);
+    --blue: #3b82f6;
+    --blue-dim: rgba(59,130,246,0.10);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.10);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
+  .mono { font-family:'JetBrains Mono',monospace; }
+
+  /* HEADER */
+  .header {
+    background:var(--surface);
+    border-bottom:1px solid var(--border);
+    padding:12px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky; top:0; z-index:100;
+  }
+  .header-left { display:flex; align-items:center; gap:14px; }
+  .header-badge {
+    background:var(--copper-dim);
+    color:var(--copper);
+    font-size:11px; font-weight:700; letter-spacing:1.5px;
+    padding:5px 12px; border-radius:6px;
+    border:1px solid rgba(193,120,50,0.2);
+  }
+  .header-title { font-size:14px; color:var(--text-2); }
+  .header-title strong { color:#fff; }
+
+  /* MAIN */
+  .main { max-width:1440px; margin:0 auto; padding:20px 28px; }
+
+  /* REFERENCE DEAL BANNER */
+  .ref-deal {
+    background:linear-gradient(135deg, var(--surface-2), var(--surface-3));
+    border:1px solid var(--border);
+    border-left:4px solid var(--copper);
+    border-radius:14px;
+    padding:24px 28px;
+    margin-bottom:20px;
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:24px;
+    align-items:center;
+  }
+  .ref-deal h2 { font-size:13px; color:var(--copper); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:6px; }
+  .ref-deal h1 { font-size:22px; font-weight:700; color:#fff; margin-bottom:6px; }
+  .ref-deal p { font-size:14px; color:var(--text-2); max-width:700px; }
+  .ref-stats { display:flex; gap:20px; }
+  .ref-stat { text-align:center; padding:12px 18px; background:var(--bg); border-radius:10px; border:1px solid var(--border); min-width:110px; }
+  .ref-stat-value { font-size:20px; font-weight:700; color:#fff; }
+  .ref-stat-label { font-size:11px; color:var(--text-3); margin-top:2px; }
+
+  /* PATTERN SECTION */
+  .pattern-section { margin-bottom:20px; }
+  .section-header {
+    font-size:12px; font-weight:700; color:var(--text-3);
+    letter-spacing:1px; text-transform:uppercase;
+    margin-bottom:12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .section-header .line { flex:1; height:1px; background:var(--border); }
+  
+  .pattern-grid {
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:8px;
+  }
+  .pattern-tag {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:13px;
+    color:var(--text-2);
+    cursor:pointer;
+    transition:all 0.2s;
+    position:relative;
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+  }
+  .pattern-tag:hover { border-color:var(--copper); background:var(--surface-2); }
+  .pattern-tag.matched { border-color:var(--copper); background:var(--copper-dim); }
+  .pattern-num {
+    font-size:10px; font-weight:700; color:var(--copper);
+    background:var(--copper-dim);
+    min-width:20px; height:20px;
+    border-radius:6px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .pattern-tag.matched .pattern-num { background:var(--copper); color:#fff; }
+
+  /* OPPORTUNITIES WORKSPACE */
+  .workspace {
+    display:grid;
+    grid-template-columns:340px 1fr;
+    gap:16px;
+    align-items:start;
+  }
+
+  /* LEFT: OPP LIST */
+  .opp-list-title {
+    font-size:12px; font-weight:700; color:var(--text-3);
+    letter-spacing:1px; text-transform:uppercase;
+    margin-bottom:10px;
+  }
+  .opp-item {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:8px;
+    cursor:pointer;
+    transition:all 0.25s;
+  }
+  .opp-item:hover { border-color:var(--border-light); transform:translateX(2px); }
+  .opp-item.active { border-color:var(--copper); background:var(--surface-2); box-shadow:0 0 0 1px var(--copper); }
+  .opp-item-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+  .opp-item-id { font-size:10px; font-weight:700; color:var(--text-3); letter-spacing:0.8px; }
+  .opp-item-urgency { font-size:10px; font-weight:700; padding:3px 8px; border-radius:12px; }
+  .opp-item-urgency.alta { background:var(--red-dim); color:var(--red); }
+  .opp-item-urgency.media-alta { background:var(--orange-dim); color:var(--orange); }
+  .opp-item-urgency.media { background:var(--yellow-dim); color:var(--yellow); }
+  .opp-item-name { font-size:15px; font-weight:600; color:#fff; margin-bottom:6px; }
+  .opp-item-bar { height:3px; background:var(--surface-3); border-radius:3px; overflow:hidden; margin-bottom:4px; }
+  .opp-item-fill { height:100%; border-radius:3px; transition:width 0.5s; }
+  .opp-item-meta { display:flex; justify-content:space-between; font-size:11px; color:var(--text-3); }
+  .opp-item-meta .prob { font-weight:700; }
+
+  /* RIGHT: OPP DETAIL */
+  .opp-detail-panel {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    overflow:hidden;
+    position:sticky;
+    top:64px;
+  }
+  .opp-detail-header {
+    padding:20px 24px;
+    background:linear-gradient(135deg, var(--surface-2), var(--surface-3));
+    border-bottom:1px solid var(--border);
+  }
+  .opp-detail-header .opp-id-tag {
+    font-size:10px; font-weight:700; color:var(--text-3);
+    letter-spacing:1px; margin-bottom:4px;
+  }
+  .opp-detail-header h2 { font-size:20px; font-weight:700; color:#fff; margin-bottom:4px; }
+  .opp-detail-header .match-score {
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-weight:600; color:var(--copper);
+    background:var(--copper-dim); padding:4px 10px; border-radius:8px;
+  }
+  .opp-detail-header .opp-size {
+    font-size:18px; font-weight:700; color:var(--gold); margin-top:8px;
+  }
+  .opp-detail-header .opp-service {
+    font-size:12px; color:var(--text-2); margin-top:2px;
+  }
+
+  /* Detail tabs */
+  .detail-nav {
+    display:flex; border-bottom:1px solid var(--border);
+  }
+  .detail-nav button {
+    flex:1; padding:10px 8px;
+    font-size:12px; font-weight:600; font-family:inherit;
+    background:transparent; border:none; color:var(--text-3);
+    cursor:pointer; transition:all 0.2s;
+    border-bottom:2px solid transparent;
+  }
+  .detail-nav button:hover { color:var(--text-2); }
+  .detail-nav button.active { color:var(--copper); border-bottom-color:var(--copper); }
+
+  .detail-body { padding:20px 24px; max-height:calc(100vh - 320px); overflow-y:auto; }
+  .detail-body .tab { display:none; animation:fadeIn 0.25s; }
+  .detail-body .tab.active { display:block; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+  .detail-label { font-size:11px; font-weight:700; color:var(--copper); letter-spacing:0.5px; text-transform:uppercase; margin-bottom:6px; margin-top:16px; }
+  .detail-label:first-child { margin-top:0; }
+  .detail-text { font-size:14px; color:var(--text-2); line-height:1.65; }
+  .detail-text strong { color:#fff; }
+
+  /* Buyers list */
+  .buyer-tag {
+    display:inline-block;
+    font-size:12px; color:var(--text-2);
+    background:var(--surface-3); border:1px solid var(--border);
+    padding:4px 10px; border-radius:6px;
+    margin:3px 4px 3px 0;
+  }
+
+  /* Signals checklist */
+  .signal-item {
+    display:flex; align-items:flex-start; gap:10px;
+    padding:8px 0; border-bottom:1px solid rgba(30,45,74,0.4);
+    cursor:pointer;
+  }
+  .signal-item:last-child { border-bottom:none; }
+  .signal-check {
+    width:18px; height:18px; border:2px solid var(--border-light);
+    border-radius:5px; flex-shrink:0; margin-top:1px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:transparent; transition:all 0.2s;
+  }
+  .signal-item.done .signal-check { background:var(--green); border-color:var(--green); color:#fff; }
+  .signal-item.done .signal-text { opacity:0.4; text-decoration:line-through; }
+  .signal-text { font-size:13px; color:var(--text-2); }
+
+  /* Actions section */
+  .action-card {
+    background:var(--copper-dim);
+    border:1px solid rgba(193,120,50,0.2);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-top:16px;
+  }
+  .action-card h4 { font-size:12px; font-weight:700; color:var(--copper); margin-bottom:8px; }
+  .action-step {
+    display:flex; align-items:flex-start; gap:8px;
+    padding:6px 0; font-size:13px; color:var(--text-2);
+  }
+  .action-step-num {
+    font-size:10px; font-weight:700; color:var(--copper);
+    background:rgba(193,120,50,0.2);
+    min-width:18px; height:18px; border-radius:4px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; margin-top:1px;
+  }
+
+  /* Notes */
+  .notes-area {
+    width:100%; background:var(--surface-2); border:1px solid var(--border);
+    border-radius:8px; padding:10px 12px; color:var(--text-2);
+    font-size:13px; font-family:inherit; resize:vertical; min-height:80px;
+    outline:none; transition:border-color 0.2s;
+  }
+  .notes-area:focus { border-color:var(--copper); }
+  .notes-area::placeholder { color:var(--text-3); }
+
+  /* Comparables mini table */
+  .comp-table { width:100%; border-collapse:collapse; margin-top:8px; }
+  .comp-table th {
+    text-align:left; font-size:10px; font-weight:700; color:var(--text-3);
+    letter-spacing:0.5px; padding:6px 8px;
+    border-bottom:1px solid var(--border);
+  }
+  .comp-table td {
+    font-size:12px; color:var(--text-2); padding:6px 8px;
+    border-bottom:1px solid rgba(30,45,74,0.3);
+  }
+  .comp-table td.highlight { color:var(--gold); font-weight:600; }
+
+  /* Toast */
+  .toast {
+    position:fixed; bottom:20px; right:20px;
+    background:var(--surface-2); border:1px solid var(--copper);
+    border-radius:10px; padding:12px 18px;
+    font-size:13px; color:var(--copper-light);
+    z-index:200; transform:translateY(80px); opacity:0;
+    transition:all 0.3s;
+  }
+  .toast.show { transform:translateY(0); opacity:1; }
+
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--surface-3); border-radius:3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-badge">DEAL SPOTTER</div>
+    <div class="header-title"><strong>Ingenieria Reversa</strong> &mdash; Avidanti / Patria Investments</div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <span style="font-size:11px;color:var(--text-3)">Generado con IA &middot; Nivel 1</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- REFERENCE DEAL -->
+  <div class="ref-deal">
+    <div>
+      <h2>Deal de Referencia</h2>
+      <h1>Avidanti &rarr; Patria Investments (Zentria)</h1>
+      <p>Patria adquirio Avidanti en 2020 como plataforma de consolidacion en salud. En 6 anos construyo Zentria: la red hospitalaria privada mas grande de Colombia. Inversion total: USD 420M+. En 2025 compro Banmedica en Chile por ~USD 1,000M con la misma tesis.</p>
+    </div>
+    <div class="ref-stats">
+      <div class="ref-stat">
+        <div class="ref-stat-value mono">$420M+</div>
+        <div class="ref-stat-label">Inversion total</div>
+      </div>
+      <div class="ref-stat">
+        <div class="ref-stat-value mono">25</div>
+        <div class="ref-stat-label">Hospitales</div>
+      </div>
+      <div class="ref-stat">
+        <div class="ref-stat-value mono">2,700</div>
+        <div class="ref-stat-label">Camas</div>
+      </div>
+      <div class="ref-stat">
+        <div class="ref-stat-value mono">6x</div>
+        <div class="ref-stat-label">Multiplo creado</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATTERN -->
+  <div class="pattern-section">
+    <div class="section-header">
+      <span>Patron Transaccional Extraido</span>
+      <span class="line"></span>
+      <span style="font-size:11px;color:var(--text-3)" id="matchCount">10 de 10</span>
+    </div>
+    <div class="pattern-grid" id="patternGrid"></div>
+  </div>
+
+  <!-- WORKSPACE -->
+  <div class="workspace">
+
+    <!-- LEFT: OPP LIST -->
+    <div>
+      <div class="opp-list-title">Oportunidades Identificadas (5)</div>
+      <div id="oppList"></div>
+    </div>
+
+    <!-- RIGHT: DETAIL -->
+    <div class="opp-detail-panel" id="detailPanel">
+      <div class="opp-detail-header" id="detailHeader"></div>
+      <div class="detail-nav" id="detailNav"></div>
+      <div class="detail-body" id="detailBody"></div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const patterns = [
+  "Sector con demanda inelastica o estructural",
+  "Mercado altamente fragmentado sin integracion",
+  "Target con escala para ser plataforma de consolidacion",
+  "Presencia en ciudades intermedias o regiones desatendidas",
+  "Management profesionalizado sin capital institucional",
+  "Oportunidad clara de buy-and-build con bolt-ons",
+  "Margenes mejorables via eficiencia y tecnologia",
+  "Tendencia demografica o regulatoria favorable",
+  "Accionistas dispuestos a vender (sucesion, fatiga)",
+  "Multiplos de entrada atractivos vs. comparables"
+];
+
+const opps = [
+  {
+    id: "1", name: "Consolidacion Veterinaria / Pet Care",
+    service: "Sell-side / Platform Build", size: "$80M - 200M",
+    prob: 80, urgency: "alta", urgencyLabel: "ALTA",
+    matchedPatterns: [0,1,2,3,4,5,6,7,8],
+    analysis: "El sector veterinario en Colombia replica exactamente el patron Avidanti/salud humana: miles de clinicas independientes, demanda creciente (mercado de mascotas crece >15% anual), ninguno con participacion significativa a nivel nacional. Colombia tiene mas de 8,000 establecimientos veterinarios. El mercado de mascotas mueve mas de COP 4 billones anuales, impulsado por urbanizacion, menor natalidad y humanizacion de mascotas.",
+    whyNow: "El mercado esta en <strong>punto de inflexion</strong>. Cadenas como Gabrica estan creciendo pero ninguna ha alcanzado escala nacional. Fondos de PE globales ya estan ejecutando esta tesis en Brasil (Petz/Cobasi) y Mexico. Colombia es el siguiente mercado logico.",
+    buyers: ["Patria Investments (tesis salud/consumo)", "Advent International", "Mars Veterinary Health", "CVC Capital", "Cadenas regionales de Brasil"],
+    signals: [
+      "Cadenas veterinarias que abran 3+ sedes en un ano",
+      "Franquicias del sector pet care levantando capital",
+      "Fondos de PE anunciando tesis en pet care LatAm",
+      "Fundadores >55 anos de clinicas grandes",
+      "Alianzas o clusters entre veterinarias independientes"
+    ],
+    comparables: [
+      { deal: "Petz + Cobasi (Brasil)", year: "2023", value: "~$800M", mult: "1.2x revenue" },
+      { deal: "VCA / Mars (USA)", year: "2017", value: "$9.1B", mult: "~18x EBITDA" },
+      { deal: "CVS Group (UK)", year: "2023", value: "~$2.5B", mult: "~15x EBITDA" }
+    ],
+    actions: [
+      "Mapear las 15 clinicas veterinarias mas grandes de Colombia por ingresos y sedes",
+      "Identificar accionistas dispuestos a vender (fundadores >55 anos)",
+      "Preparar teaser de consolidacion para fondos de PE",
+      "Investigar precedentes en Brasil y Mexico para benchmarking",
+      "Agendar conversaciones con Mars Veterinary y equipo de Patria"
+    ]
+  },
+  {
+    id: "2", name: "Laboratorios Clinicos Regionales",
+    service: "M&A Advisory", size: "$50M - 150M",
+    prob: 70, urgency: "alta", urgencyLabel: "ALTA",
+    matchedPatterns: [0,1,2,3,5,6,7,8],
+    analysis: "BANICOL ya asesoro la venta de Analizar Lab a Synlab, asi que este sector es conocido. Fuera de Bogota y Medellin quedan decenas de laboratorios regionales con buena reputacion local pero sin escala. La misma tesis de Zentria aplica: comprar una plataforma y consolidar bolt-ons. Synlab, Eurofins o un nuevo fondo podrian estar interesados en una segunda ola de consolidacion.",
+    whyNow: "La <strong>primera ola de consolidacion</strong> (Synlab/Analizar) demostro que el modelo funciona en Colombia. Quedan oportunidades en ciudades intermedias y en especialidades (genetica, patologia). Post-COVID, los laboratorios regionales modernizaron equipos pero no tienen capital para el siguiente salto.",
+    buyers: ["Synlab (expansion post-Analizar)", "Eurofins Scientific", "Patria/Zentria (integracion vertical)", "Fondos de salud de PE"],
+    signals: [
+      "Laboratorios con fundadores >60 anos",
+      "Acreditaciones internacionales recientes (ISO 15189)",
+      "Alianzas entre laboratorios pequenos para compartir equipos",
+      "Labs regionales ganando licitaciones gubernamentales grandes"
+    ],
+    comparables: [
+      { deal: "Analizar Lab / Synlab", year: "2019", value: "N/D", mult: "~8-10x EBITDA est." },
+      { deal: "Cerba Healthcare (FR)", year: "2022", value: "~$5B", mult: "~14x EBITDA" }
+    ],
+    actions: [
+      "Mapear laboratorios en ciudades intermedias: Bucaramanga, Pereira, Villavicencio, Cucuta",
+      "Validar con Synlab Colombia si tienen apetito por mas bolt-ons",
+      "Preparar analisis de mercado de diagnostico en Colombia",
+      "Contactar Eurofins para explorar interes en entrada a Colombia"
+    ]
+  },
+  {
+    id: "3", name: "Educacion Tecnica / Formacion para el Trabajo",
+    service: "Sell-side Advisory", size: "$100M - 300M",
+    prob: 65, urgency: "media-alta", urgencyLabel: "MEDIA-ALTA",
+    matchedPatterns: [0,1,3,5,6,7,8],
+    analysis: "Colombia tiene un deficit estructural de formacion tecnica. Miles de instituciones ofrecen programas de educacion para el trabajo sin estandares unificados. La demanda es masiva (>60% de jovenes no acceden a educacion superior tradicional) y crece por la adopcion de modelos de upskilling y reskilling post-IA.",
+    whyNow: "La <strong>revolucion de IA</strong> esta creando demanda urgente de reskilling en todo el mercado laboral colombiano. El gobierno esta promoviendo la formacion tecnica como politica publica. Fondos como Advent (Laureate) y Patria conocen esta tesis y la han ejecutado en Brasil.",
+    buyers: ["Advent International (experiencia Laureate)", "Patria Investments", "Estrategicos de edtech (Coursera, Platzi)", "Fondos de impacto social"],
+    signals: [
+      "Instituciones tecnicas que abran sedes virtuales/hibridas",
+      "Alianzas con empresas de tech para programas de certificacion",
+      "Fondos de PE anunciando tesis en educacion LatAm",
+      "Regulacion favorable para educacion tecnica"
+    ],
+    comparables: [
+      { deal: "Laureate / Advent", year: "Multiple", value: "$3.6B", mult: "~12x EBITDA" },
+      { deal: "Cogna Educacao (BR)", year: "2023", value: "~$1.5B", mult: "~8x EBITDA" }
+    ],
+    actions: [
+      "Mapear las 10 instituciones de formacion tecnica mas grandes fuera del SENA",
+      "Analizar el marco regulatorio actual y proyectado",
+      "Identificar fondos con tesis activa en educacion LatAm",
+      "Preparar benchmark de consolidacion educativa en Brasil y Mexico"
+    ]
+  },
+  {
+    id: "4", name: "Servicios Odontologicos Integrados",
+    service: "M&A / Fundraising", size: "$40M - 120M",
+    prob: 60, urgency: "media", urgencyLabel: "MEDIA",
+    matchedPatterns: [0,1,5,6,7,8,9],
+    analysis: "El mercado odontologico colombiano esta extremadamente fragmentado entre consultorios individuales y clinicas pequenas. Existen cadenas emergentes pero ninguna con escala nacional. El turismo dental (Colombia se posiciona como destino dental de LatAm) y la cobertura de planes complementarios crean un tailwind de demanda. El modelo de consolidacion vertical (clinica + laboratorio dental + insumos) tiene margenes atractivos.",
+    whyNow: "El <strong>turismo dental</strong> a Colombia esta creciendo aceleradamente. La brecha de precios vs. USA/Europa es enorme (60-70% mas barato). Cadenas en Mexico (Dentalia) ya probaron que el modelo de consolidacion funciona en LatAm.",
+    buyers: ["Fondos de consumo/salud", "Dentalia (expansion regional)", "Estrategicos europeos de dental", "Fondos de turismo medico"],
+    signals: [
+      "Cadenas dentales que abran en zonas turisticas (Cartagena, Medellin, Bogota norte)",
+      "Alianzas con plataformas de turismo medico",
+      "Fondos que inviertan en cadenas dentales en Mexico o Brasil"
+    ],
+    comparables: [
+      { deal: "Dentalia (MX) / Capital Group", year: "2021", value: "N/D", mult: "~10-12x EBITDA est." },
+      { deal: "Aspen Dental (USA)", year: "2023", value: "~$3.7B", mult: "~14x EBITDA" }
+    ],
+    actions: [
+      "Mapear cadenas dentales emergentes en Colombia",
+      "Analizar flujo de turismo dental (ciudades, procedimientos, ticket promedio)",
+      "Contactar Dentalia Mexico para explorar expansion a Colombia"
+    ]
+  },
+  {
+    id: "5", name: "Clinicas Esteticas / Bienestar Premium",
+    service: "Sell-side Advisory", size: "$60M - 180M",
+    prob: 55, urgency: "media", urgencyLabel: "MEDIA",
+    matchedPatterns: [0,1,6,7,8,9],
+    analysis: "Colombia es el cuarto pais del mundo en procedimientos esteticos. El sector esta fragmentado entre clinicas boutique operadas por cirujanos individuales. Hay una oportunidad de crear una plataforma que integre multiples clinicas bajo estandares de calidad y marca unificada, capturando especialmente el mercado de turismo medico estetico.",
+    whyNow: "El <strong>turismo medico estetico</strong> a Colombia crece >20% anual. Medellin y Bogota se posicionan como destinos globales. Pero el sector tiene problemas de calidad y regulacion que un operador institucional podria resolver, creando diferenciacion premium.",
+    buyers: ["Allergan/AbbVie (estrategico)", "Galderma", "Fondos de consumo premium", "Grupos hospitalarios buscando diversificacion"],
+    signals: [
+      "Clinicas esteticas que abran segundas sedes",
+      "Regulacion mas estricta (favorece a operadores serios)",
+      "Alianzas con hoteles/turismo",
+      "Cirujanos reconocidos buscando socios financieros"
+    ],
+    comparables: [
+      { deal: "Skin Spirit / Main Street", year: "2021", value: "N/D", mult: "~12-15x EBITDA" },
+      { deal: "Groupe Odyssey (FR)", year: "2022", value: "~$200M", mult: "~10x EBITDA" }
+    ],
+    actions: [
+      "Mapear las clinicas esteticas top de Colombia por reputacion y volumen",
+      "Analizar el marco regulatorio de turismo medico",
+      "Preparar benchmark de consolidacion estetica global"
+    ]
+  }
+];
+
+let selectedOpp = 0;
+let selectedTab = 0;
+
+function renderPatterns(matchedIndices) {
+  const grid = document.getElementById('patternGrid');
+  grid.innerHTML = patterns.map((p, i) => `
+    <div class="pattern-tag ${matchedIndices.includes(i) ? 'matched' : ''}" id="pat-${i}">
+      <div class="pattern-num">${i+1}</div>
+      <span style="font-size:12px">${p}</span>
+    </div>
+  `).join('');
+  document.getElementById('matchCount').textContent = `${matchedIndices.length} de 10 coinciden`;
+}
+
+function renderOppList() {
+  const list = document.getElementById('oppList');
+  list.innerHTML = opps.map((o, i) => `
+    <div class="opp-item ${i === selectedOpp ? 'active' : ''}" onclick="selectOpp(${i})">
+      <div class="opp-item-top">
+        <span class="opp-item-id">${i === 0 ? 'OPP-' + o.id + ' ★ PRIORITARIA' : 'OPP-' + o.id}</span>
+        <span class="opp-item-urgency ${o.urgency}">${o.urgencyLabel}</span>
+      </div>
+      <div class="opp-item-name">${o.name}</div>
+      <div class="opp-item-bar"><div class="opp-item-fill" style="width:${o.prob}%;background:${
+        o.urgency === 'alta' ? 'var(--red)' : o.urgency === 'media-alta' ? 'var(--orange)' : 'var(--yellow)'
+      }"></div></div>
+      <div class="opp-item-meta">
+        <span>${o.service}</span>
+        <span class="prob mono" style="color:${
+          o.urgency === 'alta' ? 'var(--red)' : o.urgency === 'media-alta' ? 'var(--orange)' : 'var(--yellow)'
+        }">${o.prob}%</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderDetail() {
+  const o = opps[selectedOpp];
+  
+  document.getElementById('detailHeader').innerHTML = `
+    <div class="opp-id-tag">OPORTUNIDAD ${o.id} ${selectedOpp === 0 ? '&middot; PRIORITARIA' : ''}</div>
+    <h2>${o.name}</h2>
+    <div class="match-score">Coincidencia: ${o.matchedPatterns.length}/10 patrones</div>
+    <div class="opp-size mono">${o.size}</div>
+    <div class="opp-service">${o.service}</div>
+  `;
+
+  const tabs = ['Analisis', 'Compradores', 'Senales', 'Comparables', 'Notas'];
+  document.getElementById('detailNav').innerHTML = tabs.map((t, i) => `
+    <button class="${i === selectedTab ? 'active' : ''}" onclick="selectTab(${i})">${t}</button>
+  `).join('');
+
+  let body = '';
+  
+  // Tab 0: Analisis
+  body += `<div class="tab ${selectedTab === 0 ? 'active' : ''}">
+    <div class="detail-label">Oportunidad</div>
+    <div class="detail-text">${o.analysis}</div>
+    <div class="detail-label">Por que ahora</div>
+    <div class="detail-text">${o.whyNow}</div>
+    <div class="action-card">
+      <h4>Proximos Pasos</h4>
+      ${o.actions.map((a, i) => `<div class="action-step"><div class="action-step-num">${i+1}</div><span>${a}</span></div>`).join('')}
+    </div>
+  </div>`;
+
+  // Tab 1: Compradores
+  body += `<div class="tab ${selectedTab === 1 ? 'active' : ''}">
+    <div class="detail-label">Compradores Potenciales</div>
+    <div style="margin-top:8px">${o.buyers.map(b => `<span class="buyer-tag">${b}</span>`).join('')}</div>
+    <div class="detail-label">Tipo de transaccion probable</div>
+    <div class="detail-text">Venta de plataforma a fondo de PE (buy-and-build) o venta a estrategico internacional buscando entrada a Colombia. Posible estructura: adquisicion mayoritaria con earn-out vinculado a EBITDA post-integracion.</div>
+  </div>`;
+
+  // Tab 2: Senales
+  body += `<div class="tab ${selectedTab === 2 ? 'active' : ''}">
+    <div class="detail-label">Senales a Monitorear</div>
+    <div style="margin-top:8px">
+      ${o.signals.map((s, i) => `
+        <div class="signal-item" onclick="this.classList.toggle('done')">
+          <div class="signal-check">&#10003;</div>
+          <div class="signal-text">${s}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--text-3)">Haz click para marcar senales confirmadas</div>
+  </div>`;
+
+  // Tab 3: Comparables
+  body += `<div class="tab ${selectedTab === 3 ? 'active' : ''}">
+    <div class="detail-label">Transacciones Comparables</div>
+    <table class="comp-table">
+      <tr><th>DEAL</th><th>ANO</th><th>VALOR</th><th>MULTIPLO</th></tr>
+      ${o.comparables.map(c => `
+        <tr><td>${c.deal}</td><td>${c.year}</td><td class="highlight mono">${c.value}</td><td class="mono">${c.mult}</td></tr>
+      `).join('')}
+    </table>
+    <div style="margin-top:12px;font-size:11px;color:var(--text-3)">Nota: multiplos internacionales. El mercado colombiano tipicamente opera a descuento de 20-40% vs. mercados desarrollados.</div>
+  </div>`;
+
+  // Tab 4: Notas
+  const noteKey = 'banicol-ds-notes-' + o.id;
+  const savedNote = localStorage.getItem(noteKey) || '';
+  body += `<div class="tab ${selectedTab === 4 ? 'active' : ''}">
+    <div class="detail-label">Notas del Equipo</div>
+    <textarea class="notes-area" placeholder="Notas internas: contactos, reuniones agendadas, info adicional..."
+      oninput="localStorage.setItem('${noteKey}', this.value)">${savedNote}</textarea>
+    <div style="margin-top:6px;font-size:11px;color:var(--text-3)">Se guarda automaticamente en tu navegador</div>
+  </div>`;
+
+  document.getElementById('detailBody').innerHTML = body;
+}
+
+function selectOpp(i) {
+  selectedOpp = i;
+  selectedTab = 0;
+  renderPatterns(opps[i].matchedPatterns);
+  renderOppList();
+  renderDetail();
+}
+
+function selectTab(i) {
+  selectedTab = i;
+  renderDetail();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Init
+selectOpp(0);
+</script>
+</body>
+</html>
