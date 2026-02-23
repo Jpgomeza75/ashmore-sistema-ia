@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import SystemMap from "@/components/SystemMap";
 
 const Index = () => {
@@ -43,6 +44,7 @@ const Index = () => {
           La toma de decisiones y los loops iterativos son capas transversales que atraviesan todos los componentes.
         </motion.p>
       </main>
+      <Footer />
     </div>
   );
 };
