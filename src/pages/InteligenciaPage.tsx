@@ -78,14 +78,14 @@ const InteligenciaPage = () => {
         <div className="shrink-0 h-8 lg:h-10" />
 
         {/* ZONA 2 — Los Dos Niveles — NOT flex-1, auto height */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 shrink-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 shrink-0 auto-rows-fr">
           {/* Nivel 1 */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.4 }}
             onClick={() => navigate("/componente/inteligencia/fase-1")}
-            className="group bg-card border border-border rounded-lg cursor-pointer
+            className="group bg-card border border-border rounded-lg cursor-pointer flex flex-col justify-center
                        hover:border-copper hover:shadow-node-hover transition-all duration-300"
             style={{ padding: "28px 32px" }}
           >
@@ -126,15 +126,15 @@ const InteligenciaPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.4 }}
             onClick={() => navigate("/componente/inteligencia/fase-2")}
-            className="group rounded-lg cursor-pointer
-                       border border-border/30 hover:border-copper/40 hover:shadow-node-hover transition-all duration-300"
-            style={{ backgroundColor: "hsl(221 45% 14%)", padding: "28px 32px" }}
+            className="group bg-card border border-border rounded-lg cursor-pointer flex flex-col justify-center
+                       hover:border-copper hover:shadow-node-hover transition-all duration-300"
+            style={{ padding: "28px 32px" }}
           >
             <div className="flex items-center gap-3 mb-1">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: "hsl(29 59% 48% / 0.15)" }}>
                 <Settings className="w-5 h-5 text-copper" />
               </div>
-              <h3 className="font-serif text-2xl font-bold leading-tight" style={{ color: "hsl(36 45% 97%)" }}>
+              <h3 className="font-serif text-2xl font-bold text-foreground leading-tight">
                 Nivel 2 — El Sistema Institucional
               </h3>
             </div>
@@ -142,14 +142,14 @@ const InteligenciaPage = () => {
               style={{ backgroundColor: "hsl(29 59% 48% / 0.18)", color: "hsl(29 59% 58%)" }}>
               Visión 2.0
             </span>
-            <p className="text-lg font-sans leading-relaxed mb-5" style={{ color: "hsl(220 15% 65%)" }}>
+            <p className="text-lg font-sans text-muted-foreground leading-relaxed mb-5">
               Un sistema institucional que captura, procesa y distribuye inteligencia de mercado automáticamente. La firma tiene un radar encendido 24/7 que alimenta el pipeline comercial sin depender de que alguien se acuerde de revisar las noticias.
             </p>
             <div className="space-y-4 mb-7">
               {level2Outcomes.map((item, i) => (
                 <div key={i}>
                   <span className="text-[15px] font-sans font-bold text-copper">{item.title}</span>
-                  <p className="text-sm font-sans leading-snug mt-0.5" style={{ color: "hsl(220 15% 65%)" }}>{item.desc}</p>
+                  <p className="text-sm font-sans text-muted-foreground leading-snug mt-0.5">{item.desc}</p>
                 </div>
               ))}
             </div>
