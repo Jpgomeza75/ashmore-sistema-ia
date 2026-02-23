@@ -7,7 +7,7 @@ import {
   panelData,
 } from "@/data/components";
 import ComponentNode from "@/components/ComponentNode";
-import ConnectionPanel from "@/components/ConnectionPanel";
+import DetailPanel from "@/components/DetailPanel";
 
 interface LineCoords {
   x1: number;
@@ -34,12 +34,13 @@ const SystemMap = () => {
     return id !== selectedId && !connectedIds.includes(id);
   };
 
-  const getConnectionBadge = (id: string): "input" | "output" | null => {
+  const getConnectionBadge = (id: string): "input" | "output" | "both" | null => {
     if (!selectedId || id === selectedId) return null;
     const data = panelData[selectedId];
     if (!data) return null;
     const isOutput = data.outputs.some((o) => o.sourceId === id);
     const isInput = data.inputs.some((i) => i.sourceId === id);
+    if (isOutput && isInput) return "both";
     if (isOutput) return "output";
     if (isInput) return "input";
     return null;
@@ -50,7 +51,6 @@ const SystemMap = () => {
       setLines([]);
       return;
     }
-
     const data = panelData[selectedId];
     if (!data) return;
 
@@ -66,7 +66,6 @@ const SystemMap = () => {
 
     const newLines: LineCoords[] = [];
 
-    // outputs (copper)
     data.outputs.forEach((o) => {
       const el = containerRef.current!.querySelector(
         `[data-node-id="${o.sourceId}"]`
@@ -82,7 +81,6 @@ const SystemMap = () => {
       });
     });
 
-    // inputs (navy)
     data.inputs.forEach((i) => {
       const el = containerRef.current!.querySelector(
         `[data-node-id="${i.sourceId}"]`
@@ -102,8 +100,7 @@ const SystemMap = () => {
   }, [selectedId]);
 
   useEffect(() => {
-    // Small delay to let DOM settle
-    const t = setTimeout(calculateLines, 50);
+    const t = setTimeout(calculateLines, 80);
     window.addEventListener("resize", calculateLines);
     return () => {
       clearTimeout(t);
@@ -111,179 +108,139 @@ const SystemMap = () => {
     };
   }, [calculateLines]);
 
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest("[data-node-id]")) return;
+    setSelectedId(null);
+  };
+
   const rowLabel = (label: string) => (
-    <div className="flex items-center gap-2 mb-1.5">
+    <div className="flex items-center gap-2 mb-1">
       <div className="h-px flex-1 bg-border" />
-      <span className="text-[9px] font-sans font-medium uppercase tracking-[0.2em] text-muted-foreground">
+      <span className="text-[8px] font-sans font-medium uppercase tracking-[0.2em] text-muted-foreground">
         {label}
       </span>
       <div className="h-px flex-1 bg-border" />
     </div>
   );
 
-  return (
-    <>
-      <div ref={containerRef} className="w-full max-w-4xl mx-auto relative">
-        {/* SVG overlay for connection lines */}
-        <svg
-          className="absolute inset-0 w-full h-full pointer-events-none z-10"
-          style={{ overflow: "visible" }}
-        >
-          <defs>
-            <marker
-              id="arrow-copper"
-              viewBox="0 0 10 7"
-              refX="10"
-              refY="3.5"
-              markerWidth="8"
-              markerHeight="6"
-              orient="auto-start-reverse"
-            >
-              <path d="M 0 0 L 10 3.5 L 0 7 z" fill="hsl(29 59% 48%)" />
-            </marker>
-            <marker
-              id="arrow-navy"
-              viewBox="0 0 10 7"
-              refX="10"
-              refY="3.5"
-              markerWidth="8"
-              markerHeight="6"
-              orient="auto-start-reverse"
-            >
-              <path
-                d="M 0 0 L 10 3.5 L 0 7 z"
-                fill="hsl(221 45% 18%)"
-                opacity="0.5"
-              />
-            </marker>
-          </defs>
-          <AnimatePresence>
-            {lines.map((line, i) => (
-              <motion.line
-                key={`${selectedId}-${i}`}
-                x1={line.x1}
-                y1={line.y1}
-                x2={line.x2}
-                y2={line.y2}
-                stroke={
-                  line.type === "output"
-                    ? "hsl(29 59% 48%)"
-                    : "hsl(221 45% 18%)"
-                }
-                strokeOpacity={line.type === "output" ? 0.8 : 0.35}
-                strokeWidth={1.5}
-                strokeDasharray="6 4"
-                markerEnd={
-                  line.type === "output"
-                    ? "url(#arrow-copper)"
-                    : "url(#arrow-navy)"
-                }
-                initial={{ pathLength: 0, opacity: 0 }}
-                animate={{ pathLength: 1, opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-              />
-            ))}
-          </AnimatePresence>
-        </svg>
-
-        {/* Row 1 */}
-        {rowLabel("Funciones continuas")}
-        <div className="grid grid-cols-2 gap-3 mb-3">
-          {row1.map((c) => (
-            <ComponentNode
-              key={c.id}
-              component={c}
-              isSelected={selectedId === c.id}
-              isDimmed={isDimmed(c.id)}
-              connectionBadge={getConnectionBadge(c.id)}
-              onSelect={setSelectedId}
+  const mapContent = (
+    <div
+      ref={containerRef}
+      className="relative h-full flex flex-col justify-between"
+      onClick={handleBackgroundClick}
+    >
+      {/* SVG overlay */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none z-10"
+        style={{ overflow: "visible" }}
+      >
+        <defs>
+          <marker id="arrow-copper" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 3.5 L 0 7 z" fill="hsl(29 59% 48%)" />
+          </marker>
+          <marker id="arrow-navy" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 3.5 L 0 7 z" fill="hsl(221 45% 18%)" opacity="0.5" />
+          </marker>
+        </defs>
+        <AnimatePresence>
+          {lines.map((line, i) => (
+            <motion.line
+              key={`${selectedId}-${i}`}
+              x1={line.x1}
+              y1={line.y1}
+              x2={line.x2}
+              y2={line.y2}
+              stroke={line.type === "output" ? "hsl(29 59% 48%)" : "hsl(221 45% 18%)"}
+              strokeOpacity={line.type === "output" ? 0.8 : 0.35}
+              strokeWidth={1.5}
+              strokeDasharray="6 4"
+              markerEnd={line.type === "output" ? "url(#arrow-copper)" : "url(#arrow-navy)"}
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             />
           ))}
-        </div>
+        </AnimatePresence>
+      </svg>
 
-        <FlowArrow />
-
-        {/* Row 2 */}
-        {rowLabel("Embudo de captura")}
-        <div className="max-w-sm mx-auto mb-3">
-          {row2.map((c) => (
-            <ComponentNode
-              key={c.id}
-              component={c}
-              isSelected={selectedId === c.id}
-              isDimmed={isDimmed(c.id)}
-              connectionBadge={getConnectionBadge(c.id)}
-              onSelect={setSelectedId}
-            />
-          ))}
-        </div>
-
-        <FlowArrow />
-
-        {/* Row 3 */}
-        {rowLabel("Fábrica del deal")}
-        <div className="grid grid-cols-3 gap-3 mb-3">
-          {row3.map((c) => (
-            <ComponentNode
-              key={c.id}
-              component={c}
-              isSelected={selectedId === c.id}
-              isDimmed={isDimmed(c.id)}
-              connectionBadge={getConnectionBadge(c.id)}
-              onSelect={setSelectedId}
-            />
-          ))}
-        </div>
-
-        <FlowArrow />
-
-        {/* Row 4 */}
-        {rowLabel("Salida al mundo")}
-        <div className="max-w-sm mx-auto mb-3">
-          {row4.map((c) => (
-            <ComponentNode
-              key={c.id}
-              component={c}
-              isSelected={selectedId === c.id}
-              isDimmed={isDimmed(c.id)}
-              connectionBadge={getConnectionBadge(c.id)}
-              onSelect={setSelectedId}
-            />
-          ))}
-        </div>
-
-        <FlowArrow />
-
-        {/* Row 5 */}
-        {rowLabel("Habilitadoras")}
-        <div className="grid grid-cols-2 gap-3">
-          {row5.map((c) => (
-            <ComponentNode
-              key={c.id}
-              component={c}
-              isSelected={selectedId === c.id}
-              isDimmed={isDimmed(c.id)}
-              connectionBadge={getConnectionBadge(c.id)}
-              onSelect={setSelectedId}
-            />
-          ))}
-        </div>
+      {/* Row 1 */}
+      {rowLabel("Funciones continuas")}
+      <div className="grid grid-cols-2 gap-2 mb-1.5">
+        {row1.map((c) => (
+          <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
+        ))}
       </div>
 
-      {/* Overlay panel */}
+      <FlowArrow />
+
+      {/* Row 2 */}
+      {rowLabel("Embudo de captura")}
+      <div className={`mx-auto mb-1.5 ${selectedId ? "w-full max-w-[70%]" : "max-w-sm w-full"}`}>
+        {row2.map((c) => (
+          <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
+        ))}
+      </div>
+
+      <FlowArrow />
+
+      {/* Row 3 */}
+      {rowLabel("Fábrica del deal")}
+      <div className="grid grid-cols-3 gap-2 mb-1.5">
+        {row3.map((c) => (
+          <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
+        ))}
+      </div>
+
+      <FlowArrow />
+
+      {/* Row 4 */}
+      {rowLabel("Salida al mundo")}
+      <div className={`mx-auto mb-1.5 ${selectedId ? "w-full max-w-[70%]" : "max-w-sm w-full"}`}>
+        {row4.map((c) => (
+          <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
+        ))}
+      </div>
+
+      <FlowArrow />
+
+      {/* Row 5 */}
+      {rowLabel("Habilitadoras")}
+      <div className="grid grid-cols-2 gap-2">
+        {row5.map((c) => (
+          <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
+        ))}
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="flex-1 min-h-0 flex gap-0 overflow-hidden">
+      {/* Map side */}
+      <motion.div
+        className="min-h-0 overflow-hidden"
+        animate={{ flex: selectedId ? "0 0 58%" : "0 0 100%" }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+      >
+        <div className="h-full max-w-4xl mx-auto px-2">
+          {mapContent}
+        </div>
+      </motion.div>
+
+      {/* Detail panel side */}
       <AnimatePresence>
         {selectedId && getComponentById(selectedId) && (
           <motion.div
-            initial={{ y: "100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "100%" }}
-            transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border shadow-[0_-4px_24px_rgba(0,0,0,0.1)]"
-            style={{ maxHeight: "35vh" }}
+            key="detail-panel"
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: "42%", opacity: 1 }}
+            exit={{ width: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="min-h-0 overflow-hidden border-l-[3px] shrink-0"
+            style={{ borderLeftColor: "hsl(29 59% 48%)" }}
           >
-            <div className="overflow-y-auto" style={{ maxHeight: "35vh" }}>
-              <ConnectionPanel
+            <div className="h-full overflow-y-auto bg-card">
+              <DetailPanel
                 component={getComponentById(selectedId)!}
                 onClose={() => setSelectedId(null)}
               />
@@ -291,22 +248,14 @@ const SystemMap = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 
 const FlowArrow = () => (
-  <div className="flex justify-center my-1">
-    <svg width="2" height="14" className="text-border">
-      <line
-        x1="1"
-        y1="0"
-        x2="1"
-        y2="14"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeDasharray="3 2"
-      />
+  <div className="flex justify-center my-0.5">
+    <svg width="2" height="10" className="text-border">
+      <line x1="1" y1="0" x2="1" y2="10" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 2" />
     </svg>
   </div>
 );
