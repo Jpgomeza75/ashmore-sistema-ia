@@ -8,6 +8,8 @@ import ComponentPage from "./pages/ComponentPage";
 import InteligenciaPage from "./pages/InteligenciaPage";
 import InteligenciaFase1 from "./pages/InteligenciaFase1";
 import InteligenciaFase2 from "./pages/InteligenciaFase2";
+import DealSpotterCase from "./pages/DealSpotterCase";
+import PrePitchCase from "./pages/PrePitchCase";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 
@@ -23,6 +25,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/componente/inteligencia" element={<InteligenciaPage />} />
           <Route path="/componente/inteligencia/fase-1" element={<InteligenciaFase1 />} />
+          <Route path="/componente/inteligencia/fase-1/deal-spotter/avidanti-patria" element={<DealSpotterCase />} />
+          <Route path="/componente/inteligencia/fase-1/pre-pitch/geopark-frontera" element={<PrePitchCase />} />
           <Route path="/componente/inteligencia/fase-2" element={<InteligenciaFase2 />} />
           <Route path="/componente/:id" element={<ComponentPage />} />
           <Route path="*" element={<NotFound />} />
