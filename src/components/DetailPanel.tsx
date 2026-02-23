@@ -27,13 +27,13 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1 min-w-0">
-          <span className={`inline-block text-[10px] font-sans font-bold uppercase tracking-[0.15em] px-2 py-0.5 rounded-sm mb-2 ${typeColors[component.type]}`}>
+          <span className={`inline-block text-[11px] font-sans font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-sm mb-2 ${typeColors[component.type]}`}>
             {component.type}
           </span>
-          <h2 className="font-serif text-lg font-bold text-foreground leading-tight mb-1.5">
+          <h2 className="font-serif text-xl font-bold text-foreground leading-tight mb-1.5">
             {component.name}
           </h2>
-          <p className="text-xs font-sans text-muted-foreground leading-relaxed">
+          <p className="text-sm font-sans text-muted-foreground leading-relaxed">
             {component.description}
           </p>
         </div>
@@ -50,7 +50,7 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
       <div className="mb-4">
         <div className="flex items-center gap-2 mb-3 pb-1.5 border-b-2" style={{ borderBottomColor: "hsl(221 45% 18%)" }}>
           <ArrowDownLeft className="w-3.5 h-3.5 text-foreground/60" />
-          <h4 className="text-[11px] font-sans font-bold uppercase tracking-wide text-foreground">
+          <h4 className="text-xs font-sans font-bold uppercase tracking-wide text-foreground">
             Entradas
           </h4>
         </div>
@@ -60,10 +60,10 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
             return (
               <li
                 key={i}
-                className="text-xs font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 py-0.5"
+                className="text-sm font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 py-0.5"
                 style={{ borderLeftColor: "hsl(221 45% 18%)" }}
               >
-                <span className="font-bold text-foreground block text-[11px]">{source?.shortName}</span>
+                <span className="font-bold text-foreground block text-xs">{source?.shortName}</span>
                 {entry.label}
               </li>
             );
@@ -75,7 +75,7 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
       <div className="mb-4">
         <div className="flex items-center gap-2 mb-3 pb-1.5 border-b-2 border-copper">
           <ArrowUpRight className="w-3.5 h-3.5 text-copper" />
-          <h4 className="text-[11px] font-sans font-bold uppercase tracking-wide text-copper">
+          <h4 className="text-xs font-sans font-bold uppercase tracking-wide text-copper">
             Salidas
           </h4>
         </div>
@@ -85,9 +85,9 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
             return (
               <li
                 key={i}
-                className="text-xs font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 border-copper py-0.5"
+                className="text-sm font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 border-copper py-0.5"
               >
-                <span className="font-bold text-copper block text-[11px]">{target?.shortName}</span>
+                <span className="font-bold text-copper block text-xs">{target?.shortName}</span>
                 {entry.label}
               </li>
             );
@@ -99,7 +99,7 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
       <div className="mb-5">
         <div className="flex items-center gap-2 mb-3 pb-1.5 border-b-2" style={{ borderBottomColor: "hsl(152 52% 32%)" }}>
           <Zap className="w-3.5 h-3.5" style={{ color: "hsl(152 52% 32%)" }} />
-          <h4 className="text-[11px] font-sans font-bold uppercase tracking-wide" style={{ color: "hsl(152 52% 32%)" }}>
+          <h4 className="text-xs font-sans font-bold uppercase tracking-wide" style={{ color: "hsl(152 52% 32%)" }}>
             Oportunidades IA
           </h4>
         </div>
@@ -107,7 +107,7 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
           {data.iaOpportunities.map((opp, i) => (
             <li
               key={i}
-              className="text-xs font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 py-0.5"
+              className="text-sm font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 py-0.5"
               style={{ borderLeftColor: "hsl(152 52% 32%)" }}
             >
               {opp}
@@ -119,7 +119,7 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
       {/* Navigate button */}
       <button
         onClick={() => navigate(`/componente/${component.id}`)}
-        className="w-full py-2.5 rounded-lg text-sm font-sans font-semibold transition-colors"
+        className="w-full py-3 rounded-lg text-base font-sans font-semibold transition-colors"
         style={{ backgroundColor: "hsl(29 59% 48%)", color: "white" }}
       >
         {component.hasContent ? "Explorar en detalle →" : "Próximamente →"}
