@@ -85,7 +85,7 @@ const InteligenciaPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.4 }}
             onClick={() => navigate("/componente/inteligencia/fase-1")}
-            className="group bg-card border border-border rounded-lg cursor-pointer flex flex-col justify-center
+            className="group bg-card border border-border rounded-lg cursor-pointer flex flex-col
                        hover:border-copper hover:shadow-node-hover transition-all duration-300"
             style={{ padding: "28px 32px" }}
           >
@@ -104,7 +104,7 @@ const InteligenciaPage = () => {
             <p className="text-lg font-sans text-muted-foreground leading-relaxed mb-5">
               Con herramientas de IA generativa, cada analista se convierte en un radar de mercado de alta frecuencia. No reemplaza el criterio del banquero — lo amplifica, procesando en minutos lo que antes tomaba días.
             </p>
-            <div className="space-y-4 mb-7">
+            <div className="space-y-4 flex-1">
               {level1Outcomes.map((item, i) => (
                 <div key={i}>
                   <span className="text-[15px] font-sans font-bold text-copper">{item.title}</span>
@@ -113,7 +113,7 @@ const InteligenciaPage = () => {
               ))}
             </div>
             <button
-              className="w-full py-2.5 rounded-lg text-lg font-sans font-bold transition-colors"
+              className="mt-7 w-full py-2.5 rounded-lg text-lg font-sans font-bold transition-colors"
               style={{ backgroundColor: "hsl(29 59% 48%)", color: "white" }}
             >
               Explorar Nivel 1 →
@@ -126,7 +126,7 @@ const InteligenciaPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.4 }}
             onClick={() => navigate("/componente/inteligencia/fase-2")}
-            className="group bg-card border border-border rounded-lg cursor-pointer flex flex-col justify-center
+            className="group bg-card border border-border rounded-lg cursor-pointer flex flex-col
                        hover:border-copper hover:shadow-node-hover transition-all duration-300"
             style={{ padding: "28px 32px" }}
           >
@@ -145,7 +145,7 @@ const InteligenciaPage = () => {
             <p className="text-lg font-sans text-muted-foreground leading-relaxed mb-5">
               Un sistema institucional que captura, procesa y distribuye inteligencia de mercado automáticamente. La firma tiene un radar encendido 24/7 que alimenta el pipeline comercial sin depender de que alguien se acuerde de revisar las noticias.
             </p>
-            <div className="space-y-4 mb-7">
+            <div className="space-y-4 flex-1">
               {level2Outcomes.map((item, i) => (
                 <div key={i}>
                   <span className="text-[15px] font-sans font-bold text-copper">{item.title}</span>
@@ -154,7 +154,7 @@ const InteligenciaPage = () => {
               ))}
             </div>
             <button
-              className="w-full py-2.5 rounded-lg text-lg font-sans font-bold transition-colors border"
+              className="mt-7 w-full py-2.5 rounded-lg text-lg font-sans font-bold transition-colors border"
               style={{ backgroundColor: "hsl(29 59% 48% / 0.15)", color: "hsl(29 59% 58%)", borderColor: "hsl(29 59% 48% / 0.3)" }}
             >
               Explorar Nivel 2 →
