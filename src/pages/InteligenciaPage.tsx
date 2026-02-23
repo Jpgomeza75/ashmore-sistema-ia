@@ -29,13 +29,13 @@ const InteligenciaPage = () => {
   return (
     <div className="h-screen flex flex-col overflow-hidden bg-background">
       <Header />
-      <main className="flex-1 flex flex-col min-h-0 px-6 lg:px-10 py-3 pb-14">
-        {/* ZONA 1 — Hero + Problema */}
+      <main className="flex-1 flex flex-col min-h-0 px-6 lg:px-10 pt-4 pb-16">
+        {/* ZONA 1 — Hero */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="shrink-0 mb-3"
+          className="shrink-0"
         >
           {/* Breadcrumb */}
           <nav className="text-sm font-sans text-muted-foreground mb-2 flex items-center gap-1.5">
@@ -45,11 +45,11 @@ const InteligenciaPage = () => {
           </nav>
 
           {/* Hero */}
-          <div className="mb-3">
+          <div className="mb-5">
             <span className="inline-block text-[13px] font-sans font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-sm mb-2 bg-navy text-cream">
               CONTINUA
             </span>
-            <h1 className="font-serif text-5xl font-bold text-foreground leading-tight mb-1.5">
+            <h1 className="font-serif text-5xl font-bold text-foreground leading-tight mb-2">
               Inteligencia de Mercado
             </h1>
             <p className="text-xl font-sans text-muted-foreground">
@@ -58,7 +58,7 @@ const InteligenciaPage = () => {
           </div>
 
           {/* El Problema Hoy — KPI bar */}
-          <div className="bg-secondary/60 border border-border rounded-lg px-5 py-3 flex items-center gap-5">
+          <div className="bg-secondary/60 border border-border rounded-lg px-5 py-3.5 flex items-center gap-5">
             <div className="flex items-center gap-2 shrink-0 pr-5 border-r border-border">
               <AlertTriangle className="w-5 h-5 text-copper" />
               <span className="text-sm font-sans font-bold uppercase tracking-wider text-muted-foreground whitespace-nowrap">El problema hoy</span>
@@ -74,16 +74,20 @@ const InteligenciaPage = () => {
           </div>
         </motion.div>
 
-        {/* ZONA 2 — Los Dos Niveles */}
-        <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* Spacer between KPIs and panels */}
+        <div className="shrink-0 h-8 lg:h-10" />
+
+        {/* ZONA 2 — Los Dos Niveles — NOT flex-1, auto height */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-7 shrink-0">
           {/* Nivel 1 */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.12, duration: 0.4 }}
             onClick={() => navigate("/componente/inteligencia/fase-1")}
-            className="group bg-card border border-border rounded-lg p-5 flex flex-col cursor-pointer
-                       hover:border-copper hover:shadow-node-hover transition-all duration-300 overflow-y-auto"
+            className="group bg-card border border-border rounded-lg cursor-pointer
+                       hover:border-copper hover:shadow-node-hover transition-all duration-300"
+            style={{ padding: "28px 32px" }}
           >
             <div className="flex items-center gap-3 mb-1">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: "hsl(29 59% 48% / 0.12)" }}>
@@ -93,23 +97,23 @@ const InteligenciaPage = () => {
                 Nivel 1 — El Analista con Superpoderes
               </h3>
             </div>
-            <span className="inline-block text-[13px] font-sans font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm mb-2 w-fit"
+            <span className="inline-block text-[13px] font-sans font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm mb-3 w-fit"
               style={{ backgroundColor: "hsl(152 52% 32% / 0.12)", color: "hsl(152 52% 32%)" }}>
               Disponible hoy
             </span>
-            <p className="text-lg font-sans text-muted-foreground leading-relaxed mb-3">
+            <p className="text-lg font-sans text-muted-foreground leading-relaxed mb-5">
               Con herramientas de IA generativa, cada analista se convierte en un radar de mercado de alta frecuencia. No reemplaza el criterio del banquero — lo amplifica, procesando en minutos lo que antes tomaba días.
             </p>
-            <div className="space-y-2.5 flex-1">
+            <div className="space-y-4 mb-7">
               {level1Outcomes.map((item, i) => (
                 <div key={i}>
-                  <span className="text-base font-sans font-bold text-copper">{item.title}</span>
-                  <p className="text-[15px] font-sans text-muted-foreground leading-snug">{item.desc}</p>
+                  <span className="text-[15px] font-sans font-bold text-copper">{item.title}</span>
+                  <p className="text-sm font-sans text-muted-foreground leading-snug mt-0.5">{item.desc}</p>
                 </div>
               ))}
             </div>
             <button
-              className="mt-4 w-full py-2.5 rounded-lg text-lg font-sans font-bold transition-colors"
+              className="w-full py-2.5 rounded-lg text-lg font-sans font-bold transition-colors"
               style={{ backgroundColor: "hsl(29 59% 48%)", color: "white" }}
             >
               Explorar Nivel 1 →
@@ -122,9 +126,9 @@ const InteligenciaPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.4 }}
             onClick={() => navigate("/componente/inteligencia/fase-2")}
-            className="group rounded-lg p-5 flex flex-col cursor-pointer overflow-y-auto
+            className="group rounded-lg cursor-pointer
                        border border-border/30 hover:border-copper/40 hover:shadow-node-hover transition-all duration-300"
-            style={{ backgroundColor: "hsl(221 45% 14%)" }}
+            style={{ backgroundColor: "hsl(221 45% 14%)", padding: "28px 32px" }}
           >
             <div className="flex items-center gap-3 mb-1">
               <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: "hsl(29 59% 48% / 0.15)" }}>
@@ -134,29 +138,31 @@ const InteligenciaPage = () => {
                 Nivel 2 — El Sistema Institucional
               </h3>
             </div>
-            <span className="inline-block text-[13px] font-sans font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm mb-2 w-fit"
+            <span className="inline-block text-[13px] font-sans font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-sm mb-3 w-fit"
               style={{ backgroundColor: "hsl(29 59% 48% / 0.18)", color: "hsl(29 59% 58%)" }}>
               Visión 2.0
             </span>
-            <p className="text-lg font-sans leading-relaxed mb-3" style={{ color: "hsl(220 15% 65%)" }}>
+            <p className="text-lg font-sans leading-relaxed mb-5" style={{ color: "hsl(220 15% 65%)" }}>
               Un sistema institucional que captura, procesa y distribuye inteligencia de mercado automáticamente. La firma tiene un radar encendido 24/7 que alimenta el pipeline comercial sin depender de que alguien se acuerde de revisar las noticias.
             </p>
-            <div className="space-y-2.5 flex-1">
+            <div className="space-y-4 mb-7">
               {level2Outcomes.map((item, i) => (
                 <div key={i}>
-                  <span className="text-base font-sans font-bold text-copper">{item.title}</span>
-                  <p className="text-[15px] font-sans leading-snug" style={{ color: "hsl(220 15% 65%)" }}>{item.desc}</p>
+                  <span className="text-[15px] font-sans font-bold text-copper">{item.title}</span>
+                  <p className="text-sm font-sans leading-snug mt-0.5" style={{ color: "hsl(220 15% 65%)" }}>{item.desc}</p>
                 </div>
               ))}
             </div>
             <button
-              className="mt-4 w-full py-2.5 rounded-lg text-lg font-sans font-bold transition-colors border"
+              className="w-full py-2.5 rounded-lg text-lg font-sans font-bold transition-colors border"
               style={{ backgroundColor: "hsl(29 59% 48% / 0.15)", color: "hsl(29 59% 58%)", borderColor: "hsl(29 59% 48% / 0.3)" }}
             >
               Explorar Nivel 2 →
             </button>
           </motion.div>
         </div>
+
+        {/* ZONA 3 — Respiro visual natural hasta el footer */}
       </main>
     </div>
   );
