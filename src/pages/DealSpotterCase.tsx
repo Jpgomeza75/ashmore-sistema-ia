@@ -142,7 +142,7 @@ const steps: StepContent[] = [
           Claude generará un artifact directamente en la conversación. Haz click en "pantalla completa" para verlo mejor. Aquí puedes ver un ejemplo real:
         </p>
         <a
-          href="https://claude.ai/public/artifacts/bf2ead7c-e273-46e9-9e64-996bf4060cd1"
+          href="/demos/deal-spotter-avidanti.html"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-lg font-sans font-bold transition-colors"

@@ -144,11 +144,18 @@ const steps: StepContent[] = [
         <p className="text-base font-sans text-muted-foreground mb-5 leading-relaxed">
           Claude generará un artifact directamente en la conversación. Haz click en "pantalla completa" para verlo mejor.
         </p>
-        <div className="bg-card border border-border rounded-lg p-5 text-center">
-          <p className="text-base font-sans text-muted-foreground">
-            Ejemplo disponible próximamente
-          </p>
-        </div>
+        <a
+          href="/demos/pre-pitch-geopark.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-lg font-sans font-bold transition-colors"
+          style={{ backgroundColor: "hsl(29 59% 48%)", color: "white" }}
+        >
+          Ver Ejemplo de Dashboard <ExternalLink className="w-5 h-5" />
+        </a>
+        <p className="text-sm font-sans text-muted-foreground mt-4 italic">
+          Este es un ejemplo generado con el prompt anterior. Tu resultado puede variar ligeramente.
+        </p>
       </div>
     ),
   },
