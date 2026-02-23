@@ -25,71 +25,239 @@ export interface Connection {
   label: string;
 }
 
+export interface PanelEntry {
+  sourceId: string;
+  label: string;
+}
+
+export interface PanelData {
+  inputs: PanelEntry[];
+  outputs: PanelEntry[];
+  iaOpportunities: string[];
+}
+
 export const connections: Connection[] = [
-  // Inteligencia de Mercado - Salidas
   { from: "inteligencia", to: "desarrollo", label: "Señales y triggers" },
   { from: "inteligencia", to: "analisis", label: "Data de mercado" },
   { from: "inteligencia", to: "memoria", label: "Conocimiento sectorial" },
   { from: "inteligencia", to: "pitch", label: "Inteligencia competitiva" },
-  // Inteligencia de Mercado - Entradas
   { from: "memoria", to: "inteligencia", label: "Históricos y patrones" },
   { from: "ejecucion", to: "inteligencia", label: "Señales del mercado en deals activos" },
-
-  // Desarrollo Comercial - Salidas
   { from: "desarrollo", to: "pitch", label: "Oportunidades calificadas" },
   { from: "desarrollo", to: "memoria", label: "Historial de relaciones" },
-  // Desarrollo Comercial - Entradas (already covered above + below)
   { from: "memoria", to: "desarrollo", label: "Historial con clientes" },
   { from: "ejecucion", to: "desarrollo", label: "Track record" },
   { from: "pitch", to: "desarrollo", label: "Feedback ganado/perdido" },
-
-  // Pitch y Captura - Salidas
   { from: "pitch", to: "analisis", label: "Brief de ejecución del mandato" },
   { from: "pitch", to: "memoria", label: "Propuestas y aprendizajes" },
-  // Pitch y Captura - Entradas
   { from: "memoria", to: "pitch", label: "Track record y deals similares" },
   { from: "estructuracion", to: "pitch", label: "Tesis de valor preliminar" },
   { from: "analisis", to: "pitch", label: "Valoración preliminar" },
-
-  // Análisis y Modelación - Salidas
   { from: "analisis", to: "estructuracion", label: "Modelo financiero y hallazgos" },
   { from: "analisis", to: "narrativa", label: "Data para documentos" },
   { from: "analisis", to: "memoria", label: "Modelos y supuestos" },
-  // Análisis - Entradas
   { from: "memoria", to: "analisis", label: "Modelos base históricos" },
   { from: "estructuracion", to: "analisis", label: "Requerimientos de recalibración" },
   { from: "ejecucion", to: "analisis", label: "Nueva info de due diligence" },
-
-  // Estructuración - Salidas
   { from: "estructuracion", to: "narrativa", label: "Tesis de valor para documentar" },
   { from: "estructuracion", to: "ejecucion", label: "Estructura y términos para negociación" },
-  // Estructuración - Entradas
   { from: "ejecucion", to: "estructuracion", label: "Feedback del mercado" },
   { from: "memoria", to: "estructuracion", label: "Estructuras precedentes" },
-
-  // Narrativa - Salidas
   { from: "narrativa", to: "ejecucion", label: "Documentos finales" },
   { from: "narrativa", to: "memoria", label: "Templates para reutilización" },
-  // Narrativa - Entradas
   { from: "control", to: "narrativa", label: "Validación de documentos" },
   { from: "memoria", to: "narrativa", label: "Templates anteriores" },
-
-  // Ejecución - Salidas
   { from: "ejecucion", to: "memoria", label: "Lecciones aprendidas" },
-  // Already covered: ejecucion->desarrollo, ejecucion->analisis, ejecucion->estructuracion, ejecucion->inteligencia
-
-  // Control de Calidad - Salidas
   { from: "control", to: "ejecucion", label: "Aprobaciones go/no-go" },
   { from: "control", to: "memoria", label: "Estándares actualizados" },
-  // Control - Entradas
   { from: "analisis", to: "control", label: "Modelos para revisión" },
   { from: "narrativa", to: "control", label: "Documentos para validación" },
   { from: "estructuracion", to: "control", label: "Estructuras para aprobación" },
   { from: "memoria", to: "control", label: "Checklists y estándares" },
-
-  // Memoria Corporativa - Salidas (most already covered)
-  // Memoria - Entradas (most already covered)
 ];
+
+// Detailed panel data per component
+export const panelData: Record<string, PanelData> = {
+  inteligencia: {
+    inputs: [
+      { sourceId: "memoria", label: "Históricos y patrones previos" },
+      { sourceId: "ejecucion", label: "Señales del mercado en deals activos" },
+    ],
+    outputs: [
+      { sourceId: "desarrollo", label: "Señales y triggers de oportunidad" },
+      { sourceId: "analisis", label: "Data de mercado y comparables" },
+      { sourceId: "memoria", label: "Conocimiento sectorial acumulado" },
+      { sourceId: "pitch", label: "Inteligencia competitiva para propuestas" },
+    ],
+    iaOpportunities: [
+      "Screening automatizado de empresas por criterios",
+      "Alertas inteligentes de triggers transaccionales",
+      "Resúmenes de actividad sectorial",
+      "Análisis de tendencias y patrones",
+    ],
+  },
+  desarrollo: {
+    inputs: [
+      { sourceId: "inteligencia", label: "Señales y triggers de oportunidad" },
+      { sourceId: "memoria", label: "Historial con clientes y contrapartes" },
+      { sourceId: "ejecucion", label: "Track record y reputación (deals cerrados)" },
+      { sourceId: "pitch", label: "Feedback de pitches ganados/perdidos" },
+    ],
+    outputs: [
+      { sourceId: "pitch", label: "Oportunidades calificadas" },
+      { sourceId: "memoria", label: "Historial de relaciones y contactos" },
+    ],
+    iaOpportunities: [
+      "Scoring de oportunidades por probabilidad",
+      "Briefs automáticos por prospecto",
+      "Identificación de oportunidades de cross-selling",
+      "Monitoreo de cambios en empresas target",
+    ],
+  },
+  pitch: {
+    inputs: [
+      { sourceId: "desarrollo", label: "Oportunidad calificada" },
+      { sourceId: "inteligencia", label: "Inteligencia competitiva y sectorial" },
+      { sourceId: "memoria", label: "Track record, modelos base, deals similares" },
+      { sourceId: "estructuracion", label: "Tesis de valor diferenciada preliminar" },
+      { sourceId: "analisis", label: "Valoración y análisis preliminar" },
+    ],
+    outputs: [
+      { sourceId: "analisis", label: "Mandato ganado — brief de ejecución" },
+      { sourceId: "desarrollo", label: "Feedback ganado/perdido y por qué" },
+      { sourceId: "memoria", label: "Propuestas y aprendizajes del proceso" },
+    ],
+    iaOpportunities: [
+      "Generación de pitch books con data actualizada",
+      "Análisis rápido de comparables",
+      "Benchmark de fees de mercado",
+      "Draft de estrategia del deal",
+    ],
+  },
+  analisis: {
+    inputs: [
+      { sourceId: "pitch", label: "Brief del mandato y estrategia" },
+      { sourceId: "inteligencia", label: "Data de mercado y comparables" },
+      { sourceId: "memoria", label: "Modelos base y supuestos históricos" },
+      { sourceId: "estructuracion", label: "Requerimientos de recalibración" },
+      { sourceId: "ejecucion", label: "Nueva información de due diligence" },
+    ],
+    outputs: [
+      { sourceId: "estructuracion", label: "Modelo financiero y hallazgos analíticos" },
+      { sourceId: "narrativa", label: "Data y análisis para documentos" },
+      { sourceId: "pitch", label: "Valoración preliminar para propuestas" },
+      { sourceId: "memoria", label: "Modelos y supuestos para la librería" },
+    ],
+    iaOpportunities: [
+      "Estructura de modelo a partir de inputs",
+      "Chequeos automáticos de consistencia",
+      "Generación de tablas de sensibilidad",
+      "Identificación de inconsistencias en supuestos",
+    ],
+  },
+  estructuracion: {
+    inputs: [
+      { sourceId: "analisis", label: "Modelo financiero y hallazgos" },
+      { sourceId: "ejecucion", label: "Feedback del mercado y contrapartes" },
+      { sourceId: "memoria", label: "Estructuras y términos de deals anteriores" },
+    ],
+    outputs: [
+      { sourceId: "narrativa", label: "Tesis de valor y estructura para documentar" },
+      { sourceId: "analisis", label: "Requerimientos de recalibración del modelo" },
+      { sourceId: "ejecucion", label: "Estructura y términos para negociación" },
+      { sourceId: "pitch", label: "Tesis de valor diferenciada para nuevos pitches" },
+    ],
+    iaOpportunities: [
+      "Identificación de drivers y palancas accionables",
+      "Draft de term sheets y covenants",
+      "Benchmark de estructuras en deals similares",
+      "Simulación de escenarios de estructura",
+    ],
+  },
+  narrativa: {
+    inputs: [
+      { sourceId: "analisis", label: "Data, modelos y análisis" },
+      { sourceId: "estructuracion", label: "Tesis de valor y estructura" },
+      { sourceId: "control", label: "Validación de consistencia y compliance" },
+      { sourceId: "memoria", label: "Templates y narrativas anteriores" },
+    ],
+    outputs: [
+      { sourceId: "ejecucion", label: "Documentos finales para el proceso" },
+      { sourceId: "memoria", label: "Templates y documentos para reutilización" },
+    ],
+    iaOpportunities: [
+      "Drafts de secciones de documentos",
+      "Verificación de consistencia narrativa vs. números",
+      "Generación de executive summaries",
+      "Traducción de modelos complejos a recomendaciones claras",
+    ],
+  },
+  ejecucion: {
+    inputs: [
+      { sourceId: "narrativa", label: "Documentos finales" },
+      { sourceId: "estructuracion", label: "Estructura y términos" },
+      { sourceId: "control", label: "Aprobaciones y validaciones" },
+    ],
+    outputs: [
+      { sourceId: "desarrollo", label: "Track record y reputación" },
+      { sourceId: "memoria", label: "Lecciones aprendidas y resultados" },
+      { sourceId: "analisis", label: "Nueva info de DD que requiere recalibración" },
+      { sourceId: "estructuracion", label: "Feedback del mercado para reajustar" },
+      { sourceId: "inteligencia", label: "Señales del mercado detectadas en proceso" },
+    ],
+    iaOpportunities: [
+      "Gestión automatizada de Q&A en due diligence",
+      "Tracking de hitos y alertas de timeline",
+      "Comparación de ofertas recibidas",
+      "Preparación de respuestas a preguntas frecuentes",
+    ],
+  },
+  control: {
+    inputs: [
+      { sourceId: "analisis", label: "Modelos para revisión" },
+      { sourceId: "narrativa", label: "Documentos para validación" },
+      { sourceId: "estructuracion", label: "Estructuras para aprobación" },
+      { sourceId: "memoria", label: "Checklists y estándares" },
+    ],
+    outputs: [
+      { sourceId: "narrativa", label: "Validación y aprobación de documentos" },
+      { sourceId: "ejecucion", label: "Aprobaciones de go/no-go" },
+      { sourceId: "memoria", label: "Estándares y checklists actualizados" },
+    ],
+    iaOpportunities: [
+      "Chequeos automáticos de consistencia en modelos",
+      "Detección de errores de fórmula",
+      "Verificación cruzada narrativa vs. números",
+      "Auditoría de supuestos contra fuentes",
+    ],
+  },
+  memoria: {
+    inputs: [
+      { sourceId: "inteligencia", label: "Conocimiento sectorial" },
+      { sourceId: "desarrollo", label: "Relaciones y contactos" },
+      { sourceId: "pitch", label: "Propuestas y resultados" },
+      { sourceId: "analisis", label: "Modelos y supuestos" },
+      { sourceId: "ejecucion", label: "Lecciones aprendidas y resultados" },
+      { sourceId: "narrativa", label: "Documentos y templates" },
+      { sourceId: "control", label: "Estándares actualizados" },
+    ],
+    outputs: [
+      { sourceId: "inteligencia", label: "Históricos y patrones para monitoreo" },
+      { sourceId: "desarrollo", label: "Historial con clientes y contrapartes" },
+      { sourceId: "pitch", label: "Track record y deals similares" },
+      { sourceId: "analisis", label: "Modelos base y supuestos históricos" },
+      { sourceId: "estructuracion", label: "Estructuras y términos precedentes" },
+      { sourceId: "narrativa", label: "Templates y narrativas de referencia" },
+      { sourceId: "control", label: "Checklists y estándares" },
+    ],
+    iaOpportunities: [
+      "Búsqueda inteligente en base de conocimiento",
+      "Sugerencia de comparables relevantes",
+      "Auto-catalogación de documentos y modelos",
+      "Extracción de lecciones de deals pasados",
+    ],
+  },
+};
 
 export const systemComponents: SystemComponent[] = [
   {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { systemComponents, getConnectedIds } from "@/data/components";
+import { systemComponents, getConnectedIds, getComponentById } from "@/data/components";
 import ComponentNode from "@/components/ComponentNode";
 import ConnectionPanel from "@/components/ConnectionPanel";
 
@@ -111,7 +111,12 @@ const SystemMap = () => {
       </div>
 
       {/* Connection Panel */}
-      {selectedId && <ConnectionPanel componentId={selectedId} />}
+      {selectedId && getComponentById(selectedId) && (
+        <ConnectionPanel
+          component={getComponentById(selectedId)!}
+          onClose={() => setSelectedId(null)}
+        />
+      )}
     </div>
   );
 };
