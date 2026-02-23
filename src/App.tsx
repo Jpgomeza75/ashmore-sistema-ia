@@ -9,6 +9,7 @@ import InteligenciaPage from "./pages/InteligenciaPage";
 import InteligenciaFase1 from "./pages/InteligenciaFase1";
 import InteligenciaFase2 from "./pages/InteligenciaFase2";
 import NotFound from "./pages/NotFound";
+import Footer from "./components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/componente/:id" element={<ComponentPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
