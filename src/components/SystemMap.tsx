@@ -126,7 +126,7 @@ const SystemMap = () => {
   const mapContent = (
     <div
       ref={containerRef}
-      className="relative h-full flex flex-col justify-between"
+      className="relative h-full flex flex-col justify-center gap-0"
       onClick={handleBackgroundClick}
     >
       {/* SVG overlay */}
@@ -166,7 +166,7 @@ const SystemMap = () => {
 
       {/* Row 1 */}
       {rowLabel("Funciones continuas")}
-      <div className="grid grid-cols-2 gap-2 mb-1.5">
+      <div className="grid grid-cols-2 gap-2 mb-1">
         {row1.map((c) => (
           <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
         ))}
@@ -176,7 +176,7 @@ const SystemMap = () => {
 
       {/* Row 2 */}
       {rowLabel("Embudo de captura")}
-      <div className={`mx-auto mb-1.5 ${selectedId ? "w-full max-w-[70%]" : "max-w-sm w-full"}`}>
+      <div className={`mx-auto mb-1 ${selectedId ? "w-full max-w-[70%]" : "max-w-md w-full"}`}>
         {row2.map((c) => (
           <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
         ))}
@@ -186,7 +186,7 @@ const SystemMap = () => {
 
       {/* Row 3 */}
       {rowLabel("Fábrica del deal")}
-      <div className="grid grid-cols-3 gap-2 mb-1.5">
+      <div className="grid grid-cols-3 gap-2 mb-1">
         {row3.map((c) => (
           <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
         ))}
@@ -196,7 +196,7 @@ const SystemMap = () => {
 
       {/* Row 4 */}
       {rowLabel("Salida al mundo")}
-      <div className={`mx-auto mb-1.5 ${selectedId ? "w-full max-w-[70%]" : "max-w-sm w-full"}`}>
+      <div className={`mx-auto mb-1 ${selectedId ? "w-full max-w-[70%]" : "max-w-md w-full"}`}>
         {row4.map((c) => (
           <ComponentNode key={c.id} component={c} isSelected={selectedId === c.id} isDimmed={isDimmed(c.id)} connectionBadge={getConnectionBadge(c.id)} onSelect={setSelectedId} compact={!!selectedId} />
         ))}
