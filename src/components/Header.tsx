@@ -20,7 +20,7 @@ const Header = () => {
             </Link>
           )}
           <Link to="/" className="flex items-center gap-3">
-            <img src={logoBanicol} alt="Banicol — Banca de Inversión" className="h-8 w-auto" />
+            <img src={logoBanicol} alt="Banicol — Banca de Inversión" className="h-12 w-auto" />
             <span className="hidden sm:block h-5 w-px bg-border" />
             <span className="hidden sm:block text-xs font-sans text-muted-foreground tracking-wide uppercase">
               Sistema Operativo · IA

@@ -7,7 +7,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <main className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 pb-20">
         {/* Hero */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
