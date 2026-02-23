@@ -5,44 +5,40 @@ import SystemMap from "@/components/SystemMap";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen flex flex-col overflow-hidden bg-background">
       <Header />
-      <main className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 pb-20">
-        {/* Hero */}
+      <main className="flex-1 flex flex-col overflow-hidden px-4 sm:px-6 lg:px-8 py-4">
+        {/* Hero — compact */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
+          transition={{ duration: 0.4 }}
+          className="text-center mb-4 shrink-0"
         >
-          <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-4">
+          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-foreground leading-tight mb-1.5">
             El Sistema Operativo de la{" "}
             <span className="text-gradient-copper">Banca de Inversión</span>
           </h1>
-          <p className="text-base sm:text-lg font-sans text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm font-sans text-muted-foreground max-w-xl mx-auto leading-relaxed">
             Explora los 9 componentes que definen cómo opera una firma de banca de inversión
             — y descubre cómo la IA puede transformar cada uno.
           </p>
         </motion.div>
 
-        {/* Map */}
+        {/* Map — fills remaining space */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="flex-1 flex items-start justify-center overflow-hidden"
         >
           <SystemMap />
         </motion.div>
 
         {/* Footer note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-center text-xs font-sans text-muted-foreground mt-12 max-w-lg mx-auto italic"
-        >
+        <p className="text-center text-[10px] font-sans text-muted-foreground mt-2 italic shrink-0">
           La toma de decisiones y los loops iterativos son capas transversales que atraviesan todos los componentes.
-        </motion.p>
+        </p>
       </main>
       <Footer />
     </div>
