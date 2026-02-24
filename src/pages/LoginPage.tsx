@@ -24,7 +24,7 @@ const LoginPage = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-primary px-4">
       <div className="w-full max-w-sm">
         <div className="flex flex-col items-center mb-8">
-          <img src={logoBanicol} alt="Banicol" className="h-14 w-auto mb-4 brightness-0 invert" />
+          <img src={logoBanicol} alt="Banicol" className="h-14 w-auto mb-4 invert" />
           <span className="text-xs font-sans tracking-[0.15em] uppercase text-primary-foreground/60">
             Sistema Operativo · IA
           </span>
