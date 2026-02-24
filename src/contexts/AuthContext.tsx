@@ -6,12 +6,11 @@ interface AuthContextType {
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const defaultAuth: AuthContextType = { isAuthenticated: false, login: () => false, logout: () => {} };
+const AuthContext = createContext<AuthContextType>(defaultAuth);
 
 export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be inside AuthProvider");
-  return ctx;
+  return useContext(AuthContext);
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
