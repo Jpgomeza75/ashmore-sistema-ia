@@ -14,6 +14,9 @@ interface CaseStepperProps {
   title: string;
   subtitle: string;
   steps: StepContent[];
+  parentName?: string;
+  parentHref?: string;
+  fase1Href?: string;
 }
 
 const CopyPromptButton = ({ text }: { text: string }) => {
@@ -46,7 +49,7 @@ const PromptBlock = ({ children }: { children: string }) => (
 
 export { PromptBlock };
 
-const CaseStepper = ({ breadcrumbLabel, title, subtitle, steps }: CaseStepperProps) => {
+const CaseStepper = ({ breadcrumbLabel, title, subtitle, steps, parentName = "Inteligencia de Mercado", parentHref = "/componente/inteligencia", fase1Href = "/componente/inteligencia/fase-1" }: CaseStepperProps) => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -63,9 +66,9 @@ const CaseStepper = ({ breadcrumbLabel, title, subtitle, steps }: CaseStepperPro
           <nav className="text-sm font-sans text-muted-foreground mb-1.5 flex items-center gap-1.5">
             <Link to="/" className="hover:text-foreground transition-colors">Mapa del Sistema</Link>
             <span>/</span>
-            <Link to="/componente/inteligencia" className="hover:text-foreground transition-colors">Inteligencia de Mercado</Link>
+            <Link to={parentHref} className="hover:text-foreground transition-colors">{parentName}</Link>
             <span>/</span>
-            <Link to="/componente/inteligencia/fase-1" className="hover:text-foreground transition-colors">Nivel 1</Link>
+            <Link to={fase1Href} className="hover:text-foreground transition-colors">Nivel 1</Link>
             <span>/</span>
             <span className="text-foreground font-medium">{breadcrumbLabel}</span>
           </nav>
@@ -142,7 +145,7 @@ const CaseStepper = ({ breadcrumbLabel, title, subtitle, steps }: CaseStepperPro
             </button>
           ) : (
             <button
-              onClick={() => navigate("/componente/inteligencia/fase-1")}
+              onClick={() => navigate(fase1Href)}
               className="text-base font-sans font-bold px-6 py-2 rounded-lg transition-colors"
               style={{ backgroundColor: "hsl(29 59% 48%)", color: "white" }}
             >

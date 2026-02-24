@@ -10,6 +10,11 @@ import InteligenciaFase1 from "./pages/InteligenciaFase1";
 import InteligenciaFase2 from "./pages/InteligenciaFase2";
 import DealSpotterCase from "./pages/DealSpotterCase";
 import PrePitchCase from "./pages/PrePitchCase";
+import AnalisisPage from "./pages/AnalisisPage";
+import AnalisisFase1 from "./pages/AnalisisFase1";
+import AnalisisFase2 from "./pages/AnalisisFase2";
+import AuditorCase from "./pages/AuditorCase";
+import ModeloPresentacionCase from "./pages/ModeloPresentacionCase";
 import NotFound from "./pages/NotFound";
 import Footer from "./components/Footer";
 
@@ -28,6 +33,11 @@ const App = () => (
           <Route path="/componente/inteligencia/fase-1/deal-spotter/avidanti-patria" element={<DealSpotterCase />} />
           <Route path="/componente/inteligencia/fase-1/pre-pitch/geopark-frontera" element={<PrePitchCase />} />
           <Route path="/componente/inteligencia/fase-2" element={<InteligenciaFase2 />} />
+          <Route path="/componente/analisis" element={<AnalisisPage />} />
+          <Route path="/componente/analisis/fase-1" element={<AnalisisFase1 />} />
+          <Route path="/componente/analisis/fase-1/auditor/demo-en-vivo" element={<AuditorCase />} />
+          <Route path="/componente/analisis/fase-1/modelo-a-presentacion/demo-en-vivo" element={<ModeloPresentacionCase />} />
+          <Route path="/componente/analisis/fase-2" element={<AnalisisFase2 />} />
           <Route path="/componente/:id" element={<ComponentPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
