@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const login = useCallback((user: string, pass: string) => {
-    if (user === "banicol" && pass === "banicol2026") {
+    if (user === "jp@xptnova.com" && pass === "Nltp0203!") {
       sessionStorage.setItem("auth", "1");
       setIsAuthenticated(true);
       return true;
