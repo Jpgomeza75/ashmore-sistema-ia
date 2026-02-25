@@ -306,7 +306,7 @@ export const systemComponents: SystemComponent[] = [
     type: "CONTINUA",
     row: 1,
     description: "Gestión de relaciones con clientes actuales y potenciales, identificación de oportunidades y cultivo del pipeline comercial.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "pitch",
@@ -315,7 +315,7 @@ export const systemComponents: SystemComponent[] = [
     type: "EPISÓDICA",
     row: 2,
     description: "Preparación de propuestas competitivas, presentaciones a clientes y cierre de mandatos de asesoría.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "analisis",
@@ -363,7 +363,7 @@ export const systemComponents: SystemComponent[] = [
     type: "EPISÓDICA",
     row: 3,
     description: "Diseño de la estructura óptima de la transacción y articulación de la tesis de valor que maximice el resultado para el cliente.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "narrativa",
@@ -372,7 +372,7 @@ export const systemComponents: SystemComponent[] = [
     type: "EPISÓDICA",
     row: 3,
     description: "Creación de documentos de alta calidad: teasers, information memorandums, presentaciones al board y materiales de proceso.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "ejecucion",
@@ -381,7 +381,7 @@ export const systemComponents: SystemComponent[] = [
     type: "EPISÓDICA",
     row: 4,
     description: "Coordinación del proceso de la transacción: gestión de data rooms, negociaciones, due diligence y cierre.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "control",
@@ -390,7 +390,7 @@ export const systemComponents: SystemComponent[] = [
     type: "HABILITADORA",
     row: 5,
     description: "Revisión y aprobación de entregables, cumplimiento regulatorio y gobierno interno del proceso de asesoría.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "memoria",
