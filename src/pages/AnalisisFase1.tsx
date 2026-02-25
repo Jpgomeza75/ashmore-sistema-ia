@@ -94,76 +94,75 @@ const AnalisisFase1 = () => {
   const caseCard = casesMap[selected] || auditorCase;
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-background">
+    <div className="min-h-screen md:h-screen flex flex-col md:overflow-hidden bg-background">
       <Header />
-      <main className="flex-1 flex flex-col min-h-0 px-6 lg:px-10 pt-4 pb-16">
-        {/* Breadcrumb + Title */}
+      <main className="flex-1 flex flex-col min-h-0 px-4 md:px-6 lg:px-10 pt-4 pb-8 md:pb-16">
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
           className="shrink-0 mb-4"
         >
-          <nav className="text-sm font-sans text-muted-foreground mb-2 flex items-center gap-1.5">
+          <nav className="text-xs md:text-sm font-sans text-muted-foreground mb-2 flex items-center gap-1 md:gap-1.5 flex-wrap">
             <Link to="/" className="hover:text-foreground transition-colors">Mapa del Sistema</Link>
             <span>/</span>
             <Link to="/componente/analisis" className="hover:text-foreground transition-colors">Análisis y Modelación</Link>
             <span>/</span>
             <span className="text-foreground font-medium">Nivel 1</span>
           </nav>
-          <h1 className="font-serif text-4xl font-bold text-foreground leading-tight mb-1">
+          <h1 className="font-serif text-2xl md:text-4xl font-bold text-foreground leading-tight mb-1">
             El Analista con Superpoderes
           </h1>
-          <p className="text-lg font-sans text-muted-foreground max-w-3xl">
+          <p className="text-sm md:text-lg font-sans text-muted-foreground max-w-3xl">
             Claude trabaja dentro de Excel con el add-in. Selecciona un superpoder para conocer la metodología y ver el caso práctico.
           </p>
         </motion.div>
 
-        {/* Superpowers Tab Bar */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1, duration: 0.3 }}
-          className="shrink-0 grid grid-cols-4 gap-3 mb-5"
+          className="shrink-0 mb-5 overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0"
         >
-          {superpowers.map((sp) => {
-            const isSelected = selected === sp.id;
-            const isDisabled = !sp.active;
-            return (
-              <button
-                key={sp.id}
-                disabled={isDisabled}
-                onClick={() => sp.active && setSelected(sp.id)}
-                className={`relative rounded-lg border px-4 py-2.5 text-left transition-all duration-200
-                  ${isDisabled
-                    ? "opacity-40 cursor-not-allowed border-border bg-secondary/40"
-                    : isSelected
-                      ? "border-copper bg-card shadow-node"
-                      : "border-border bg-card hover:border-copper/50 cursor-pointer"
-                  }`}
-              >
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className={`text-[15px] font-sans font-bold ${isSelected ? "text-copper" : "text-foreground"}`}>
-                    {sp.name}
-                  </span>
-                  {sp.active ? (
-                    <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-sm"
-                      style={{ backgroundColor: "hsl(152 52% 32% / 0.12)", color: "hsl(152 52% 32%)" }}>
-                      DEMO
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 min-w-0">
+            {superpowers.map((sp) => {
+              const isSelected = selected === sp.id;
+              const isDisabled = !sp.active;
+              return (
+                <button
+                  key={sp.id}
+                  disabled={isDisabled}
+                  onClick={() => sp.active && setSelected(sp.id)}
+                  className={`relative rounded-lg border px-3 md:px-4 py-2 md:py-2.5 text-left transition-all duration-200
+                    ${isDisabled
+                      ? "opacity-40 cursor-not-allowed border-border bg-secondary/40"
+                      : isSelected
+                        ? "border-copper bg-card shadow-node"
+                        : "border-border bg-card hover:border-copper/50 cursor-pointer"
+                    }`}
+                >
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className={`text-[13px] md:text-[15px] font-sans font-bold ${isSelected ? "text-copper" : "text-foreground"}`}>
+                      {sp.name}
                     </span>
-                  ) : (
-                    <span className="text-[10px] font-sans font-bold uppercase tracking-wider text-muted-foreground">
-                      PRÓXIMAMENTE
-                    </span>
-                  )}
-                </div>
-                <span className="text-xs font-sans text-muted-foreground">{sp.subtitle}</span>
-              </button>
-            );
-          })}
+                    {sp.active ? (
+                      <span className="text-[10px] font-sans font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-sm"
+                        style={{ backgroundColor: "hsl(152 52% 32% / 0.12)", color: "hsl(152 52% 32%)" }}>
+                        DEMO
+                      </span>
+                    ) : (
+                      <span className="text-[9px] md:text-[10px] font-sans font-bold uppercase tracking-wider text-muted-foreground">
+                        PRÓX.
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-[11px] md:text-xs font-sans text-muted-foreground line-clamp-1">{sp.subtitle}</span>
+                </button>
+              );
+            })}
+          </div>
         </motion.div>
 
-        {/* Main Content: Methodology + Case */}
         <AnimatePresence mode="wait">
           <motion.div
             key={selected}
@@ -171,12 +170,11 @@ const AnalisisFase1 = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-6"
+            className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[55%_45%] gap-6 overflow-y-auto md:overflow-hidden"
           >
-            {/* Left: Methodology */}
-            <div className="flex flex-col min-h-0 overflow-y-auto pr-2">
-              <h2 className="font-serif text-2xl font-bold text-foreground mb-1">¿Cómo funciona?</h2>
-              <p className="text-sm font-sans text-muted-foreground mb-4">
+            <div className="flex flex-col min-h-0 md:overflow-y-auto pr-0 md:pr-2">
+              <h2 className="font-serif text-xl md:text-2xl font-bold text-foreground mb-1">¿Cómo funciona?</h2>
+              <p className="text-xs md:text-sm font-sans text-muted-foreground mb-4">
                 Estos superpoderes usan el add-in de Claude directamente dentro de Excel. El flujo es el mismo para cualquier modelo.
               </p>
               <div className="space-y-3">
@@ -187,8 +185,8 @@ const AnalisisFase1 = () => {
                       {i + 1}
                     </div>
                     <div className="min-w-0">
-                      <span className="text-[16px] font-sans font-bold text-foreground">{step.title}</span>
-                      <p className="text-sm font-sans text-muted-foreground leading-snug mt-0.5">{step.desc}</p>
+                      <span className="text-[14px] md:text-[16px] font-sans font-bold text-foreground">{step.title}</span>
+                      <p className="text-[13px] md:text-sm font-sans text-muted-foreground leading-snug mt-0.5">{step.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -198,23 +196,22 @@ const AnalisisFase1 = () => {
               </p>
             </div>
 
-            {/* Right: Cases */}
             <div className="flex flex-col min-h-0">
-              <h2 className="font-serif text-2xl font-bold text-foreground mb-1">Caso Práctico</h2>
-              <p className="text-sm font-sans text-muted-foreground mb-4">
+              <h2 className="font-serif text-xl md:text-2xl font-bold text-foreground mb-1">Caso Práctico</h2>
+              <p className="text-xs md:text-sm font-sans text-muted-foreground mb-4">
                 Demo en vivo sobre un modelo real.
               </p>
 
               <div
-                className="border-2 rounded-lg p-6 flex flex-col cursor-pointer group hover:shadow-node-hover transition-all duration-300"
+                className="border-2 rounded-lg p-4 md:p-6 flex flex-col cursor-pointer group hover:shadow-node-hover transition-all duration-300"
                 style={{ borderColor: "hsl(29 59% 48% / 0.4)", backgroundColor: "hsl(29 59% 48% / 0.04)" }}
                 onClick={() => navigate(caseCard.href)}
               >
                 <span className="text-[10px] font-sans font-bold uppercase tracking-[0.15em] text-copper mb-3">
                   {caseCard.label}
                 </span>
-                <h3 className="font-serif text-xl font-bold text-foreground mb-2">{caseCard.title}</h3>
-                <p className="text-sm font-sans text-muted-foreground leading-relaxed mb-4">{caseCard.description}</p>
+                <h3 className="font-serif text-lg md:text-xl font-bold text-foreground mb-2">{caseCard.title}</h3>
+                <p className="text-[13px] md:text-sm font-sans text-muted-foreground leading-relaxed mb-4">{caseCard.description}</p>
                 <div className="space-y-1.5 mb-5">
                   {caseCard.stats.map((s, i) => (
                     <div key={i} className="flex items-baseline gap-2">
@@ -224,7 +221,7 @@ const AnalisisFase1 = () => {
                   ))}
                 </div>
                 <button
-                  className="w-full py-2.5 rounded-lg text-base font-sans font-bold transition-colors"
+                  className="w-full py-2.5 rounded-lg text-base font-sans font-bold transition-colors min-h-[44px]"
                   style={{ backgroundColor: "hsl(29 59% 48%)", color: "white" }}
                 >
                   Ver caso completo →
