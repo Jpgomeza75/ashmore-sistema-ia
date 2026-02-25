@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { ChevronRight } from "lucide-react";
 import {
   systemComponents,
   getConnectedIds,
@@ -8,6 +10,7 @@ import {
 } from "@/data/components";
 import ComponentNode from "@/components/ComponentNode";
 import DetailPanel from "@/components/DetailPanel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LineCoords {
   x1: number;
@@ -17,7 +20,67 @@ interface LineCoords {
   type: "input" | "output";
 }
 
+/* ── Mobile list view ── */
+const mobileGroups = [
+  { label: "Funciones continuas", ids: ["inteligencia", "desarrollo"] },
+  { label: "Embudo de captura", ids: ["pitch"] },
+  { label: "Fábrica del deal", ids: ["analisis", "estructuracion", "narrativa"] },
+  { label: "Salida al mundo", ids: ["ejecucion"] },
+  { label: "Habilitadoras", ids: ["control", "memoria"] },
+];
+
+const MobileSystemMap = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="flex flex-col gap-6 pb-8">
+      {mobileGroups.map((group) => (
+        <div key={group.label}>
+          <div className="flex items-center gap-2 mb-2">
+            <div className="h-px flex-1 bg-border" />
+            <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+              {group.label}
+            </span>
+            <div className="h-px flex-1 bg-border" />
+          </div>
+          <div className="flex flex-col gap-2">
+            {group.ids.map((id) => {
+              const comp = getComponentById(id);
+              if (!comp) return null;
+              const nodeClass =
+                comp.type === "CONTINUA"
+                  ? "bg-navy text-cream"
+                  : comp.type === "HABILITADORA"
+                    ? "bg-navy-light text-cream"
+                    : "bg-card text-foreground border border-border";
+              return (
+                <button
+                  key={id}
+                  onClick={() => navigate(`/componente/${id}`)}
+                  className={`flex items-center justify-between rounded-lg px-4 py-3.5 min-h-[52px] transition-all active:scale-[0.98] ${nodeClass}`}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className="text-[9px] font-sans font-bold uppercase tracking-[0.12em] text-copper shrink-0">
+                      {comp.type}
+                    </span>
+                    <span className="font-sans font-bold text-[15px] leading-tight truncate">
+                      {comp.name}
+                    </span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 shrink-0 opacity-60" />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+/* ── Desktop map view ── */
 const SystemMap = () => {
+  const isMobile = useIsMobile();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const connectedIds = selectedId ? getConnectedIds(selectedId) : [];
   const containerRef = useRef<HTMLDivElement>(null);
@@ -123,6 +186,12 @@ const SystemMap = () => {
     </div>
   );
 
+  // Mobile: render list
+  if (isMobile) {
+    return <MobileSystemMap />;
+  }
+
+  // Desktop: render map
   const mapContent = (
     <div
       ref={containerRef}
