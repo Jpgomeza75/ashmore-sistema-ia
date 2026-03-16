@@ -1,20 +1,22 @@
-import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
 import SystemMap from "@/components/SystemMap";
 
 const Index = () => {
   return (
-    <div style={{ 
-      display: 'flex', 
-      height: '100vh', 
-      overflow: 'hidden',
-      background: '#F5F2EC'
+    <div style={{
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      background: '#F5F2EC',
+      overflow: 'hidden'
     }}>
-      <Sidebar />
-      <div style={{ 
-        flex: 1, 
+      <Header />
+      <div style={{
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        padding: '36px 36px 28px 28px',
+        padding: '24px 32px 20px',
+        minHeight: 0,
         overflow: 'hidden'
       }}>
         <SystemMap />
