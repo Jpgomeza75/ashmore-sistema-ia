@@ -1,7 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import Header from "@/components/Header";
 import { getComponentById, getAdjacentComponents } from "@/data/components";
 
 export default function ComponentPage() {
@@ -10,8 +9,7 @@ export default function ComponentPage() {
 
   if (!component) {
     return (
-      <div className="min-h-screen bg-[#F8F5F0]">
-        <Header />
+      <div className="flex-1 min-h-0 overflow-auto bg-[#F5F2EC]">
         <div className="container max-w-3xl mx-auto px-4 py-20 text-center">
           <h1 className="font-serif text-2xl font-bold text-[#0A2240] mb-2">
             Componente no encontrado
@@ -27,8 +25,7 @@ export default function ComponentPage() {
   const adj = getAdjacentComponents(component.id);
 
   return (
-    <div className="min-h-screen bg-[#F8F5F0]">
-      <Header />
+    <div className="flex-1 min-h-0 overflow-auto bg-[#F5F2EC]">
       <main className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
         <motion.nav
           initial={{ opacity: 0 }}

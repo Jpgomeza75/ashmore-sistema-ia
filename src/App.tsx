@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import AppLayout from "./components/AppLayout";
 import Index from "./pages/Index";
 import LoginPage from "./pages/LoginPage";
 import ComponentPage from "./pages/ComponentPage";
@@ -7,7 +8,7 @@ import ComponentPage from "./pages/ComponentPage";
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
   if (!isAuthenticated) return <Navigate to="/login" replace />;
-  return <>{children}</>;
+  return <AppLayout>{children}</AppLayout>;
 }
 
 function LoginRoute() {

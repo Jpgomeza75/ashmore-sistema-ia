@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import logoAshmore from "@/assets/logo-ashmore.svg";
+import logoXptnova from "@/assets/xptnova-light.svg";
 
 export default function LoginPage() {
   const [password, setPassword] = useState("");
@@ -18,22 +20,27 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0A2240] px-4">
-      <div className="w-full max-w-sm">
-        <div className="flex flex-col items-center mb-8">
-          <span
-            className="font-serif text-3xl font-bold text-[#F8F5F0] mb-4"
-          >
-            Ashmore
-          </span>
-          <span className="text-xs font-sans tracking-[0.15em] uppercase text-[#F8F5F0]/70">
-            Sistema Operativo · IA
-          </span>
-        </div>
+    <div
+      className="min-h-screen flex flex-col items-center justify-center px-4"
+      style={{ background: "#0A2240" }}
+    >
+      <div className="w-full max-w-sm flex flex-col items-center">
+        {/* Logo Ashmore arriba del card */}
+        <img
+          src={logoAshmore}
+          alt="Ashmore"
+          className="mb-6"
+          style={{ width: 120 }}
+        />
 
+        {/* Card */}
         <form
           onSubmit={handleSubmit}
-          className="rounded-lg border border-[#143050] bg-white/5 backdrop-blur-sm p-8 space-y-5"
+          className="w-full rounded p-8 space-y-5"
+          style={{
+            background: "#143050",
+            border: "1px solid #B8860B",
+          }}
         >
           <div className="space-y-1.5">
             <label className="text-xs font-sans font-medium text-[#F8F5F0]/80 uppercase tracking-wider">
@@ -46,7 +53,7 @@ export default function LoginPage() {
                 setPassword(e.target.value);
                 setError(false);
               }}
-              className="w-full h-10 rounded-md border border-[#143050] bg-white/10 px-3 text-sm text-[#F8F5F0] placeholder:text-[#F8F5F0]/40 focus:outline-none focus:ring-1 focus:ring-[#B8860B]"
+              className="w-full h-10 bg-transparent px-0 text-sm text-[#F8F5F0] placeholder:text-[#F8F5F0]/40 focus:outline-none border-0 border-b border-[#B8860B] rounded-none"
               placeholder="Ingresa la contraseña"
               autoFocus
             />
@@ -60,11 +67,23 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full h-10 rounded-md bg-[#B8860B] text-white font-sans font-medium text-sm hover:bg-[#B8860B]/90 transition-colors"
+            className="w-full h-10 rounded font-sans font-bold text-sm transition-colors hover:opacity-90"
+            style={{
+              background: "#B8860B",
+              color: "#0A2240",
+            }}
           >
             Ingresar
           </button>
         </form>
+
+        {/* Logo XPTNova abajo del card */}
+        <img
+          src={logoXptnova}
+          alt="XPTNova"
+          className="mt-8 opacity-50"
+          style={{ width: 80 }}
+        />
       </div>
     </div>
   );
