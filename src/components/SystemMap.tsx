@@ -69,7 +69,7 @@ const SystemMap = () => {
                   }} />
                 )}
                 <div style={{
-                  fontSize:'clamp(18px, 2.2vh, 32px)',
+                  fontSize:'clamp(28px, 3.5vh, 48px)',
                   fontWeight:800, letterSpacing:'-0.5px', lineHeight:1.1,
                   color: c.hasContent ? '#F8F5F0' : '#888480',
                   fontFamily:'Inter, sans-serif'
@@ -78,7 +78,7 @@ const SystemMap = () => {
                 </div>
                 <div style={{
                   fontFamily:'Inter, sans-serif',
-                  fontSize:'clamp(80px, 18vh, 180px)',
+                  fontSize:'clamp(120px, 22vh, 240px)',
                   fontWeight:900, lineHeight:0.85,
                   color: c.hasContent ? '#B8860B' : '#C8C5BC',
                   alignSelf:'flex-end'
@@ -148,7 +148,7 @@ const SystemMap = () => {
                   borderRadius:'0 0 4px 4px'
                 }} />
                 <div style={{
-                  fontSize:'clamp(18px, 2.2vh, 32px)',
+                  fontSize:'clamp(28px, 3.5vh, 48px)',
                   fontWeight:800, letterSpacing:'-0.5px', lineHeight:1.1,
                   color:'#0A2240',
                   fontFamily:'Inter, sans-serif'
@@ -157,7 +157,7 @@ const SystemMap = () => {
                 </div>
                 <div style={{
                   fontFamily:'Inter, sans-serif',
-                  fontSize:'clamp(80px, 18vh, 180px)',
+                  fontSize:'clamp(120px, 22vh, 240px)',
                   fontWeight:900, lineHeight:0.85,
                   color:'rgba(10,34,64,0.12)',
                   alignSelf:'flex-end'
