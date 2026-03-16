@@ -47,10 +47,10 @@ const SystemMap = () => {
         {/* JOURNEY TITLE */}
         <div style={{
           fontFamily:'Georgia, serif',
-          fontSize:'clamp(28px, 4vw, 52px)',
+          fontSize:48,
           fontWeight:700, color:'#0A2240',
           flexShrink:0, lineHeight:1,
-          marginBottom:12
+          marginBottom:16
         }}>
           El <span style={{ color:'#B8860B' }}>Journey</span>
         </div>
@@ -73,8 +73,7 @@ const SystemMap = () => {
                   borderRadius:4,
                   display:'flex', flexDirection:'column',
                   justifyContent:'flex-start',
-                  padding:'16px 14px',
-                  paddingTop:16,
+                  padding:'20px 20px 20px 20px',
                   cursor: c.hasContent ? 'pointer' : 'default',
                   position:'relative',
                   background: c.hasContent
@@ -93,10 +92,10 @@ const SystemMap = () => {
                   }} />
                 )}
                 <div style={{
-                  display:'inline-block', fontSize:10,
-                  letterSpacing:'2px', textTransform:'uppercase',
+                  display:'inline-block', fontSize:12,
+                  letterSpacing:2, textTransform:'uppercase',
                   fontWeight:600, padding:'2px 6px', borderRadius:2,
-                  marginBottom:8, width:'fit-content',
+                  marginBottom:12, width:'fit-content',
                   background: c.hasContent
                     ? 'rgba(184,134,11,0.2)' : 'rgba(0,0,0,0.06)',
                   color: c.hasContent ? '#D4A830' : '#9A9690',
@@ -105,16 +104,23 @@ const SystemMap = () => {
                   Journey · {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
-                  fontFamily:'Georgia, serif',
-                  fontSize:'var(--card-num-size, 64px)',
-                  fontWeight:700, lineHeight:1, marginBottom:6,
-                  color: c.hasContent ? '#B8860B' : '#B8B4AA'
+                  overflow:'hidden',
+                  maxHeight:'55%',
+                  display:'flex',
+                  alignItems:'flex-start'
                 }}>
-                  {String(c.order).padStart(2,'0')}
+                  <div style={{
+                    fontFamily:'Georgia, serif',
+                    fontSize:120,
+                    fontWeight:700, lineHeight:1, marginBottom:0,
+                    color: c.hasContent ? '#B8860B' : '#B8B4AA'
+                  }}>
+                    {String(c.order).padStart(2,'0')}
+                  </div>
                 </div>
                 <div style={{
-                  fontSize:'var(--card-name-size, 16px)',
-                  fontWeight:600, lineHeight:1.3,
+                  fontSize:22,
+                  fontWeight:600, lineHeight:1.2,
                   color: c.hasContent ? '#F8F5F0' : '#888480',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
@@ -137,10 +143,10 @@ const SystemMap = () => {
         {/* TRANSVERSALES TITLE */}
         <div style={{
           fontFamily:'Georgia, serif',
-          fontSize:'clamp(28px, 4vw, 52px)',
+          fontSize:48,
           fontWeight:700, color:'#0A2240',
           flexShrink:0, lineHeight:1,
-          marginBottom:12
+          marginBottom:16
         }}>
           Las <span style={{ color:'#B8860B' }}>Transversales</span>
         </div>
@@ -174,8 +180,7 @@ const SystemMap = () => {
                   border:'1px solid #D5D0C8',
                   display:'flex', flexDirection:'column',
                   justifyContent:'flex-start',
-                  padding:'16px 14px',
-                  paddingTop:16,
+                  padding:'20px 20px 20px 20px',
                   cursor:'pointer', position:'relative',
                   transition:'background 0.15s',
                   userSelect:'none'
@@ -187,26 +192,33 @@ const SystemMap = () => {
                   borderRadius:'0 0 4px 4px'
                 }} />
                 <div style={{
-                  display:'inline-block', fontSize:10,
-                  letterSpacing:'2px', textTransform:'uppercase',
+                  display:'inline-block', fontSize:12,
+                  letterSpacing:2, textTransform:'uppercase',
                   fontWeight:600, padding:'2px 6px', borderRadius:2,
-                  marginBottom:8, width:'fit-content',
+                  marginBottom:12, width:'fit-content',
                   background:'rgba(10,34,64,0.08)', color:'#0A2240',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   Transversal · {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
-                  fontFamily:'Georgia, serif',
-                  fontSize:'var(--card-num-size, 64px)',
-                  fontWeight:700, lineHeight:1, marginBottom:6,
-                  color:'#0A2240', opacity:0.15
+                  overflow:'hidden',
+                  maxHeight:'55%',
+                  display:'flex',
+                  alignItems:'flex-start'
                 }}>
-                  {String(c.order).padStart(2,'0')}
+                  <div style={{
+                    fontFamily:'Georgia, serif',
+                    fontSize:120,
+                    fontWeight:700, lineHeight:1, marginBottom:0,
+                    color:'#0A2240', opacity:0.15
+                  }}>
+                    {String(c.order).padStart(2,'0')}
+                  </div>
                 </div>
                 <div style={{
-                  fontSize:'var(--card-name-size, 16px)',
-                  fontWeight:600, lineHeight:1.3, color:'#0A2240',
+                  fontSize:22,
+                  fontWeight:600, lineHeight:1.2, color:'#0A2240',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   {c.name}
