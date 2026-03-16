@@ -12,9 +12,9 @@ const LevantatCapitalPage = () => {
       fontFamily: 'Inter, sans-serif',
     } as React.CSSProperties,
     container: {
-      maxWidth: 960,
+      maxWidth: 1400,
       margin: '0 auto',
-      padding: '48px 48px 80px',
+      padding: '48px 64px 80px',
     } as React.CSSProperties,
     hero: {
       marginBottom: 56,
@@ -39,35 +39,35 @@ const LevantatCapitalPage = () => {
     } as React.CSSProperties,
     heroTitle: {
       fontFamily: 'Georgia, serif',
-      fontSize: 52,
+      fontSize: 96,
       fontWeight: 700,
       color: '#0A2240',
       lineHeight: 1.05,
       marginBottom: 20,
-      letterSpacing: -1,
+      letterSpacing: -3,
     } as React.CSSProperties,
     heroDesc: {
-      fontSize: 16,
+      fontSize: 20,
       color: '#5A6070',
-      lineHeight: 1.7,
-      maxWidth: 600,
+      lineHeight: 1.8,
+      maxWidth: 800,
     } as React.CSSProperties,
     sectionLabel: {
-      fontSize: 10,
+      fontSize: 12,
       fontWeight: 700,
-      letterSpacing: 3,
+      letterSpacing: 4,
       textTransform: 'uppercase' as const,
       color: '#B8860B',
-      marginBottom: 24,
+      marginBottom: 32,
     } as React.CSSProperties,
     backBtn: {
       display: 'inline-flex',
       alignItems: 'center',
       gap: 6,
-      fontSize: 12,
+      fontSize: 14,
       color: '#8A8880',
       cursor: 'pointer',
-      marginBottom: 40,
+      marginBottom: 48,
       background: 'none',
       border: 'none',
       padding: 0,
@@ -172,22 +172,22 @@ const LevantatCapitalPage = () => {
               }}>
                 <div style={{
                   fontFamily: 'Georgia, serif',
-                  fontSize: 36,
+                  fontSize: 72,
                   fontWeight: 700,
                   color: '#E8E4DC',
                   lineHeight: 1,
                   marginBottom: 12,
                 }}>{p.num}</div>
                 <div style={{
-                  fontSize: 13,
+                  fontSize: 18,
                   fontWeight: 700,
                   color: '#0A2240',
                   marginBottom: 8,
                 }}>{p.title}</div>
                 <div style={{
-                  fontSize: 12,
+                  fontSize: 15,
                   color: '#6A7080',
-                  lineHeight: 1.65,
+                  lineHeight: 1.7,
                 }}>{p.text}</div>
               </div>
             ))}
@@ -204,7 +204,7 @@ const LevantatCapitalPage = () => {
               style={{
                 display: 'flex',
                 gap: 24,
-                padding: '28px 0',
+                padding: '36px 0',
                 borderTop: idx === 0 ? '1px solid #E0DBD0' : 'none',
                 borderBottom: '1px solid #E0DBD0',
                 cursor: 'pointer',
@@ -219,7 +219,7 @@ const LevantatCapitalPage = () => {
             >
               <div style={{
                 fontFamily: 'Georgia, serif',
-                fontSize: 32,
+                fontSize: 56,
                 fontWeight: 700,
                 color: '#E8E4DC',
                 lineHeight: 1,
@@ -228,23 +228,23 @@ const LevantatCapitalPage = () => {
               }}>{sp.num}</div>
               <div style={{ flex: 1 }}>
                 <div style={{
-                  fontSize: 9,
+                  fontSize: 11,
                   fontWeight: 700,
-                  letterSpacing: 2,
+                  letterSpacing: 3,
                   textTransform: 'uppercase',
                   color: '#B8860B',
                   marginBottom: 6,
                 }}>{sp.tag}</div>
                 <div style={{
-                  fontSize: 18,
+                  fontSize: 28,
                   fontWeight: 700,
                   color: '#0A2240',
                   marginBottom: 6,
                 }}>{sp.title}</div>
                 <div style={{
-                  fontSize: 13,
+                  fontSize: 16,
                   color: '#6A7080',
-                  lineHeight: 1.65,
+                  lineHeight: 1.7,
                 }}>{sp.desc}</div>
               </div>
               <div style={{
@@ -262,14 +262,14 @@ const LevantatCapitalPage = () => {
         <div style={{
           background: '#0A2240',
           borderRadius: 8,
-          padding: 40,
+          padding: 56,
           display: 'flex',
           gap: 40,
           alignItems: 'flex-start',
         }}>
           <div style={{ flex: 1 }}>
             <div style={{
-              fontSize: 9,
+              fontSize: 11,
               fontWeight: 700,
               letterSpacing: 3,
               textTransform: 'uppercase',
@@ -278,16 +278,16 @@ const LevantatCapitalPage = () => {
             }}>Nivel 2 · La visión institucional</div>
             <div style={{
               fontFamily: 'Georgia, serif',
-              fontSize: 28,
+              fontSize: 40,
               fontWeight: 700,
               color: '#F8F5F0',
               lineHeight: 1.2,
               marginBottom: 16,
             }}>Un sistema que aprende de cada interacción con LPs</div>
             <div style={{
-              fontSize: 13,
+              fontSize: 16,
               color: '#6A8AAA',
-              lineHeight: 1.7,
+              lineHeight: 1.8,
               marginBottom: 24,
             }}>
               Cuando llega un DDQ nuevo, el sistema pre-llena el 80%
@@ -299,7 +299,7 @@ const LevantatCapitalPage = () => {
               {n2features.map((f, i) => (
                 <div key={i} style={{
                   display: 'flex', alignItems: 'flex-start', gap: 10,
-                  fontSize: 12, color: '#8AAABB',
+                  fontSize: 15, color: '#8AAABB',
                 }}>
                   <div style={{
                     width: 4, height: 4,
@@ -314,10 +314,10 @@ const LevantatCapitalPage = () => {
               onClick={() => navigate('/demo/nivel2-fundraising')}
               style={{
                 marginTop: 28,
-                padding: '12px 24px',
+                padding: '14px 32px',
                 border: '1.5px solid #B8860B',
                 borderRadius: 4,
-                fontSize: 11,
+                fontSize: 13,
                 fontWeight: 700,
                 letterSpacing: 2,
                 color: '#B8860B',
@@ -341,7 +341,7 @@ const LevantatCapitalPage = () => {
 
           {/* MOCKUP */}
           <div style={{
-            flex: '0 0 260px',
+            flex: '0 0 320px',
             background: '#143050',
             borderRadius: 6,
             border: '1px solid #1E3A5A',
