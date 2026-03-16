@@ -17,6 +17,15 @@
     --gray-trans: #6A8AAA;
   }
 
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  #root {
+    min-height: 100%;
+  }
+
   * {
     @apply border-[#143050]/20;
   }
