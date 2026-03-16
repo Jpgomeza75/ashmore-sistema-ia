@@ -12,7 +12,6 @@ const SystemMap = () => {
     : null;
 
   const handleSelect = (c: SystemComponent) => {
-    if (!c.hasContent) return;
     setSelectedId(prev => prev === c.id ? null : c.id);
   };
 
@@ -44,7 +43,8 @@ const SystemMap = () => {
         {/* JOURNEY CARDS */}
         <div style={{
           display:'flex', alignItems:'stretch',
-          flex:1, minHeight:0, marginBottom:12
+          flex:1, minHeight:0, marginBottom:12,
+          containerType:'inline-size'
         }}>
           {journeyComponents.map((c, idx) => (
             <div key={c.id} style={{
@@ -90,14 +90,14 @@ const SystemMap = () => {
                 </div>
                 <div style={{
                   fontFamily:'Georgia, serif',
-                  fontSize:'clamp(22px, 2.8vw, 38px)',
+                  fontSize:'clamp(18px, 2.5vw, 40px)',
                   fontWeight:700, lineHeight:1, marginBottom:6,
                   color: c.hasContent ? '#B8860B' : '#C8C5BC'
                 }}>
                   {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
-                  fontSize:'clamp(9px, 1vw, 12px)',
+                  fontSize:'clamp(10px, 1.1vw, 14px)',
                   fontWeight:500, lineHeight:1.3,
                   color: c.hasContent ? '#E8E5DC' : '#B0ADA6',
                   fontFamily:'DM Sans, sans-serif'
@@ -132,7 +132,8 @@ const SystemMap = () => {
         {/* TRANSVERSALES CARDS — centradas */}
         <div style={{
           display:'flex', alignItems:'stretch',
-          flex:1, minHeight:0, marginBottom:10
+          flex:1, minHeight:0, marginBottom:10,
+          containerType:'inline-size'
         }}>
           {/* Spacer izquierdo = media flecha */}
           <div style={{ width:9, flexShrink:0 }} />
@@ -144,11 +145,17 @@ const SystemMap = () => {
             }}>
               <div
                 onClick={() => handleSelect(c)}
+                onMouseEnter={e => {
+                  if (selectedId !== c.id) e.currentTarget.style.background = '#E8E4DC';
+                }}
+                onMouseLeave={e => {
+                  if (selectedId !== c.id) e.currentTarget.style.background = '#F0EDE6';
+                }}
                 style={{
                   flex:1, height:'100%',
                   borderRadius:4,
-                  background: selectedId === c.id ? '#112840' : '#0A2240',
-                  border:'1px solid #1E3A5A',
+                  background: selectedId === c.id ? '#E0DBD0' : '#F0EDE6',
+                  border:'1px solid #D5D0C8',
                   display:'flex', flexDirection:'column',
                   justifyContent:'flex-end',
                   padding:'16px 14px',
@@ -159,7 +166,7 @@ const SystemMap = () => {
               >
                 <div style={{
                   position:'absolute', bottom:0, left:0, right:0,
-                  height:3, background:'#B8860B', opacity:0.35,
+                  height:3, background:'#B8860B', opacity:0.4,
                   borderRadius:'0 0 4px 4px'
                 }} />
                 <div style={{
@@ -167,22 +174,22 @@ const SystemMap = () => {
                   letterSpacing:'1.5px', textTransform:'uppercase',
                   fontWeight:600, padding:'2px 6px', borderRadius:2,
                   marginBottom:8, width:'fit-content',
-                  background:'rgba(184,134,11,0.12)', color:'#B8860B',
+                  background:'rgba(10,34,64,0.08)', color:'#4A5A6A',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   Transversal · {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
                   fontFamily:'Georgia, serif',
-                  fontSize:'clamp(22px, 2.8vw, 38px)',
+                  fontSize:'clamp(18px, 2.5vw, 40px)',
                   fontWeight:700, lineHeight:1, marginBottom:6,
-                  color:'#1E3A5A'
+                  color:'#C8C3B8'
                 }}>
                   {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
-                  fontSize:'clamp(9px, 1vw, 12px)',
-                  fontWeight:500, lineHeight:1.3, color:'#6A8AAA',
+                  fontSize:'clamp(10px, 1.1vw, 14px)',
+                  fontWeight:500, lineHeight:1.3, color:'#5A6070',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   {c.name}
