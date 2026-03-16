@@ -1,130 +1,109 @@
 import { useNavigate } from "react-router-dom";
-import { X, ArrowDownLeft, ArrowUpRight, Zap } from "lucide-react";
-import {
-  getComponentById,
-  panelData,
-  type SystemComponent,
-} from "@/data/components";
+import { X } from "lucide-react";
+import type { SystemComponent } from "@/data/components";
 
 interface DetailPanelProps {
   component: SystemComponent;
   onClose: () => void;
 }
 
-const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
+export default function DetailPanel({ component, onClose }: DetailPanelProps) {
   const navigate = useNavigate();
-  const data = panelData[component.id];
-  if (!data) return null;
-
-  const typeColors: Record<string, string> = {
-    JOURNEY: "bg-navy text-cream",
-    TRANSVERSAL: "bg-navy-light text-cream",
-  };
-
   return (
-    <div className="p-5">
-      {/* Header */}
+    <div className="p-6 h-full flex flex-col">
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1 min-w-0">
-          <span className={`inline-block text-[11px] font-sans font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-sm mb-2 ${typeColors[component.type]}`}>
+          <span className="inline-block text-[10px] font-sans font-bold uppercase tracking-wider px-2.5 py-1 rounded-sm mb-2 bg-[#0A2240] text-[#F8F5F0]">
             {component.type}
           </span>
-          <h2 className="font-serif text-xl font-bold text-foreground leading-tight mb-1.5">
+          <h2 className="font-serif text-xl font-bold text-[#0A2240] leading-tight mb-2">
             {component.name}
           </h2>
-          <p className="text-sm font-sans text-muted-foreground leading-relaxed">
+          <p className="text-sm font-sans text-[#6B7280] leading-relaxed">
             {component.description}
           </p>
         </div>
         <button
           onClick={onClose}
-          className="p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors ml-3 shrink-0"
+          className="p-1.5 rounded-md text-[#6B7280] hover:text-[#0A2240] hover:bg-[#F8F5F0] transition-colors ml-3 shrink-0"
           aria-label="Cerrar panel"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
-      {/* Entradas */}
-      <div className="mb-4">
-        <div className="flex items-center gap-2 mb-3 pb-1.5 border-b-2" style={{ borderBottomColor: "hsl(221 45% 18%)" }}>
-          <ArrowDownLeft className="w-3.5 h-3.5 text-foreground/60" />
-          <h4 className="text-xs font-sans font-bold uppercase tracking-wide text-foreground">
-            Entradas
-          </h4>
+      {!component.hasContent ? (
+        <div className="flex-1 flex flex-col items-center justify-center py-12">
+          <div className="w-16 h-16 rounded-full bg-[#F8F5F0] flex items-center justify-center mb-4">
+            <span className="text-2xl font-serif font-bold text-[#B8860B]">·</span>
+          </div>
+          <span className="inline-block px-4 py-2 rounded-lg bg-[#B8860B]/10 text-[#B8860B] font-sans font-semibold text-sm">
+            Próximamente
+          </span>
+          <p className="text-sm font-sans text-[#6B7280] mt-3 text-center max-w-xs">
+            Este módulo se habilitará próximamente.
+          </p>
         </div>
-        <ul className="space-y-2">
-          {data.inputs.map((entry, i) => {
-            const source = getComponentById(entry.sourceId);
-            return (
-              <li
-                key={i}
-                className="text-sm font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 py-0.5"
-                style={{ borderLeftColor: "hsl(221 45% 18%)" }}
-              >
-                <span className="font-bold text-foreground block text-xs">{source?.shortName}</span>
-                {entry.label}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      ) : (
+        <div className="flex-1 overflow-y-auto space-y-6">
+          {component.problemToday && (
+            <section>
+              <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-[#0A2240] mb-2">
+                El problema hoy
+              </h4>
+              <p className="text-sm font-sans text-[#6B7280] leading-relaxed">
+                {component.problemToday}
+              </p>
+            </section>
+          )}
 
-      {/* Salidas */}
-      <div className="mb-4">
-        <div className="flex items-center gap-2 mb-3 pb-1.5 border-b-2 border-copper">
-          <ArrowUpRight className="w-3.5 h-3.5 text-copper" />
-          <h4 className="text-xs font-sans font-bold uppercase tracking-wide text-copper">
-            Salidas
-          </h4>
+          {component.level1 && (
+            <section>
+              <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-[#0A2240] mb-2">
+                Nivel 1 — Superpoderes con IA
+              </h4>
+              <p className="text-sm font-sans text-[#6B7280] leading-relaxed mb-4">
+                {component.level1.intro}
+              </p>
+              <ul className="space-y-2">
+                {component.level1.cases.map((c, i) => (
+                  <li
+                    key={i}
+                    className="text-sm font-sans text-[#0A2240] pl-3 border-l-2 border-[#B8860B]"
+                  >
+                    <span className="font-semibold">{c.title}</span> — {c.description}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {component.level2 && (
+            <section>
+              <h4 className="text-xs font-sans font-bold uppercase tracking-wider text-[#0A2240] mb-2">
+                Nivel 2 — Visión institucional
+              </h4>
+              <p className="text-sm font-sans text-[#6B7280] leading-relaxed mb-4">
+                {component.level2.intro}
+              </p>
+              <ul className="space-y-2">
+                {component.level2.features.map((f, i) => (
+                  <li key={i} className="text-sm font-sans text-[#6B7280] flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#B8860B] shrink-0 mt-1.5" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+          <button
+            onClick={() => navigate(`/componente/${component.id}`)}
+            className="mt-6 w-full py-3 rounded-lg bg-[#B8860B] text-white font-sans font-semibold text-sm hover:bg-[#B8860B]/90 transition-colors"
+          >
+            Explorar en detalle →
+          </button>
         </div>
-        <ul className="space-y-2">
-          {data.outputs.map((entry, i) => {
-            const target = getComponentById(entry.sourceId);
-            return (
-              <li
-                key={i}
-                className="text-sm font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 border-copper py-0.5"
-              >
-                <span className="font-bold text-copper block text-xs">{target?.shortName}</span>
-                {entry.label}
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-
-      {/* Oportunidades IA */}
-      <div className="mb-5">
-        <div className="flex items-center gap-2 mb-3 pb-1.5 border-b-2" style={{ borderBottomColor: "hsl(152 52% 32%)" }}>
-          <Zap className="w-3.5 h-3.5" style={{ color: "hsl(152 52% 32%)" }} />
-          <h4 className="text-xs font-sans font-bold uppercase tracking-wide" style={{ color: "hsl(152 52% 32%)" }}>
-            Oportunidades IA
-          </h4>
-        </div>
-        <ul className="space-y-2">
-          {data.iaOpportunities.map((opp, i) => (
-            <li
-              key={i}
-              className="text-sm font-sans text-muted-foreground leading-relaxed pl-3 border-l-2 py-0.5"
-              style={{ borderLeftColor: "hsl(152 52% 32%)" }}
-            >
-              {opp}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Navigate button */}
-      <button
-        onClick={() => navigate(`/componente/${component.id}`)}
-        className="w-full py-3 rounded-lg text-base font-sans font-semibold transition-colors"
-        style={{ backgroundColor: "hsl(29 59% 48%)", color: "white" }}
-      >
-        {component.hasContent ? "Explorar en detalle →" : "Próximamente →"}
-      </button>
+      )}
     </div>
   );
-};
-
-export default DetailPanel;
+}
