@@ -17,9 +17,8 @@ const DetailPanel = ({ component, onClose }: DetailPanelProps) => {
   if (!data) return null;
 
   const typeColors: Record<string, string> = {
-    CONTINUA: "bg-navy text-cream",
-    "EPISÓDICA": "bg-cream-dark text-navy",
-    HABILITADORA: "bg-navy-light text-cream",
+    JOURNEY: "bg-navy text-cream",
+    TRANSVERSAL: "bg-navy-light text-cream",
   };
 
   return (

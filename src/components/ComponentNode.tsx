@@ -11,11 +11,9 @@ interface ComponentNodeProps {
 
 const ComponentNode = ({ component, isSelected, isDimmed, connectionBadge, onSelect, compact }: ComponentNodeProps) => {
   const nodeClass =
-    component.type === "CONTINUA"
+    component.type === "JOURNEY"
       ? "node-continua"
-      : component.type === "HABILITADORA"
-        ? "node-habilitadora"
-        : "node-episodica";
+      : "node-habilitadora";
 
   const badgeSymbol = connectionBadge === "both" ? "↔" : connectionBadge === "output" ? "→" : "←";
 
