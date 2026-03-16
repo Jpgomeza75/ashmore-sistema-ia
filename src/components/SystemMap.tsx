@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { journeyComponents, transversalComponents } from "@/data/components";
 import type { SystemComponent } from "@/data/components";
@@ -15,13 +15,28 @@ const SystemMap = () => {
     setSelectedId(prev => prev === c.id ? null : c.id);
   };
 
+  useEffect(() => {
+    const updateSizes = () => {
+      const root = document.getElementById('system-map-root');
+      if (!root) return;
+      const w = root.offsetWidth;
+      const numSize = Math.max(36, Math.min(80, w * 0.055));
+      const nameSize = Math.max(12, Math.min(20, w * 0.014));
+      document.documentElement.style.setProperty('--card-num-size', numSize + 'px');
+      document.documentElement.style.setProperty('--card-name-size', nameSize + 'px');
+    };
+    updateSizes();
+    window.addEventListener('resize', updateSizes);
+    return () => window.removeEventListener('resize', updateSizes);
+  }, [selectedId]);
+
   return (
     <div style={{
       flex:1, display:'flex',
       minHeight:0, gap:0, overflow:'hidden'
     }}>
       {/* MAP */}
-      <div style={{
+      <div id="system-map-root" style={{
         flex: selectedId ? '0 0 57%' : '1',
         display:'flex', flexDirection:'column',
         minHeight:0, overflow:'hidden',
@@ -57,8 +72,9 @@ const SystemMap = () => {
                   flex:1, height:'100%',
                   borderRadius:4,
                   display:'flex', flexDirection:'column',
-                  justifyContent:'flex-end',
+                  justifyContent:'flex-start',
                   padding:'16px 14px',
+                  paddingTop:16,
                   cursor: c.hasContent ? 'pointer' : 'default',
                   position:'relative',
                   background: c.hasContent
@@ -77,7 +93,7 @@ const SystemMap = () => {
                   }} />
                 )}
                 <div style={{
-                  display:'inline-block', fontSize:'clamp(8px, 0.9vw, 11px)',
+                  display:'inline-block', fontSize:10,
                   letterSpacing:'2px', textTransform:'uppercase',
                   fontWeight:600, padding:'2px 6px', borderRadius:2,
                   marginBottom:8, width:'fit-content',
@@ -90,14 +106,14 @@ const SystemMap = () => {
                 </div>
                 <div style={{
                   fontFamily:'Georgia, serif',
-                  fontSize:'clamp(36px, 6vw, 80px)',
+                  fontSize:'var(--card-num-size, 64px)',
                   fontWeight:700, lineHeight:1, marginBottom:6,
                   color: c.hasContent ? '#B8860B' : '#B8B4AA'
                 }}>
                   {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
-                  fontSize:'clamp(13px, 1.6vw, 20px)',
+                  fontSize:'var(--card-name-size, 16px)',
                   fontWeight:600, lineHeight:1.3,
                   color: c.hasContent ? '#F8F5F0' : '#888480',
                   fontFamily:'DM Sans, sans-serif'
@@ -157,8 +173,9 @@ const SystemMap = () => {
                   background: selectedId === c.id ? '#E0DBD0' : '#F0EDE6',
                   border:'1px solid #D5D0C8',
                   display:'flex', flexDirection:'column',
-                  justifyContent:'flex-end',
+                  justifyContent:'flex-start',
                   padding:'16px 14px',
+                  paddingTop:16,
                   cursor:'pointer', position:'relative',
                   transition:'background 0.15s',
                   userSelect:'none'
@@ -170,7 +187,7 @@ const SystemMap = () => {
                   borderRadius:'0 0 4px 4px'
                 }} />
                 <div style={{
-                  display:'inline-block', fontSize:'clamp(8px, 0.9vw, 11px)',
+                  display:'inline-block', fontSize:10,
                   letterSpacing:'2px', textTransform:'uppercase',
                   fontWeight:600, padding:'2px 6px', borderRadius:2,
                   marginBottom:8, width:'fit-content',
@@ -181,14 +198,14 @@ const SystemMap = () => {
                 </div>
                 <div style={{
                   fontFamily:'Georgia, serif',
-                  fontSize:'clamp(36px, 6vw, 80px)',
+                  fontSize:'var(--card-num-size, 64px)',
                   fontWeight:700, lineHeight:1, marginBottom:6,
                   color:'#0A2240', opacity:0.15
                 }}>
                   {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
-                  fontSize:'clamp(13px, 1.6vw, 20px)',
+                  fontSize:'var(--card-name-size, 16px)',
                   fontWeight:600, lineHeight:1.3, color:'#0A2240',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
