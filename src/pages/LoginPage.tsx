@@ -5,6 +5,7 @@ import logoAshmore from "@/assets/logo-ashmore.svg";
 import logoXptnova from "@/assets/xptnova-light.svg";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const { login } = useAuth();
@@ -12,12 +13,14 @@ export default function LoginPage() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (login(password)) {
+    if (login(email, password)) {
       navigate("/", { replace: true });
     } else {
       setError(true);
     }
   };
+
+  const clearError = () => setError(false);
 
   return (
     <div
@@ -44,6 +47,23 @@ export default function LoginPage() {
         >
           <div className="space-y-1.5">
             <label className="text-xs font-sans font-medium text-[#F8F5F0]/80 uppercase tracking-wider">
+              Email
+            </label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                clearError();
+              }}
+              className="w-full h-10 bg-transparent px-0 text-sm text-[#F8F5F0] placeholder:text-[#F8F5F0]/40 focus:outline-none border-0 border-b border-[#B8860B] rounded-none"
+              placeholder="tu@email.com"
+              autoComplete="email"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-sans font-medium text-[#F8F5F0]/80 uppercase tracking-wider">
               Contraseña
             </label>
             <input
@@ -51,17 +71,17 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                setError(false);
+                clearError();
               }}
               className="w-full h-10 bg-transparent px-0 text-sm text-[#F8F5F0] placeholder:text-[#F8F5F0]/40 focus:outline-none border-0 border-b border-[#B8860B] rounded-none"
               placeholder="Ingresa la contraseña"
-              autoFocus
+              autoComplete="current-password"
             />
           </div>
 
           {error && (
             <p className="text-xs text-red-300 font-sans">
-              Contraseña incorrecta. Intenta de nuevo.
+              Credenciales incorrectas
             </p>
           )}
 
