@@ -72,8 +72,8 @@ const SystemMap = () => {
                   flex:1, height:'100%',
                   borderRadius:4,
                   display:'flex', flexDirection:'column',
-                  justifyContent:'flex-start',
-                  padding:'20px 20px 20px 20px',
+                  justifyContent:'space-between',
+                  padding:'24px 20px',
                   cursor: c.hasContent ? 'pointer' : 'default',
                   position:'relative',
                   background: c.hasContent
@@ -92,39 +92,21 @@ const SystemMap = () => {
                   }} />
                 )}
                 <div style={{
-                  display:'inline-block', fontSize:12,
-                  letterSpacing:2, textTransform:'uppercase',
-                  fontWeight:600, padding:'2px 6px', borderRadius:2,
-                  marginBottom:12, width:'fit-content',
-                  background: c.hasContent
-                    ? 'rgba(184,134,11,0.2)' : 'rgba(0,0,0,0.06)',
-                  color: c.hasContent ? '#D4A830' : '#9A9690',
-                  fontFamily:'DM Sans, sans-serif'
-                }}>
-                  Journey · {String(c.order).padStart(2,'0')}
-                </div>
-                <div style={{
-                  overflow:'hidden',
-                  maxHeight:'55%',
-                  display:'flex',
-                  alignItems:'flex-start'
-                }}>
-                  <div style={{
-                    fontFamily:'Georgia, serif',
-                    fontSize:120,
-                    fontWeight:700, lineHeight:1, marginBottom:0,
-                    color: c.hasContent ? '#B8860B' : '#B8B4AA'
-                  }}>
-                    {String(c.order).padStart(2,'0')}
-                  </div>
-                </div>
-                <div style={{
                   fontSize:22,
                   fontWeight:600, lineHeight:1.2,
                   color: c.hasContent ? '#F8F5F0' : '#888480',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   {c.name}
+                </div>
+                <div style={{
+                  fontFamily:'Georgia, serif',
+                  fontSize:120,
+                  fontWeight:700, lineHeight:1,
+                  color: c.hasContent ? '#B8860B' : '#C8C5BC',
+                  alignSelf:'flex-end'
+                }}>
+                  {String(c.order)}
                 </div>
               </div>
 
@@ -179,8 +161,8 @@ const SystemMap = () => {
                   background: selectedId === c.id ? '#E0DBD0' : '#F0EDE6',
                   border:'1px solid #D5D0C8',
                   display:'flex', flexDirection:'column',
-                  justifyContent:'flex-start',
-                  padding:'20px 20px 20px 20px',
+                  justifyContent:'space-between',
+                  padding:'24px 20px',
                   cursor:'pointer', position:'relative',
                   transition:'background 0.15s',
                   userSelect:'none'
@@ -192,36 +174,20 @@ const SystemMap = () => {
                   borderRadius:'0 0 4px 4px'
                 }} />
                 <div style={{
-                  display:'inline-block', fontSize:12,
-                  letterSpacing:2, textTransform:'uppercase',
-                  fontWeight:600, padding:'2px 6px', borderRadius:2,
-                  marginBottom:12, width:'fit-content',
-                  background:'rgba(10,34,64,0.08)', color:'#0A2240',
-                  fontFamily:'DM Sans, sans-serif'
-                }}>
-                  Transversal · {String(c.order).padStart(2,'0')}
-                </div>
-                <div style={{
-                  overflow:'hidden',
-                  maxHeight:'55%',
-                  display:'flex',
-                  alignItems:'flex-start'
-                }}>
-                  <div style={{
-                    fontFamily:'Georgia, serif',
-                    fontSize:120,
-                    fontWeight:700, lineHeight:1, marginBottom:0,
-                    color:'#0A2240', opacity:0.15
-                  }}>
-                    {String(c.order).padStart(2,'0')}
-                  </div>
-                </div>
-                <div style={{
                   fontSize:22,
                   fontWeight:600, lineHeight:1.2, color:'#0A2240',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   {c.name}
+                </div>
+                <div style={{
+                  fontFamily:'Georgia, serif',
+                  fontSize:120,
+                  fontWeight:700, lineHeight:1,
+                  color:'rgba(10,34,64,0.12)',
+                  alignSelf:'flex-end'
+                }}>
+                  {String(c.order)}
                 </div>
               </div>
 
