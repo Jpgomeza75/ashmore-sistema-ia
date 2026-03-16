@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Header from "@/components/Header";
@@ -6,6 +6,7 @@ import { getComponentById, getAdjacentComponents } from "@/data/components";
 
 export default function ComponentPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const component = getComponentById(id || "");
 
   if (!component) {
@@ -33,6 +34,22 @@ export default function ComponentPage() {
       <Header />
       <div style={{ flex: 1, overflow: "auto" }}>
         <main style={{ maxWidth: 896, margin: "0 auto", padding: "40px 24px 56px" }}>
+          <button
+            onClick={() => navigate("/")}
+            style={{
+              background: "none",
+              border: "none",
+              color: "#0A2240",
+              fontSize: 13,
+              cursor: "pointer",
+              padding: 0,
+              marginBottom: 24,
+              fontFamily: "DM Sans, sans-serif"
+            }}
+          >
+            ← Volver al mapa
+          </button>
+
           <motion.nav
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
