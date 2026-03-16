@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import Sidebar from "@/components/Sidebar";
 import { getComponentById, getAdjacentComponents } from "@/data/components";
 
 export default function ComponentPage() {
@@ -9,7 +10,9 @@ export default function ComponentPage() {
 
   if (!component) {
     return (
-      <div className="flex-1 min-h-0 overflow-auto bg-[#F5F2EC]">
+      <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "#F5F2EC" }}>
+        <Sidebar />
+        <div className="flex-1 min-h-0 overflow-auto">
         <div className="container max-w-3xl mx-auto px-4 py-20 text-center">
           <h1 className="font-serif text-2xl font-bold text-[#0A2240] mb-2">
             Componente no encontrado
@@ -18,6 +21,7 @@ export default function ComponentPage() {
             Volver al Mapa
           </Link>
         </div>
+        </div>
       </div>
     );
   }
@@ -25,7 +29,9 @@ export default function ComponentPage() {
   const adj = getAdjacentComponents(component.id);
 
   return (
-    <div className="flex-1 min-h-0 overflow-auto bg-[#F5F2EC]">
+    <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: "#F5F2EC" }}>
+      <Sidebar />
+      <div className="flex-1 min-h-0 overflow-auto">
       <main className="container max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
         <motion.nav
           initial={{ opacity: 0 }}
@@ -153,6 +159,7 @@ export default function ComponentPage() {
           )}
         </div>
       </main>
+      </div>
     </div>
   );
 }

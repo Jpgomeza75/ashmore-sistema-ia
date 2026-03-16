@@ -1,108 +1,198 @@
 import { useState } from "react";
-import { ArrowRight } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
-import { journeyComponents, transversalComponents, getComponentById } from "@/data/components";
-import ComponentNode from "./ComponentNode";
-import DetailPanel from "./DetailPanel";
+import { journeyComponents, transversalComponents } from "@/data/components";
+import DetailPanel from "@/components/DetailPanel";
 
-export default function SystemMap() {
+const SystemMap = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const selectedComponent = selectedId ? getComponentById(selectedId) : null;
+  const selected = selectedId 
+    ? [...journeyComponents, ...transversalComponents].find(c => c.id === selectedId) 
+    : null;
 
   return (
-    <div className="flex-1 min-h-0 flex gap-0 overflow-hidden">
-      {/* Mapa — 58% cuando hay panel, 100% cuando no */}
-      <div
-        className="min-h-0 flex flex-col overflow-hidden transition-[flex] duration-300"
-        style={{ flex: selectedId ? "0 0 58%" : "1 1 100%" }}
-      >
-        {/* Etiqueta EL JOURNEY */}
-        <div
-          className="shrink-0 mb-3 font-sans uppercase"
-          style={{
-            fontSize: 10,
-            letterSpacing: "3px",
-            color: "#B8860B",
-          }}
-        >
-          EL JOURNEY
-        </div>
+    <div style={{ 
+      flex: 1, 
+      display: 'flex', 
+      flexDirection: 'column',
+      overflow: 'hidden'
+    }}>
+      <div style={{ display: 'flex', flex: 1, gap: 0, overflow: 'hidden' }}>
+        
+        {/* MAP SIDE */}
+        <div style={{ 
+          flex: selectedId ? '0 0 58%' : '0 0 100%',
+          display: 'flex',
+          flexDirection: 'column',
+          transition: 'flex 0.3s ease',
+          overflow: 'hidden'
+        }}>
+          {/* Journey label */}
+          <div style={{
+            fontSize: 9,
+            fontWeight: 600,
+            letterSpacing: 3,
+            textTransform: 'uppercase',
+            color: '#B8860B',
+            marginBottom: 14,
+            fontFamily: 'DM Sans, sans-serif'
+          }}>
+            — El Journey
+          </div>
 
-        {/* JOURNEY — 5 cajas en fila horizontal */}
-        <div className="flex items-stretch gap-0 flex-1 min-h-0">
-          {journeyComponents.map((c, idx) => (
-            <div key={c.id} className="flex items-stretch flex-1 min-w-0">
-              <ComponentNode
-                component={c}
-                isSelected={selectedId === c.id}
-                onSelect={setSelectedId}
-              />
-              {idx < journeyComponents.length - 1 && (
-                <div className="flex items-center justify-center shrink-0 w-6">
-                  <ArrowRight size={20} style={{ color: "#B8860B" }} />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Separación 24px */}
-        <div style={{ height: 24 }} />
-
-        {/* TRANSVERSALES — banda horizontal */}
-        <div
-          className="shrink-0 flex items-center rounded"
-          style={{
-            height: 40,
-            background: "#0A2240",
-          }}
-        >
-          <span
-            className="shrink-0 pl-4 pr-3 font-sans uppercase"
-            style={{
-              fontSize: 9,
-              letterSpacing: "1px",
-              color: "#B8860B",
-            }}
-          >
-            BASE TRANSVERSAL
-          </span>
-          {transversalComponents.map((c, idx) => (
-            <div key={c.id} className="flex items-center flex-1">
-              {idx > 0 && (
+          {/* Journey cards */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'stretch',
+            marginBottom: 20,
+            flex: '0 0 auto'
+          }}>
+            {journeyComponents.map((c, idx) => (
+              <div key={c.id} style={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: 0 }}>
                 <div
-                  className="h-5 w-px shrink-0"
-                  style={{ background: "#1E3A5A" }}
-                />
-              )}
-              <ComponentNode
-                component={c}
-                isSelected={selectedId === c.id}
-                onSelect={setSelectedId}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+                  onClick={() => c.hasContent ? setSelectedId(c.id === selectedId ? null : c.id) : null}
+                  style={{
+                    flex: 1,
+                    minWidth: 0,
+                    height: 120,
+                    borderRadius: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end',
+                    padding: 16,
+                    cursor: c.hasContent ? 'pointer' : 'default',
+                    position: 'relative',
+                    background: c.hasContent ? (selectedId === c.id ? '#143050' : '#0A2240') : '#EAE7E0',
+                    border: c.hasContent ? 'none' : '1px solid #D5D2CA',
+                    transition: 'background 0.15s'
+                  }}
+                >
+                  {/* Copper bar bottom for active */}
+                  {c.hasContent && (
+                    <div style={{
+                      position: 'absolute',
+                      bottom: 0, left: 0, right: 0,
+                      height: 3,
+                      background: '#B8860B',
+                      borderRadius: '0 0 4px 4px'
+                    }} />
+                  )}
+                  <div style={{
+                    fontFamily: 'Playfair Display, serif',
+                    fontSize: 22,
+                    fontWeight: 700,
+                    lineHeight: 1,
+                    marginBottom: 6,
+                    color: c.hasContent ? '#B8860B' : '#C0BDB6'
+                  }}>
+                    {String(c.order).padStart(2, '0')}
+                  </div>
+                  <div style={{
+                    fontSize: 12,
+                    fontWeight: 500,
+                    lineHeight: 1.3,
+                    color: c.hasContent ? '#F8F5F0' : '#AAAAAA',
+                    fontFamily: 'DM Sans, sans-serif'
+                  }}>
+                    {c.name}
+                  </div>
+                </div>
+                {/* Arrow */}
+                {idx < journeyComponents.length - 1 && (
+                  <div style={{
+                    width: 28,
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: c.hasContent ? '#B8860B' : '#C0BDB6',
+                    fontSize: 16
+                  }}>→</div>
+                )}
+              </div>
+            ))}
+          </div>
 
-      {/* Panel lateral — 42% del área de contenido */}
-      <AnimatePresence>
-        {selectedId && selectedComponent && (
-          <motion.div
-            key="detail-panel"
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: "42%", opacity: 1 }}
-            exit={{ width: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="min-h-0 overflow-hidden shrink-0 bg-white"
-            style={{ borderLeft: "3px solid #B8860B" }}
-          >
-            <div className="h-full overflow-y-auto">
-              <DetailPanel component={selectedComponent} onClose={() => setSelectedId(null)} />
+          {/* Transversales */}
+          <div style={{
+            background: '#0A2240',
+            borderRadius: 4,
+            height: 48,
+            display: 'flex',
+            alignItems: 'center',
+            paddingLeft: 20,
+            paddingRight: 20,
+            flexShrink: 0
+          }}>
+            <div style={{
+              fontSize: 7,
+              fontWeight: 600,
+              letterSpacing: 2,
+              textTransform: 'uppercase',
+              color: '#B8860B',
+              whiteSpace: 'nowrap',
+              paddingRight: 16,
+              borderRight: '1px solid #1E3A5A',
+              fontFamily: 'DM Sans, sans-serif'
+            }}>
+              Base transversal
             </div>
-          </motion.div>
+            {transversalComponents.map((c, idx) => (
+              <div
+                key={c.id}
+                onClick={() => setSelectedId(c.id === selectedId ? null : c.id)}
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '100%',
+                  borderRight: idx < transversalComponents.length - 1 
+                    ? '1px solid #1E3A5A' : 'none',
+                  fontSize: 9,
+                  fontWeight: 500,
+                  letterSpacing: 2,
+                  textTransform: 'uppercase',
+                  color: selectedId === c.id ? '#F8F5F0' : '#6A8AAA',
+                  cursor: 'pointer',
+                  fontFamily: 'DM Sans, sans-serif',
+                  transition: 'color 0.15s'
+                }}
+              >
+                {c.name}
+              </div>
+            ))}
+          </div>
+
+          {/* Footer note */}
+          <div style={{
+            marginTop: 16,
+            fontSize: 10,
+            color: '#AAAAAA',
+            fontStyle: 'italic',
+            textAlign: 'center',
+            fontFamily: 'DM Sans, sans-serif'
+          }}>
+            Las transversales cruzan todas las etapas del ciclo de inversión
+          </div>
+        </div>
+
+        {/* DETAIL PANEL */}
+        {selectedId && selected && (
+          <div style={{
+            flex: '0 0 42%',
+            borderLeft: '3px solid #B8860B',
+            background: 'white',
+            overflowY: 'auto',
+            transition: 'flex 0.3s ease'
+          }}>
+            <DetailPanel
+              component={selected}
+              onClose={() => setSelectedId(null)}
+            />
+          </div>
         )}
-      </AnimatePresence>
+      </div>
     </div>
   );
-}
+};
+
+export default SystemMap;

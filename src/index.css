@@ -4,15 +4,17 @@
 
 @layer base {
   :root {
-    --navy: 210 70% 15%;
-    --navy-light: 210 50% 22%;
-    --copper: 43 74% 38%;
-    --cream: 40 33% 97%;
-    --background: 40 33% 97%;
-    --foreground: 210 70% 15%;
-    --muted: 220 9% 46%;
-    --border: 210 30% 90%;
-    --radius: 0.5rem;
+    --navy: #0A2240;
+    --navy-mid: #143050;
+    --navy-border: #1E3A5A;
+    --copper: #B8860B;
+    --cream-page: #F5F2EC;
+    --cream-text: #F8F5F0;
+    --gray-inactive-bg: #EAE7E0;
+    --gray-inactive-border: #D5D2CA;
+    --gray-inactive-text: #AAAAAA;
+    --gray-nav: #4A6070;
+    --gray-trans: #6A8AAA;
   }
 
   * {
