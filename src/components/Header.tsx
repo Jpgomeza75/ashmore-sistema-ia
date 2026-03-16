@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LogOut, Menu, X } from "lucide-react";
-import logoBanicol from "@/assets/logo-banicol.png";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
@@ -11,12 +10,28 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-sm border-b border-border">
       <div className="container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-14 md:h-16 flex items-center justify-between">
-        <Link to="/" className="shrink-0">
-          <img src={logoBanicol} alt="Banicol — Banca de Inversión" className="h-9 md:h-12 w-auto" />
+
+        {/* Logo — tipografía serif Ashmore, sin imagen */}
+        <Link to="/" className="shrink-0 flex items-center gap-2">
+          <span
+            className="font-serif text-navy tracking-tight leading-none"
+            style={{ fontSize: "1.35rem", fontWeight: 700, letterSpacing: "-0.01em" }}
+          >
+            Ashmore
+          </span>
+          <span
+            className="font-sans text-muted-foreground/60 tracking-tight leading-none hidden sm:block"
+            style={{ fontSize: "0.65rem", fontWeight: 400, letterSpacing: "0.08em", textTransform: "uppercase", marginTop: "1px" }}
+          >
+            Colombia
+          </span>
         </Link>
+
+        {/* Center label */}
         <span className="text-xs font-sans text-muted-foreground tracking-[0.15em] uppercase hidden md:block">
           Sistema Operativo · IA
         </span>
+
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-4">
           <Link
@@ -33,33 +48,34 @@ const Header = () => {
             <LogOut className="w-4 h-4" />
           </button>
         </nav>
+
         {/* Mobile hamburger */}
         <button
           className="md:hidden text-foreground p-1"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menú"
         >
-          {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
-      {/* Mobile menu overlay */}
+
+      {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden absolute inset-x-0 top-14 bg-card border-b border-border shadow-lg z-40">
-          <nav className="flex flex-col px-6 py-4 gap-1">
-            <Link
-              to="/"
-              onClick={() => setMenuOpen(false)}
-              className="text-base font-sans font-medium text-foreground py-3 border-b border-border"
-            >
-              Mapa del Sistema
-            </Link>
-            <button
-              onClick={() => { logout(); setMenuOpen(false); }}
-              className="text-base font-sans font-medium text-muted-foreground py-3 text-left flex items-center gap-2"
-            >
-              <LogOut className="w-4 h-4" /> Cerrar sesión
-            </button>
-          </nav>
+        <div className="md:hidden bg-card border-t border-border px-4 py-3 flex flex-col gap-3">
+          <Link
+            to="/"
+            className="text-sm font-sans font-medium text-foreground"
+            onClick={() => setMenuOpen(false)}
+          >
+            Mapa del Sistema
+          </Link>
+          <button
+            onClick={() => { logout(); setMenuOpen(false); }}
+            className="text-sm font-sans text-muted-foreground text-left flex items-center gap-2"
+          >
+            <LogOut className="w-4 h-4" />
+            Cerrar sesión
+          </button>
         </div>
       )}
     </header>
