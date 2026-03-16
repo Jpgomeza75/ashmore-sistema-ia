@@ -32,10 +32,10 @@ const SystemMap = () => {
         {/* JOURNEY TITLE */}
         <div style={{
           fontFamily:'Georgia, serif',
-          fontSize:'clamp(16px, 2vw, 22px)',
+          fontSize:'clamp(28px, 4vw, 52px)',
           fontWeight:700, color:'#0A2240',
           flexShrink:0, lineHeight:1,
-          marginBottom:10
+          marginBottom:12
         }}>
           El <span style={{ color:'#B8860B' }}>Journey</span>
         </div>
@@ -77,29 +77,29 @@ const SystemMap = () => {
                   }} />
                 )}
                 <div style={{
-                  display:'inline-block', fontSize:'6.5px',
-                  letterSpacing:'1.5px', textTransform:'uppercase',
+                  display:'inline-block', fontSize:'clamp(8px, 0.9vw, 11px)',
+                  letterSpacing:'2px', textTransform:'uppercase',
                   fontWeight:600, padding:'2px 6px', borderRadius:2,
                   marginBottom:8, width:'fit-content',
                   background: c.hasContent
-                    ? 'rgba(184,134,11,0.15)' : 'rgba(0,0,0,0.05)',
-                  color: c.hasContent ? '#B8860B' : '#C0BDB6',
+                    ? 'rgba(184,134,11,0.2)' : 'rgba(0,0,0,0.06)',
+                  color: c.hasContent ? '#D4A830' : '#9A9690',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   Journey · {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
                   fontFamily:'Georgia, serif',
-                  fontSize:'clamp(18px, 2.5vw, 40px)',
+                  fontSize:'clamp(36px, 6vw, 80px)',
                   fontWeight:700, lineHeight:1, marginBottom:6,
-                  color: c.hasContent ? '#B8860B' : '#C8C5BC'
+                  color: c.hasContent ? '#B8860B' : '#B8B4AA'
                 }}>
                   {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
-                  fontSize:'clamp(10px, 1.1vw, 14px)',
-                  fontWeight:500, lineHeight:1.3,
-                  color: c.hasContent ? '#E8E5DC' : '#B0ADA6',
+                  fontSize:'clamp(13px, 1.6vw, 20px)',
+                  fontWeight:600, lineHeight:1.3,
+                  color: c.hasContent ? '#F8F5F0' : '#888480',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   {c.name}
@@ -121,10 +121,10 @@ const SystemMap = () => {
         {/* TRANSVERSALES TITLE */}
         <div style={{
           fontFamily:'Georgia, serif',
-          fontSize:'clamp(16px, 2vw, 22px)',
+          fontSize:'clamp(28px, 4vw, 52px)',
           fontWeight:700, color:'#0A2240',
           flexShrink:0, lineHeight:1,
-          marginBottom:10
+          marginBottom:12
         }}>
           Las <span style={{ color:'#B8860B' }}>Transversales</span>
         </div>
@@ -146,7 +146,7 @@ const SystemMap = () => {
               <div
                 onClick={() => handleSelect(c)}
                 onMouseEnter={e => {
-                  if (selectedId !== c.id) e.currentTarget.style.background = '#E8E4DC';
+                  if (selectedId !== c.id) e.currentTarget.style.background = '#E5E1D8';
                 }}
                 onMouseLeave={e => {
                   if (selectedId !== c.id) e.currentTarget.style.background = '#F0EDE6';
@@ -170,26 +170,26 @@ const SystemMap = () => {
                   borderRadius:'0 0 4px 4px'
                 }} />
                 <div style={{
-                  display:'inline-block', fontSize:'6.5px',
-                  letterSpacing:'1.5px', textTransform:'uppercase',
+                  display:'inline-block', fontSize:'clamp(8px, 0.9vw, 11px)',
+                  letterSpacing:'2px', textTransform:'uppercase',
                   fontWeight:600, padding:'2px 6px', borderRadius:2,
                   marginBottom:8, width:'fit-content',
-                  background:'rgba(10,34,64,0.08)', color:'#4A5A6A',
+                  background:'rgba(10,34,64,0.08)', color:'#0A2240',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   Transversal · {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
                   fontFamily:'Georgia, serif',
-                  fontSize:'clamp(18px, 2.5vw, 40px)',
+                  fontSize:'clamp(36px, 6vw, 80px)',
                   fontWeight:700, lineHeight:1, marginBottom:6,
-                  color:'#C8C3B8'
+                  color:'#0A2240', opacity:0.15
                 }}>
                   {String(c.order).padStart(2,'0')}
                 </div>
                 <div style={{
-                  fontSize:'clamp(10px, 1.1vw, 14px)',
-                  fontWeight:500, lineHeight:1.3, color:'#5A6070',
+                  fontSize:'clamp(13px, 1.6vw, 20px)',
+                  fontWeight:600, lineHeight:1.3, color:'#0A2240',
                   fontFamily:'DM Sans, sans-serif'
                 }}>
                   {c.name}

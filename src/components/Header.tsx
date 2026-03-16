@@ -16,7 +16,7 @@ const Header = () => {
       flexShrink: 0,
     }}>
       <div style={{ display:'flex', alignItems:'center', flex:1, gap:0 }}>
-        <img src={logoAshmore} alt="Ashmore" style={{ height: 22, width:'auto' }} />
+        <img src={logoAshmore} alt="Ashmore" style={{ height: 24, width:'auto' }} />
         <div style={{ width:1, height:20, background:'#D5D0C8', margin:'0 14px' }} />
         <span style={{
           fontSize: 11, color:'#8A8880',
@@ -25,7 +25,7 @@ const Header = () => {
         }}>Sistema Operativo · IA</span>
       </div>
       <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-        <img src={logoXptnova} alt="XPTNova" style={{ height:16, width:'auto', opacity:0.5 }} />
+        <img src={logoXptnova} alt="XPTNova" style={{ height:14, width:'auto', opacity:0.6 }} />
         <div style={{ width:1, height:20, background:'#D5D0C8' }} />
         <button
           onClick={logout}
