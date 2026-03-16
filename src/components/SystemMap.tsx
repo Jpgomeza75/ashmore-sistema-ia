@@ -24,8 +24,8 @@ const SystemMap = () => {
 
         {/* JOURNEY TITLE */}
         <div style={{
-          fontFamily:'Georgia, serif',
-          fontSize:48,
+          fontFamily:'Playfair Display, serif',
+          fontSize:'clamp(32px, 5vh, 64px)',
           fontWeight:700, color:'#0A2240',
           flexShrink:0, lineHeight:1,
           marginBottom:16
@@ -51,13 +51,14 @@ const SystemMap = () => {
                   borderRadius:4,
                   display:'flex', flexDirection:'column',
                   justifyContent:'space-between',
-                  padding:'24px 20px',
+                  padding:'20px 20px 16px 20px',
                   cursor: c.hasContent ? 'pointer' : 'default',
                   position:'relative',
                   background: c.hasContent ? '#0A2240' : '#E8E5DE',
                   border: c.hasContent ? 'none' : '1px solid #CCC9C0',
                   transition:'background 0.15s',
-                  userSelect:'none'
+                  userSelect:'none',
+                  overflow:'hidden'
                 }}
               >
                 {c.hasContent && (
@@ -68,17 +69,17 @@ const SystemMap = () => {
                   }} />
                 )}
                 <div style={{
-                  fontSize:22,
-                  fontWeight:600, lineHeight:1.2,
+                  fontSize:'clamp(18px, 2.2vh, 32px)',
+                  fontWeight:800, letterSpacing:'-0.5px', lineHeight:1.1,
                   color: c.hasContent ? '#F8F5F0' : '#888480',
-                  fontFamily:'DM Sans, sans-serif'
+                  fontFamily:'Inter, sans-serif'
                 }}>
                   {c.name}
                 </div>
                 <div style={{
-                  fontFamily:'Georgia, serif',
-                  fontSize:120,
-                  fontWeight:700, lineHeight:1,
+                  fontFamily:'Inter, sans-serif',
+                  fontSize:'clamp(80px, 18vh, 180px)',
+                  fontWeight:900, lineHeight:0.85,
                   color: c.hasContent ? '#B8860B' : '#C8C5BC',
                   alignSelf:'flex-end'
                 }}>
@@ -100,8 +101,8 @@ const SystemMap = () => {
 
         {/* TRANSVERSALES TITLE */}
         <div style={{
-          fontFamily:'Georgia, serif',
-          fontSize:48,
+          fontFamily:'Playfair Display, serif',
+          fontSize:'clamp(32px, 5vh, 64px)',
           fontWeight:700, color:'#0A2240',
           flexShrink:0, lineHeight:1,
           marginBottom:16
@@ -133,11 +134,12 @@ const SystemMap = () => {
                   border:'1px solid #D5D0C8',
                   display:'flex', flexDirection:'column',
                   justifyContent:'space-between',
-                  padding:'24px 20px',
+                  padding:'20px 20px 16px 20px',
                   cursor: c.hasContent ? 'pointer' : 'default',
                   position:'relative',
                   transition:'background 0.15s',
-                  userSelect:'none'
+                  userSelect:'none',
+                  overflow:'hidden'
                 }}
               >
                 <div style={{
@@ -146,16 +148,17 @@ const SystemMap = () => {
                   borderRadius:'0 0 4px 4px'
                 }} />
                 <div style={{
-                  fontSize:22,
-                  fontWeight:600, lineHeight:1.2, color:'#0A2240',
-                  fontFamily:'DM Sans, sans-serif'
+                  fontSize:'clamp(18px, 2.2vh, 32px)',
+                  fontWeight:800, letterSpacing:'-0.5px', lineHeight:1.1,
+                  color:'#0A2240',
+                  fontFamily:'Inter, sans-serif'
                 }}>
                   {c.name}
                 </div>
                 <div style={{
-                  fontFamily:'Georgia, serif',
-                  fontSize:120,
-                  fontWeight:700, lineHeight:1,
+                  fontFamily:'Inter, sans-serif',
+                  fontSize:'clamp(80px, 18vh, 180px)',
+                  fontWeight:900, lineHeight:0.85,
                   color:'rgba(10,34,64,0.12)',
                   alignSelf:'flex-end'
                 }}>
@@ -176,7 +179,7 @@ const SystemMap = () => {
         <div style={{
           fontSize:9, color:'#B8B5AE',
           fontStyle:'italic', textAlign:'center', flexShrink:0,
-          fontFamily:'DM Sans, sans-serif'
+          fontFamily:'Inter, sans-serif'
         }}>
           Las transversales cruzan todas las etapas del ciclo de inversión
         </div>

@@ -31,7 +31,8 @@
   }
 
   body {
-    @apply bg-[#F8F5F0] text-[#0A2240] font-sans antialiased;
+    @apply bg-[#F8F5F0] text-[#0A2240] antialiased;
+    font-family: 'Inter', sans-serif;
   }
 
   .font-serif {
@@ -39,6 +40,6 @@
   }
 
   .font-sans {
-    font-family: "DM Sans", system-ui, sans-serif;
+    font-family: "Inter", system-ui, sans-serif;
   }
 }

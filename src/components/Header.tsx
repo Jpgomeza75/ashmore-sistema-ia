@@ -21,7 +21,7 @@ const Header = () => {
         <span style={{
           fontSize: 11, color:'#8A8880',
           letterSpacing:'2px', textTransform:'uppercase',
-          fontFamily:'DM Sans, sans-serif'
+          fontFamily:'Inter, sans-serif'
         }}>Sistema Operativo · IA</span>
       </div>
       <div style={{ display:'flex', alignItems:'center', gap:10 }}>

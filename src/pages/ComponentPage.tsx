@@ -44,7 +44,7 @@ export default function ComponentPage() {
               cursor: "pointer",
               padding: 0,
               marginBottom: 24,
-              fontFamily: "DM Sans, sans-serif"
+              fontFamily: "Inter, sans-serif"
             }}
           >
             ← Volver al mapa
