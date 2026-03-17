@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "@/components/Header";
 
 const Nivel2Page = () => {
   const navigate = useNavigate();
@@ -111,7 +110,7 @@ const Nivel2Page = () => {
 
   // ── DASHBOARD ──
   const renderDashboard = () => (
-    <div style={{ padding: '20px 24px', overflowY: 'auto' }}>
+    <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1, minHeight: 0 }}>
       {sectionLabel('Estado operacional · Hoy')}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 12, marginBottom: 20 }}>
         {kpiCard('DDQs de LPs activos', '5', '2 requieren atención esta semana', true)}
@@ -191,7 +190,7 @@ const Nivel2Page = () => {
 
   // ── LP RELATIONS ──
   const renderLP = () => (
-    <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 520 }}>
+    <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
       <div style={{ width: 220, flexShrink: 0, borderRight: '1px solid #1E3A5A', overflowY: 'auto', padding: '12px 0' }}>
         <div style={{ padding: '8px 16px 12px', fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#4A6070' }}>Fondo Andino III</div>
         {lps.map(lp => (
@@ -249,7 +248,7 @@ const Nivel2Page = () => {
 
   // ── DEAL DD ──
   const renderDeal = () => (
-    <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 520 }}>
+    <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
       <div style={{ width: 220, flexShrink: 0, borderRight: '1px solid #1E3A5A', overflowY: 'auto', padding: '12px 0' }}>
         <div style={{ padding: '8px 16px 12px', fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#4A6070' }}>Fondo Andino III</div>
         {deals.map(d => (
@@ -299,7 +298,7 @@ const Nivel2Page = () => {
 
   // ── BASE DE CONOCIMIENTO ──
   const renderKB = () => (
-    <div style={{ padding: '20px 24px', overflowY: 'auto' }}>
+    <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1, minHeight: 0 }}>
       <input
         placeholder="Buscar en la base de conocimiento — ej: 'respuestas ESG anteriores' o 'template DD energía'"
         style={{ width: '100%', padding: '10px 16px', background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, color: '#F8F5F0', fontSize: 12, marginBottom: 20, fontFamily: 'Inter, sans-serif', outline: 'none' }}
@@ -339,64 +338,87 @@ const Nivel2Page = () => {
   );
 
   return (
-    <div style={s.page}>
-      <Header />
-      <div style={s.container}>
-        <button style={s.back} onClick={() => navigate('/componente/levantar-capital')}>
-          ← Levantar el Capital
+    <div style={{
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      background: '#0A2240',
+      fontFamily: 'Inter, sans-serif',
+      overflow: 'hidden'
+    }}>
+      {/* APP HEADER — reemplaza el Header del portal */}
+      <div style={{
+        height: 48,
+        background: '#0A2240',
+        borderBottom: '1px solid #1E3A5A',
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 24px',
+        flexShrink: 0,
+        gap: 0
+      }}>
+        <button
+          onClick={() => navigate('/componente/levantar-capital')}
+          style={{
+            fontSize: 11, color: '#4A6070', cursor: 'pointer',
+            background: 'none', border: 'none', padding: 0,
+            display: 'flex', alignItems: 'center', gap: 6,
+            fontFamily: 'Inter, sans-serif', marginRight: 20,
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = '#8AAABB'}
+          onMouseLeave={e => e.currentTarget.style.color = '#4A6070'}
+        >
+          ← Volver
         </button>
+        <div style={{ width: 1, height: 20, background: '#1E3A5A', marginRight: 20 }} />
+        <span style={{ fontFamily: 'Georgia, serif', fontSize: 14, fontWeight: 700, color: '#F8F5F0', marginRight: 8 }}>Ashmore</span>
+        <span style={{ fontSize: 7, color: '#B8860B', letterSpacing: 2, textTransform: 'uppercase', marginRight: 24 }}>Colombia</span>
+        <div style={{ width: 1, height: 20, background: '#1E3A5A', marginRight: 24 }} />
+        <span style={{ fontSize: 10, color: '#4A6070', letterSpacing: 2, textTransform: 'uppercase', flex: 1 }}>
+          Sistema de Gestión de Due Diligence · IA
+        </span>
+        <div style={{ fontSize: 9, fontWeight: 600, padding: '3px 10px', background: 'rgba(184,134,11,0.15)', color: '#B8860B', borderRadius: 2, border: '1px solid rgba(184,134,11,0.3)' }}>
+          Nivel 2 — Demo
+        </div>
+      </div>
 
-        <div style={{ marginBottom: 8, display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', color: '#B8860B' }}>
-          <div style={{ width: 6, height: 6, background: '#B8860B', borderRadius: '50%' }} />
-          Nivel 2 · Visión institucional
-        </div>
-        <div style={{ fontFamily: 'Georgia, serif', fontSize: 40, fontWeight: 700, color: '#0A2240', lineHeight: 1.05, marginBottom: 8, letterSpacing: -1 }}>
-          Sistema de Gestión de Due Diligence
-        </div>
-        <div style={{ fontSize: 15, color: '#5A6070', lineHeight: 1.7, maxWidth: 700, marginBottom: 32, paddingBottom: 32, borderBottom: '1px solid #E0DBD0' }}>
-          Así funcionaría el sistema integrado — gestionando simultáneamente los DDQs de LPs que quieren invertir en Ashmore, y los DDQs a targets donde Ashmore quiere invertir, todo alimentado por una base de conocimiento compartida.
-        </div>
-
-        <div style={s.system}>
-          <div style={s.appHeader}>
-            <span style={{ fontFamily: 'Georgia, serif', fontSize: 14, fontWeight: 700, color: '#F8F5F0', marginRight: 8 }}>Ashmore</span>
-            <span style={{ fontSize: 7, color: '#B8860B', letterSpacing: 2, textTransform: 'uppercase', marginRight: 20 }}>Colombia</span>
-            <div style={{ width: 1, height: 20, background: '#1E3A5A', marginRight: 20 }} />
-            <span style={{ fontSize: 10, color: '#4A6070', letterSpacing: 2, textTransform: 'uppercase', flex: 1 }}>Sistema de Gestión de Due Diligence · IA</span>
-            <div style={{ fontSize: 9, fontWeight: 600, padding: '3px 10px', background: 'rgba(184,134,11,0.15)', color: '#B8860B', borderRadius: 2, border: '1px solid rgba(184,134,11,0.3)' }}>Nivel 2</div>
+      {/* TABS */}
+      <div style={{
+        display: 'flex',
+        background: '#071B33',
+        borderBottom: '1px solid #1E3A5A',
+        padding: '0 24px',
+        flexShrink: 0,
+      }}>
+        {tabs.map(tab => (
+          <div
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            style={{
+              padding: '12px 24px',
+              fontSize: 12,
+              fontWeight: 500,
+              color: activeTab === tab.id ? '#F8F5F0' : '#4A6070',
+              cursor: 'pointer',
+              borderBottom: `2px solid ${activeTab === tab.id ? '#B8860B' : 'transparent'}`,
+              transition: 'all 0.15s',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
+            <span style={{ display: 'inline-block', width: 7, height: 7, borderRadius: '50%', background: tab.color }} />
+            {tab.label}
           </div>
+        ))}
+      </div>
 
-          <div style={s.tabsBar}>
-            {tabs.map(tab => (
-              <div
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                style={{
-                  padding: '12px 20px',
-                  fontSize: 11,
-                  fontWeight: 500,
-                  color: activeTab === tab.id ? '#F8F5F0' : '#4A6070',
-                  cursor: 'pointer',
-                  borderBottom: `2px solid ${activeTab === tab.id ? '#B8860B' : 'transparent'}`,
-                  transition: 'all 0.15s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 6,
-                }}
-              >
-                <span style={{ display: 'inline-block', width: 6, height: 6, borderRadius: '50%', background: tab.color }} />
-                {tab.label}
-              </div>
-            ))}
-          </div>
-
-          <div style={s.content}>
-            {activeTab === 'dashboard' && renderDashboard()}
-            {activeTab === 'lp' && renderLP()}
-            {activeTab === 'deal' && renderDeal()}
-            {activeTab === 'kb' && renderKB()}
-          </div>
-        </div>
+      {/* CONTENT — ocupa todo el espacio restante */}
+      <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        {activeTab === 'dashboard' && renderDashboard()}
+        {activeTab === 'lp' && renderLP()}
+        {activeTab === 'deal' && renderDeal()}
+        {activeTab === 'kb' && renderKB()}
       </div>
     </div>
   );
