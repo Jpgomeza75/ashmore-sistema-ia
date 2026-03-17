@@ -215,7 +215,7 @@ const Nivel2Page = () => {
   const s = {
     page: { background: '#F5F2EC', minHeight: '100vh', fontFamily: 'Inter, sans-serif' } as React.CSSProperties,
     container: { maxWidth: 1200, margin: '0 auto', padding: '32px 48px 80px' } as React.CSSProperties,
-    back: { fontSize: 13, color: '#8A8880', cursor: 'pointer', marginBottom: 32, background: 'none', border: 'none', padding: 0, display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'Inter, sans-serif' } as React.CSSProperties,
+    back: { fontSize: 18, color: '#8A8880', cursor: 'pointer', marginBottom: 32, background: 'none', border: 'none', padding: 0, display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'Inter, sans-serif' } as React.CSSProperties,
     system: { background: '#0A2240', borderRadius: 8, overflow: 'hidden', border: '1px solid #1E3A5A' } as React.CSSProperties,
     appHeader: { background: '#0A2240', borderBottom: '1px solid #1E3A5A', padding: '0 24px', display: 'flex', alignItems: 'center', height: 48, gap: 0 } as React.CSSProperties,
     tabsBar: { display: 'flex', background: '#071B33', borderBottom: '1px solid #1E3A5A', padding: '0 24px', gap: 0 } as React.CSSProperties,
@@ -224,14 +224,14 @@ const Nivel2Page = () => {
 
   const kpiCard = (label: string, value: string, sub: string, subAlert = false) => (
     <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '14px 16px' }}>
-      <div style={{ fontSize: 9, color: '#4A6070', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>{label}</div>
-      <div style={{ fontFamily: 'Georgia, serif', fontSize: 28, fontWeight: 700, color: '#F8F5F0', lineHeight: 1, marginBottom: 4 }}>{value}</div>
-      <div style={{ fontSize: 10, color: subAlert ? '#B8860B' : '#4A6070' }}>{sub}</div>
+      <div style={{ fontSize: 13, color: '#4A6070', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>{label}</div>
+      <div style={{ fontFamily: 'Georgia, serif', fontSize: 39, fontWeight: 700, color: '#F8F5F0', lineHeight: 1, marginBottom: 4 }}>{value}</div>
+      <div style={{ fontSize: 14, color: subAlert ? '#B8860B' : '#4A6070' }}>{sub}</div>
     </div>
   );
 
   const badge = (text: string, bg: string, color: string) => (
-    <span style={{ display: 'inline-block', fontSize: 9, fontWeight: 600, padding: '2px 8px', borderRadius: 2, background: bg, color }}>{text}</span>
+    <span style={{ display: 'inline-block', fontSize: 13, fontWeight: 600, padding: '2px 8px', borderRadius: 2, background: bg, color }}>{text}</span>
   );
 
   const progressBar = (pct: number) => (
@@ -239,21 +239,21 @@ const Nivel2Page = () => {
       <div style={{ width: 80, height: 4, background: '#1E3A5A', borderRadius: 2, overflow: 'hidden' }}>
         <div style={{ height: '100%', width: `${pct}%`, background: pct > 80 ? '#86EFAC' : '#B8860B', borderRadius: 2 }} />
       </div>
-      <span style={{ fontSize: 10, color: pct > 80 ? '#86EFAC' : '#B8860B', fontWeight: 600 }}>{pct}%</span>
+      <span style={{ fontSize: 14, color: pct > 80 ? '#86EFAC' : '#B8860B', fontWeight: 600 }}>{pct}%</span>
     </div>
   );
 
   const sectionLabel = (text: string) => (
-    <div style={{ fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#B8860B', marginBottom: 10 }}>{text}</div>
+    <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#B8860B', marginBottom: 10 }}>{text}</div>
   );
 
   const ddqQuestion = (status: string, statusBg: string, statusColor: string, q: string, a: string, completar?: string) => (
     <div style={{ padding: '12px 0', borderBottom: '1px solid #0D2540' }}>
-      <div style={{ display: 'inline-block', fontSize: 8, fontWeight: 700, padding: '2px 7px', borderRadius: 2, marginBottom: 6, background: statusBg, color: statusColor }}>{status}</div>
-      <div style={{ fontSize: 11, fontWeight: 600, color: '#C8D8E8', marginBottom: 6 }}>{q}</div>
-      <div style={{ fontSize: 11, color: '#6A8AAA', lineHeight: 1.6 }}>{a}</div>
+      <div style={{ display: 'inline-block', fontSize: 15, fontWeight: 700, padding: '2px 7px', borderRadius: 2, marginBottom: 6, background: statusBg, color: statusColor }}>{status}</div>
+      <div style={{ fontSize: 15, fontWeight: 600, color: '#C8D8E8', marginBottom: 6 }}>{q}</div>
+      <div style={{ fontSize: 15, color: '#6A8AAA', lineHeight: 1.6 }}>{a}</div>
       {completar && (
-        <div style={{ fontSize: 10, color: '#854D0E', fontStyle: 'italic', marginTop: 6, padding: '5px 8px', background: 'rgba(133,77,14,0.1)', borderRadius: 2 }}>{completar}</div>
+        <div style={{ fontSize: 14, color: '#854D0E', fontStyle: 'italic', marginTop: 6, padding: '5px 8px', background: 'rgba(133,77,14,0.1)', borderRadius: 2 }}>{completar}</div>
       )}
     </div>
   );
@@ -262,33 +262,33 @@ const Nivel2Page = () => {
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '10px 12px', borderRadius: 4, background: '#071B33', border: '1px solid #1E3A5A', marginBottom: 6 }}>
       <div style={{ width: 6, height: 6, borderRadius: '50%', background: dotColor, flexShrink: 0, marginTop: 4 }} />
       <div>
-        <div style={{ fontSize: 11, color: '#8AAABB', lineHeight: 1.5 }}>{text}</div>
-        <div style={{ fontSize: 9, color: '#4A6070', marginTop: 2 }}>{time}</div>
+        <div style={{ fontSize: 15, color: '#8AAABB', lineHeight: 1.5 }}>{text}</div>
+        <div style={{ fontSize: 13, color: '#4A6070', marginTop: 2 }}>{time}</div>
       </div>
     </div>
   );
 
   const kbDoc = (icon: string, name: string, meta: string, statusText: string, statusBg: string, statusColor: string) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px', background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, marginBottom: 6 }}>
-      <div style={{ width: 28, height: 28, background: '#1E3A5A', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#B8860B', fontWeight: 700, flexShrink: 0 }}>{icon}</div>
+      <div style={{ width: 28, height: 28, background: '#1E3A5A', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, color: '#B8860B', fontWeight: 700, flexShrink: 0 }}>{icon}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: 11, color: '#C8D8E8' }}>{name}</div>
-        <div style={{ fontSize: 9, color: '#4A6070' }}>{meta}</div>
+        <div style={{ fontSize: 15, color: '#C8D8E8' }}>{name}</div>
+        <div style={{ fontSize: 13, color: '#4A6070' }}>{meta}</div>
       </div>
-      <span style={{ fontSize: 8, fontWeight: 600, padding: '2px 6px', borderRadius: 2, background: statusBg, color: statusColor }}>{statusText}</span>
+      <span style={{ fontSize: 15, fontWeight: 600, padding: '2px 6px', borderRadius: 2, background: statusBg, color: statusColor }}>{statusText}</span>
     </div>
   );
 
   const kbSection = (title: string, count: string, pct: number, desc: string) => (
     <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '14px 16px', marginBottom: 8 }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6, fontSize: 11, fontWeight: 600, color: '#F8F5F0' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6, fontSize: 15, fontWeight: 600, color: '#F8F5F0' }}>
         {title}
-        <span style={{ fontSize: 9, color: '#B8860B', fontWeight: 600 }}>{count}</span>
+        <span style={{ fontSize: 13, color: '#B8860B', fontWeight: 600 }}>{count}</span>
       </div>
       <div style={{ height: 3, background: '#1E3A5A', borderRadius: 2, overflow: 'hidden', marginBottom: 8 }}>
         <div style={{ height: '100%', width: `${pct}%`, background: pct > 80 ? '#86EFAC' : pct > 60 ? '#B8860B' : '#FCA5A5', borderRadius: 2 }} />
       </div>
-      <div style={{ fontSize: 10, color: pct < 50 ? '#FCA5A5' : '#4A6070' }}>{desc}</div>
+      <div style={{ fontSize: 14, color: pct < 50 ? '#FCA5A5' : '#4A6070' }}>{desc}</div>
     </div>
   );
 
@@ -310,7 +310,7 @@ const Nivel2Page = () => {
             <thead>
               <tr>
                 {['LP', 'Progreso', 'Estado', 'Deadline'].map(h => (
-                  <th key={h} style={{ fontSize: 8, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#4A6070', padding: '8px 12px', textAlign: 'left', borderBottom: '1px solid #1E3A5A' }}>{h}</th>
+                  <th key={h} style={{ fontSize: 15, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#4A6070', padding: '8px 12px', textAlign: 'left', borderBottom: '1px solid #1E3A5A' }}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -318,12 +318,12 @@ const Nivel2Page = () => {
               {lps.map(lp => (
                 <tr key={lp.id} style={{ cursor: 'pointer' }} onClick={() => { setActiveLP(lp.id); setActiveTab('lp'); }}>
                   <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540' }}>
-                    <div style={{ fontSize: 12, fontWeight: 600, color: '#F8F5F0' }}>{lp.name}</div>
-                    <div style={{ fontSize: 9, color: '#4A6070' }}>{lp.meta}</div>
+                    <div style={{ fontSize: 17, fontWeight: 600, color: '#F8F5F0' }}>{lp.name}</div>
+                    <div style={{ fontSize: 13, color: '#4A6070' }}>{lp.meta}</div>
                   </td>
                   <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540' }}>{progressBar(lp.pct)}</td>
                   <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540' }}>{badge(lp.status, `${lp.statusColor}22`, lp.statusColor)}</td>
-                  <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540', fontSize: 10, color: lp.id === 'porvenir' ? '#FCA5A5' : '#4A6070' }}>{lp.deadline}</td>
+                  <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540', fontSize: 14, color: lp.id === 'porvenir' ? '#FCA5A5' : '#4A6070' }}>{lp.deadline}</td>
                 </tr>
               ))}
             </tbody>
@@ -335,7 +335,7 @@ const Nivel2Page = () => {
               <thead>
                 <tr>
                   {['Activo / Target', 'País', 'Sector', 'Estado'].map(h => (
-                    <th key={h} style={{ fontSize: 8, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#4A6070', padding: '8px 12px', textAlign: 'left', borderBottom: '1px solid #1E3A5A' }}>{h}</th>
+                    <th key={h} style={{ fontSize: 15, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#4A6070', padding: '8px 12px', textAlign: 'left', borderBottom: '1px solid #1E3A5A' }}>{h}</th>
                   ))}
                 </tr>
               </thead>
@@ -347,10 +347,10 @@ const Nivel2Page = () => {
                 ].map((d, i) => (
                   <tr key={i} style={{ cursor: 'pointer' }} onClick={() => { setActiveDeal(deals[i].id); setActiveTab('deal'); }}>
                     <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540' }}>
-                      <div style={{ fontSize: 12, fontWeight: 600, color: '#F8F5F0' }}>{d.name}</div>
-                      <div style={{ fontSize: 9, color: '#4A6070' }}>{d.meta}</div>
+                      <div style={{ fontSize: 17, fontWeight: 600, color: '#F8F5F0' }}>{d.name}</div>
+                      <div style={{ fontSize: 13, color: '#4A6070' }}>{d.meta}</div>
                     </td>
-                    <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540', fontSize: 12 }}>{d.pais}</td>
+                    <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540', fontSize: 17 }}>{d.pais}</td>
                     <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540' }}>{badge(d.sector, d.sBg, d.sColor)}</td>
                     <td style={{ padding: '10px 12px', borderBottom: '1px solid #0D2540' }}>{badge(d.estado, `${d.eColor}22`, d.eColor)}</td>
                   </tr>
@@ -376,20 +376,20 @@ const Nivel2Page = () => {
   const renderLP = () => (
     <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
       <div style={{ width: 220, flexShrink: 0, borderRight: '1px solid #1E3A5A', overflowY: 'auto', padding: '12px 0' }}>
-        <div style={{ padding: '8px 16px 12px', fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#4A6070' }}>Fondo Andino III</div>
+        <div style={{ padding: '8px 16px 12px', fontSize: 15, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#4A6070' }}>Fondo Andino III</div>
         {lps.map(lp => (
           <div
             key={lp.id}
             onClick={() => setActiveLP(lp.id)}
             style={{ padding: '10px 16px', cursor: 'pointer', borderLeft: `2px solid ${activeLP === lp.id ? '#B8860B' : 'transparent'}`, background: activeLP === lp.id ? '#071B33' : 'transparent' }}
           >
-            <div style={{ fontSize: 12, fontWeight: 600, color: '#F8F5F0', marginBottom: 2 }}>{lp.name}</div>
-            <div style={{ fontSize: 10, color: '#4A6070', marginBottom: 4 }}>{lp.meta}</div>
+            <div style={{ fontSize: 17, fontWeight: 600, color: '#F8F5F0', marginBottom: 2 }}>{lp.name}</div>
+            <div style={{ fontSize: 14, color: '#4A6070', marginBottom: 4 }}>{lp.meta}</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <div style={{ flex: 1, height: 3, background: '#1E3A5A', borderRadius: 2, overflow: 'hidden' }}>
                 <div style={{ height: '100%', width: `${lp.pct}%`, background: '#B8860B', borderRadius: 2 }} />
               </div>
-              <span style={{ fontSize: 9, color: '#B8860B', fontWeight: 600 }}>{lp.pct}%</span>
+              <span style={{ fontSize: 13, color: '#B8860B', fontWeight: 600 }}>{lp.pct}%</span>
             </div>
           </div>
         ))}
@@ -400,30 +400,30 @@ const Nivel2Page = () => {
           return (
             <>
               <div style={{ marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid #1E3A5A' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 700, color: '#F8F5F0', marginBottom: 4 }}>{lp.fullName}</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 31, fontWeight: 700, color: '#F8F5F0', marginBottom: 4 }}>{lp.fullName}</div>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                   {badge(lp.status, `${lp.statusColor}22`, lp.statusColor)}
-                  <span style={{ fontSize: 10, color: '#4A6070' }}>{lp.formato} · {lp.idioma} · Deadline: {lp.deadline}</span>
+                  <span style={{ fontSize: 14, color: '#4A6070' }}>{lp.formato} · {lp.idioma} · Deadline: {lp.deadline}</span>
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8, marginBottom: 20 }}>
                 <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '10px 12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 8, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Completas</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 700, color: '#86EFAC' }}>{lp.completas}</div>
+                  <div style={{ fontSize: 15, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Completas</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 31, fontWeight: 700, color: '#86EFAC' }}>{lp.completas}</div>
                 </div>
                 <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '10px 12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 8, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Parciales</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 700, color: '#B8860B' }}>{lp.parciales}</div>
+                  <div style={{ fontSize: 15, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Parciales</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 31, fontWeight: 700, color: '#B8860B' }}>{lp.parciales}</div>
                 </div>
                 <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '10px 12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 8, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Input requerido</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 700, color: '#FCA5A5' }}>{lp.input}</div>
+                  <div style={{ fontSize: 15, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Input requerido</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 31, fontWeight: 700, color: '#FCA5A5' }}>{lp.input}</div>
                 </div>
               </div>
               {lp.notas && (
                 <div style={{ marginBottom: 20, padding: '12px 16px', background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, borderLeft: '3px solid #B8860B' }}>
-                  <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#B8860B', marginBottom: 6 }}>Notas</div>
-                  <div style={{ fontSize: 12, color: '#8AAABB', lineHeight: 1.6 }}>{lp.notas}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#B8860B', marginBottom: 6 }}>Notas</div>
+                  <div style={{ fontSize: 17, color: '#8AAABB', lineHeight: 1.6 }}>{lp.notas}</div>
                 </div>
               )}
               {sectionLabel('Respuestas del DDQ')}
@@ -439,16 +439,16 @@ const Nivel2Page = () => {
   const renderDeal = () => (
     <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
       <div style={{ width: 220, flexShrink: 0, borderRight: '1px solid #1E3A5A', overflowY: 'auto', padding: '12px 0' }}>
-        <div style={{ padding: '8px 16px 12px', fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#4A6070' }}>Fondo Andino III</div>
+        <div style={{ padding: '8px 16px 12px', fontSize: 15, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#4A6070' }}>Fondo Andino III</div>
         {deals.map(d => (
           <div
             key={d.id}
             onClick={() => setActiveDeal(d.id)}
             style={{ padding: '10px 16px', cursor: 'pointer', borderLeft: `2px solid ${activeDeal === d.id ? '#B8860B' : 'transparent'}`, background: activeDeal === d.id ? '#071B33' : 'transparent' }}
           >
-            <div style={{ fontSize: 12, fontWeight: 600, color: '#F8F5F0', marginBottom: 2 }}>{d.name}</div>
-            <div style={{ fontSize: 10, color: '#4A6070', marginBottom: 4 }}>{d.meta}</div>
-            <span style={{ fontSize: 8, fontWeight: 600, padding: '1px 6px', borderRadius: 2, background: d.sectorBg, color: d.sectorColor }}>{d.sector}</span>
+            <div style={{ fontSize: 17, fontWeight: 600, color: '#F8F5F0', marginBottom: 2 }}>{d.name}</div>
+            <div style={{ fontSize: 14, color: '#4A6070', marginBottom: 4 }}>{d.meta}</div>
+            <span style={{ fontSize: 15, fontWeight: 600, padding: '1px 6px', borderRadius: 2, background: d.sectorBg, color: d.sectorColor }}>{d.sector}</span>
           </div>
         ))}
       </div>
@@ -458,34 +458,34 @@ const Nivel2Page = () => {
           return (
             <>
               <div style={{ marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid #1E3A5A' }}>
-                <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 700, color: '#F8F5F0', marginBottom: 4 }}>{d.name}</div>
+                <div style={{ fontFamily: 'Georgia, serif', fontSize: 31, fontWeight: 700, color: '#F8F5F0', marginBottom: 4 }}>{d.name}</div>
                 <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
                   {badge(d.etapa, 'rgba(184,134,11,0.15)', '#B8860B')}
-                  <span style={{ fontSize: 10, color: '#4A6070' }}>{d.pais} · {d.ticket} · {d.compartimento}</span>
+                  <span style={{ fontSize: 14, color: '#4A6070' }}>{d.pais} · {d.ticket} · {d.compartimento}</span>
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 8, marginBottom: 20 }}>
                 <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '10px 12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 8, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Ticket</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#F8F5F0' }}>{d.ticket}</div>
+                  <div style={{ fontSize: 15, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Ticket</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 25, fontWeight: 700, color: '#F8F5F0' }}>{d.ticket}</div>
                 </div>
                 <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '10px 12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 8, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Capacidad</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#F8F5F0' }}>{d.capacidad}</div>
+                  <div style={{ fontSize: 15, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Capacidad</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 25, fontWeight: 700, color: '#F8F5F0' }}>{d.capacidad}</div>
                 </div>
                 <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '10px 12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 8, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>TIR esperada</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: '#B8860B' }}>{d.tir}</div>
+                  <div style={{ fontSize: 15, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>TIR esperada</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 25, fontWeight: 700, color: '#B8860B' }}>{d.tir}</div>
                 </div>
                 <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '10px 12px', textAlign: 'center' }}>
-                  <div style={{ fontSize: 8, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Estado</div>
-                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 18, fontWeight: 700, color: d.estadoColor }}>{d.estado}</div>
+                  <div style={{ fontSize: 15, color: '#4A6070', marginBottom: 4, textTransform: 'uppercase', letterSpacing: 1 }}>Estado</div>
+                  <div style={{ fontFamily: 'Georgia, serif', fontSize: 25, fontWeight: 700, color: d.estadoColor }}>{d.estado}</div>
                 </div>
               </div>
               {d.notas && (
                 <div style={{ marginBottom: 20, padding: '12px 16px', background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, borderLeft: '3px solid #B8860B' }}>
-                  <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#B8860B', marginBottom: 6 }}>Notas</div>
-                  <div style={{ fontSize: 12, color: '#8AAABB', lineHeight: 1.6 }}>{d.notas}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', color: '#B8860B', marginBottom: 6 }}>Notas</div>
+                  <div style={{ fontSize: 17, color: '#8AAABB', lineHeight: 1.6 }}>{d.notas}</div>
                 </div>
               )}
               {sectionLabel('Cuestionario de DD enviado al target')}
@@ -502,7 +502,7 @@ const Nivel2Page = () => {
     <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1, minHeight: 0 }}>
       <input
         placeholder="Buscar en la base de conocimiento — ej: 'respuestas ESG anteriores' o 'template DD energía'"
-        style={{ width: '100%', padding: '10px 16px', background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, color: '#F8F5F0', fontSize: 12, marginBottom: 20, fontFamily: 'Inter, sans-serif', outline: 'none' }}
+        style={{ width: '100%', padding: '10px 16px', background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, color: '#F8F5F0', fontSize: 17, marginBottom: 20, fontFamily: 'Inter, sans-serif', outline: 'none' }}
       />
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 20 }}>
         <div>
@@ -529,9 +529,9 @@ const Nivel2Page = () => {
           { icon: 'DD', name: 'Template DD Social', meta: 'Salud, educación, logística · 68 preguntas' },
         ].map(t => (
           <div key={t.name} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '12px 14px', background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, cursor: 'pointer' }}>
-            <div style={{ width: 28, height: 28, background: '#1E3A5A', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, color: '#B8860B', fontWeight: 700, marginBottom: 8 }}>{t.icon}</div>
-            <div style={{ fontSize: 11, color: '#C8D8E8', marginBottom: 2 }}>{t.name}</div>
-            <div style={{ fontSize: 9, color: '#4A6070' }}>{t.meta}</div>
+            <div style={{ width: 28, height: 28, background: '#1E3A5A', borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, color: '#B8860B', fontWeight: 700, marginBottom: 8 }}>{t.icon}</div>
+            <div style={{ fontSize: 15, color: '#C8D8E8', marginBottom: 2 }}>{t.name}</div>
+            <div style={{ fontSize: 13, color: '#4A6070' }}>{t.meta}</div>
           </div>
         ))}
       </div>
@@ -561,7 +561,7 @@ const Nivel2Page = () => {
         <button
           onClick={() => navigate('/componente/levantar-capital')}
           style={{
-            fontSize: 11, color: '#4A6070', cursor: 'pointer',
+            fontSize: 15, color: '#4A6070', cursor: 'pointer',
             background: 'none', border: 'none', padding: 0,
             display: 'flex', alignItems: 'center', gap: 6,
             fontFamily: 'Inter, sans-serif', marginRight: 20,
@@ -572,13 +572,13 @@ const Nivel2Page = () => {
           ← Volver
         </button>
         <div style={{ width: 1, height: 20, background: '#1E3A5A', marginRight: 20 }} />
-        <span style={{ fontFamily: 'Georgia, serif', fontSize: 14, fontWeight: 700, color: '#F8F5F0', marginRight: 8 }}>Ashmore</span>
-        <span style={{ fontSize: 7, color: '#B8860B', letterSpacing: 2, textTransform: 'uppercase', marginRight: 24 }}>Colombia</span>
+        <span style={{ fontFamily: 'Georgia, serif', fontSize: 20, fontWeight: 700, color: '#F8F5F0', marginRight: 8 }}>Ashmore</span>
+        <span style={{ fontSize: 14, color: '#B8860B', letterSpacing: 2, textTransform: 'uppercase', marginRight: 24 }}>Colombia</span>
         <div style={{ width: 1, height: 20, background: '#1E3A5A', marginRight: 24 }} />
-        <span style={{ fontSize: 10, color: '#4A6070', letterSpacing: 2, textTransform: 'uppercase', flex: 1 }}>
+        <span style={{ fontSize: 14, color: '#4A6070', letterSpacing: 2, textTransform: 'uppercase', flex: 1 }}>
           Sistema de Gestión de Due Diligence · IA
         </span>
-        <div style={{ fontSize: 9, fontWeight: 600, padding: '3px 10px', background: 'rgba(184,134,11,0.15)', color: '#B8860B', borderRadius: 2, border: '1px solid rgba(184,134,11,0.3)' }}>
+        <div style={{ fontSize: 13, fontWeight: 600, padding: '3px 10px', background: 'rgba(184,134,11,0.15)', color: '#B8860B', borderRadius: 2, border: '1px solid rgba(184,134,11,0.3)' }}>
           Nivel 2 — Demo
         </div>
       </div>
@@ -597,7 +597,7 @@ const Nivel2Page = () => {
             onClick={() => setActiveTab(tab.id)}
             style={{
               padding: '12px 24px',
-              fontSize: 12,
+              fontSize: 17,
               fontWeight: 500,
               color: activeTab === tab.id ? '#F8F5F0' : '#4A6070',
               cursor: 'pointer',
