@@ -4,6 +4,7 @@ import Index from "./pages/Index";
 import LoginPage from "./pages/LoginPage";
 import ComponentPage from "./pages/ComponentPage";
 import DemoPage from "./pages/DemoPage";
+import DdqPage from "./pages/DdqPage";
 
 function LoginRoute() {
   const { isAuthenticated } = useAuth();
@@ -26,6 +27,7 @@ export default function App() {
           <Route element={<ProtectedLayout />}>
             <Route path="/" element={<Index />} />
             <Route path="/componente/:id" element={<ComponentPage />} />
+            <Route path="/demo/ddq-respondedor" element={<DdqPage />} />
             <Route path="/demo/:demoId" element={<DemoPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
