@@ -185,6 +185,110 @@ const dealData: Record<string, {
   }
 };
 
+const briefingData: Record<string, {
+  proximaReunion: string;
+  asistentes: string;
+  objetivo: string;
+  tesis: { momento: string; porQueAshmore: string };
+  objeciones: { pregunta: string; respuesta: string; nivel: string }[];
+  historial: { fecha: string; tipo: string; nota: string }[];
+}> = {
+  caf: {
+    proximaReunion: 'Martes 25 Mar 2026 · 10:00am · Bogotá',
+    asistentes: 'Equipo IR Ashmore + Equipo de Inversiones CAF (3 personas)',
+    objetivo: 'Revisión final del DDQ y discusión de términos de co-inversión Compartimento B',
+    tesis: {
+      momento: 'América Latina enfrenta una brecha de infraestructura de USD 150B anuales según el BID — y la región acaba de iniciar el ciclo de inversión más ambicioso en dos décadas. Colombia lanzó su programa 5G de concesiones viales (USD 12B), Perú reactivó 23 proyectos de APP paralizados post-pandemia, y Centroamérica atrae capital climático como nunca antes por los compromisos COP28. Al mismo tiempo, la normalización de tasas en mercados desarrollados está redirigiendo capital institucional hacia activos reales en mercados emergentes — exactamente el perfil del Fondo Andino III.',
+      porQueAshmore: 'Tres fondos. Quince años. USD 953M comprometidos. Once activos operando. No somos un fondo global que abrió una oficina en Bogotá — somos un equipo local con el respaldo de Ashmore Group plc (FTSE 250, USD 48.7B AUM). CAF ya ha co-invertido con Ashmore en fondos anteriores. La relación tiene historial, los estándares IFC son compartidos, y el pipeline del Fondo III está alineado con la agenda de desarrollo de CAF en la región.',
+    },
+    objeciones: [
+      { pregunta: '¿Cómo justifican el tamaño del Fondo III (USD 420M) vs. el Fondo II (USD 248M)? ¿Tienen capacidad de despliegue?', respuesta: 'El crecimiento refleja la expansión geográfica — de 2 países a 6 — y no un cambio en el ticket promedio. Con ~10 inversiones target a USD 30-80M, el ritmo de despliegue es consistente con los fondos anteriores. Ya tenemos 7 inversiones realizadas en el Fondo III, lo que demuestra capacidad de originación. El pipeline visible para los próximos 18 meses cubre cómodamente el capital restante.', nivel: 'alta' },
+      { pregunta: '¿Cuáles son las métricas de impacto de desarrollo del Fondo III? CAF requiere additionality demostrable.', respuesta: 'El Fondo III tiene mandato explícito de infraestructura climática y social con métricas de impacto desde el due diligence. Ejemplos del portafolio actual: Bioena genera empleo rural en zonas de conflicto post-acuerdo; Ática Andina gestiona residuos en municipios sin servicio previo; Lógika conecta productores rurales con cadenas de exportación. Las métricas de empleos, toneladas de CO2 y cobertura de servicios se reportan trimestralmente bajo estándares IFC.', nivel: 'alta' },
+      { pregunta: '¿Qué pasa con el riesgo político en Colombia año electoral?', respuesta: 'La estrategia de diversificación geográfica del Fondo III — 6 países — es precisamente la respuesta estructural a este riesgo. Colombia representa ~50% del portafolio proyectado, pero los activos tienen flujos contractuales (concesiones, PPAs, tarifas reguladas) que aíslan el retorno del ciclo político de corto plazo. El track record de Ashmore incluye haber gestionado activos a través de 4 ciclos electorales colombianos sin impacto material en los fondos.', nivel: 'media' },
+      { pregunta: '¿Cómo manejan los conflictos de interés entre los 3 compartimentos del Fondo III?', respuesta: 'El reglamento del FCP establece criterios de asignación de oportunidades entre compartimentos definidos desde el inicio — no discrecionales. El Comité de Inversiones aplica estos criterios con documentación completa de cada decisión de asignación. Alianza Fiduciaria como administrador independiente supervisa el cumplimiento.', nivel: 'media' },
+      { pregunta: '¿Cuál es el plan de salida para los activos del Fondo I que ya llevan 15 años?', respuesta: 'TermoemCali y los activos del Fondo I están en proceso de maduración natural. Las opciones de salida incluyen venta estratégica a operadores del sector, venta a fondos de infraestructura de largo plazo (core), o en algunos casos IPO de vehículos holding. El timing está alineado con el plazo del fondo (15 años desde 2010) y se comunica a los LPs en los reportes trimestrales.', nivel: 'baja' },
+    ],
+    historial: [
+      { fecha: 'Nov 2025', tipo: 'Reunión inicial', nota: 'Presentación del Fondo III. CAF mostró interés en Compartimento B para co-inversión en activos climáticos. Solicitaron DDQ completo.' },
+      { fecha: 'Ene 2026', tipo: 'Call de seguimiento', nota: 'Revisión de secciones ESG del DDQ. CAF solicitó métricas de impacto adicionales sobre empleos y género en portafolio.' },
+      { fecha: 'Feb 2026', tipo: 'Envío documentos', nota: 'DDQ 87% completo enviado para revisión interna. Pendiente respuesta sobre métricas de impacto.' },
+    ]
+  },
+  porvenir: {
+    proximaReunion: 'Jueves 20 Mar 2026 · 3:00pm · Bogotá',
+    asistentes: 'Equipo IR Ashmore + Comité de Riesgos Alternos Porvenir (5 personas)',
+    objetivo: 'Presentación ante el Comité de Riesgos — decisión de inversión en Fondo III',
+    tesis: {
+      momento: 'Los fondos de pensiones colombianos enfrentan el reto de diversificar hacia activos alternativos bajo el marco regulatorio de la Superfinanciera. La infraestructura PE ofrece el perfil de riesgo-retorno ideal: flujos de caja contractuales de largo plazo, correlación baja con renta variable, y retornos en USD que protegen contra devaluación. El Fondo Andino III está alineado con los lineamientos de inversión alternativa de Asobancaria para fondos de pensiones colombianos.',
+      porQueAshmore: 'Para un fondo de pensiones regulado, la calidad del gestor es tan importante como el retorno. Ashmore Colombia tiene 15 años de historial sin incidentes regulatorios, tres fondos auditados bajo estándares internacionales, y Alianza Fiduciaria como administrador regulado por la Superfinanciera. El respaldo de Ashmore Group plc (FTSE 250) ofrece la solidez institucional que requiere un compromiso de largo plazo.',
+    },
+    objeciones: [
+      { pregunta: '¿Cuáles son los términos económicos exactos del Fondo III? Management fee, carried interest, hurdle rate.', respuesta: 'Los términos están en el Reglamento del FCP disponible para revisión bajo NDA. El esquema es consistente con el mercado de PE de infraestructura en LatAm: management fee sobre capital comprometido durante el período de inversión, sobre NAV después. Carried interest estándar de mercado con hurdle rate que protege al LP antes de que el gestor participe en los retornos. Los detalles específicos los compartimos en la sesión de revisión del Reglamento.', nivel: 'alta' },
+      { pregunta: '¿Cómo se valoran los activos trimestralmente? ¿Quién valida la metodología?', respuesta: 'La valoración sigue las metodologías de Alianza Fiduciaria aprobadas por la Superfinanciera, aplicadas sobre flujos de caja proyectados con tasas de descuento consistentes con el mercado. El auditor externo del fondo valida la metodología anualmente. Para activos de infraestructura con flujos contractuales, la metodología de valoración es más estable que en PE de growth — hay menor dependencia de múltiplos de mercado.', nivel: 'alta' },
+      { pregunta: '¿Cuál es el perfil de distribuciones esperado? ¿Cuándo empieza a recibir caja el fondo de pensiones?', respuesta: 'El perfil es típico de infraestructura PE: curva en J los primeros 3-4 años mientras se despliega el capital, distribuciones aceleradas años 6-10 a medida que los activos maduran y se producen desinversiones. Los activos de infraestructura operativa generan dividendos desde el inicio — algunos activos del Fondo III ya están distribuyendo. El plazo de 10 años está alineado con los horizontes de largo plazo de los fondos de pensiones.', nivel: 'alta' },
+      { pregunta: '¿Qué pasa si necesitamos salir del fondo antes del plazo?', respuesta: 'El Fondo III es un vehículo cerrado — no hay liquidez ordinaria durante el período de inversión. El reglamento permite la transferencia de participaciones entre inversionistas con aprobación del gestor. En la práctica, hay mercado secundario de participaciones en fondos de infraestructura de calidad — pero no debe asumirse como mecanismo de salida garantizado. Este es un compromiso de largo plazo.', nivel: 'media' },
+    ],
+    historial: [
+      { fecha: 'Dic 2025', tipo: 'Reunión inicial', nota: 'Presentación general del Fondo III. Porvenir mostró interés pero requiere aprobación del Comité de Riesgos Alternos.' },
+      { fecha: 'Feb 2026', tipo: 'Envío DDQ', nota: 'DDQ enviado en español. Porvenir solicitó información adicional sobre términos económicos y metodología de valoración.' },
+    ]
+  },
+  skandia: {
+    proximaReunion: 'Lunes 7 Abr 2026 · 11:00am · Virtual',
+    asistentes: 'Equipo IR Ashmore + Director de Inversiones Skandia',
+    objetivo: 'Revisión del DDQ y discusión de estructura de inversión compatible con regulación de aseguradoras',
+    tesis: {
+      momento: 'Las aseguradoras colombianas buscan activos de largo plazo que empaten con sus pasivos de seguros de vida y rentas vitalicias. La infraestructura PE ofrece exactamente ese perfil: flujos contractuales predecibles, duration de 10+ años, y retornos superiores a los TES de largo plazo. El Fondo Andino III cumple con los criterios de inversión en activos alternativos establecidos por la Superfinanciera para aseguradoras.',
+      porQueAshmore: 'Ashmore Colombia combina el rigor institucional que requiere una aseguradora regulada con el conocimiento local necesario para generar retornos superiores. Tres fondos auditados, Alianza Fiduciaria como administrador regulado, y 15 años sin incidentes regulatorios son la base de confianza para un compromiso de largo plazo.',
+    },
+    objeciones: [
+      { pregunta: '¿El Fondo III es elegible bajo las normas de inversión de la Superfinanciera para aseguradoras?', respuesta: 'Sí. Los FCPs gestionados por gestores registrados ante la Superfinanciera y administrados por fiduciarias vigiladas son elegibles como inversión alternativa para aseguradoras colombianas bajo los límites establecidos. Alianza Fiduciaria puede confirmar la estructura de elegibilidad. Recomendamos coordinar una sesión técnica con el equipo legal de Skandia y Alianza para revisar los límites específicos aplicables.', nivel: 'alta' },
+      { pregunta: '¿Cómo se reporta el Fondo III para efectos de capital regulatorio (Solvencia II)?', respuesta: 'El Fondo III reporta bajo los estándares del FCP colombiano con estados financieros auditados anuales y reportes de NAV trimestrales. Para efectos de Solvencia II, los activos de infraestructura en FCPs se clasifican según las instrucciones de la Superfinanciera. El administrador Alianza Fiduciaria provee la información en el formato requerido para los reportes regulatorios de Skandia.', nivel: 'alta' },
+    ],
+    historial: [
+      { fecha: 'Ene 2026', tipo: 'Primer contacto', nota: 'Reunión introductoria. Skandia está evaluando aumentar exposición a alternativos bajo nuevo límite regulatorio.' },
+      { fecha: 'Mar 2026', tipo: 'Envío DDQ', nota: 'DDQ enviado en español con sección adicional sobre elegibilidad regulatoria para aseguradoras.' },
+    ]
+  },
+  bid: {
+    proximaReunion: 'Viernes 19 Mar 2026 · 9:00am · Washington DC (virtual)',
+    asistentes: 'Equipo IR Ashmore + Equipo de Inversiones BID Invest (4 personas)',
+    objetivo: 'Revisión final pre-firma — DDQ 95% completo, pendiente métricas de impacto',
+    tesis: {
+      momento: 'BID Invest busca gestores que puedan demostrar additionality real en mercados donde el capital privado no llega solo. El Fondo III opera exactamente en ese espacio: infraestructura climática y social en mercados andinos y centroamericanos donde la brecha de financiamiento es estructural y donde la presencia de un DFI como BID Invest como co-inversionista genera efecto demostración para otros capitales privados.',
+      porQueAshmore: 'Ashmore Colombia es uno de los pocos gestores de PE de infraestructura en la región con track record demostrado bajo estándares IFC, capacidad de originación propietaria en 6 países, y un equipo que ha navegado 3 ciclos de inversión completos. La presencia de SIFEM como LP ancla del Fondo III valida la calidad ESG del gestor desde la perspectiva de los DFIs.',
+    },
+    objeciones: [
+      { pregunta: '¿Cómo miden y reportan el impacto de desarrollo? ¿Qué métricas específicas tienen para el Fondo III?', respuesta: 'El Fondo III mide impacto en 4 dimensiones: (1) Empleos: directos e indirectos generados o mantenidos por los activos del portafolio. (2) Género: % de mujeres en la fuerza laboral de las compañías del portafolio vs. benchmarks del sector. (3) Clima: MWh de energía limpia generada, toneladas de CO2 evitadas, residuos gestionados. (4) Acceso a servicios: número de hogares/personas con acceso a servicios básicos (agua, energía, transporte) como resultado de las inversiones. Reportamos estas métricas trimestralmente bajo el marco IRIS+ de GIIN.', nivel: 'alta' },
+      { pregunta: '¿Cuál es la additionality del Fondo III? ¿Estos activos no se financiarían sin su participación?', respuesta: 'La additionality opera en dos niveles. Primero, financiero: muchos activos del Fondo III no acceden a financiamiento bancario local en los términos necesarios para su desarrollo — el equity de Ashmore es el capital catalítico. Segundo, de gestión: Ashmore aporta gobernanza, estándares ESG y capacidad operativa que el mercado local no provee. Bioena y Ática son ejemplos donde sin Ashmore los proyectos no hubieran alcanzado los estándares requeridos para atraer financiamiento senior.', nivel: 'alta' },
+      { pregunta: '¿Cómo aseguran que los compromisos ESG se mantienen durante toda la vida del activo?', respuesta: 'El ESAP (Environmental and Social Action Plan) se negocia antes del cierre de cada inversión y se incluye como covenant en el acuerdo de accionistas. El cumplimiento se monitorea trimestralmente por el equipo de asset management de Ashmore y se reporta en el informe anual ESG del fondo. Ashmore tiene representación en las juntas directivas de todos los activos del portafolio — lo que da capacidad de enforcement real, no solo reporte.', nivel: 'media' },
+    ],
+    historial: [
+      { fecha: 'Oct 2025', tipo: 'Reunión inicial', nota: 'BID Invest identificó el Fondo III como candidato para su programa de co-inversión en infraestructura climática LatAm.' },
+      { fecha: 'Dic 2025', tipo: 'DD BID Invest', nota: 'BID Invest realizó su propio proceso de due diligence — revisión de políticas ESG, track record y estructura del fondo.' },
+      { fecha: 'Feb 2026', tipo: 'DDQ enviado', nota: 'DDQ ILPA + Addendum BID enviado. 95% completo — pendiente métricas de impacto IRIS+.' },
+      { fecha: 'Mar 2026', tipo: 'Pre-firma', nota: 'BID Invest confirmó interés de inversión — pendiente aprobación interna y firma de documentos.' },
+    ]
+  },
+  proteccion: {
+    proximaReunion: 'Miércoles 9 Abr 2026 · 2:00pm · Bogotá',
+    asistentes: 'Equipo IR Ashmore + Director de Inversiones Protección + Analista',
+    objetivo: 'Segunda reunión — profundizar en track record Fondo II y estructura del Fondo III',
+    tesis: {
+      momento: 'Protección ya invirtió en el Fondo Andino II — conocen al equipo, conocen el proceso, y han visto el desempeño de primera mano. La pregunta para esta reunión no es si Ashmore puede gestionar el capital, sino si el Fondo III ofrece el perfil de riesgo-retorno correcto para el portafolio de Protección en este momento del ciclo.',
+      porQueAshmore: 'La relación con Protección tiene historial. El Fondo II está en su fase de maduración — las métricas de desempeño son visibles. El Fondo III es la evolución natural: mayor diversificación geográfica, mandato climático alineado con tendencias globales, y el mismo equipo que gestionó los fondos anteriores.',
+    },
+    objeciones: [
+      { pregunta: '¿Cómo va el Fondo Andino II? ¿Cuándo esperan las primeras distribuciones?', respuesta: 'El Fondo Andino II está en línea con el plan de inversiones. Los activos operativos están generando caja y las primeras distribuciones están proyectadas para el segundo semestre de 2026 a medida que se completen las primeras desinversiones. El detalle específico de desempeño por activo lo compartimos en el reporte trimestral — que Protección recibe como LP del Fondo II.', nivel: 'alta' },
+      { pregunta: '¿Por qué aumentaron el tamaño del fondo de USD 248M a USD 420M?', respuesta: 'La expansión refleja tres factores: la ampliación geográfica de 2 a 6 países, la mayor base de LPs institucionales que confían en el gestor después del Fondo II, y el pipeline de oportunidades que identificamos en Centroamérica. El ticket promedio por inversión es similar — el mayor tamaño financia más inversiones, no tickets más grandes.', nivel: 'media' },
+    ],
+    historial: [
+      { fecha: 'Sep 2025', tipo: 'Reunión anual LPs', nota: 'Protección asistió a la asamblea anual de LPs del Fondo II. Expresaron interés en el Fondo III.' },
+      { fecha: 'Feb 2026', tipo: 'Primera reunión Fondo III', nota: 'Presentación del Fondo III. Protección solicitó detalle del track record del Fondo II y términos del Fondo III.' },
+    ]
+  }
+};
+
 const Nivel2Page = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -195,6 +299,7 @@ const Nivel2Page = () => {
     { id: 'dashboard', label: 'Dashboard', color: '#B8860B' },
     { id: 'lp', label: 'LP Relations', color: '#93C5FD' },
     { id: 'deal', label: 'Deal Due Diligence', color: '#86EFAC' },
+    { id: 'briefings', label: 'Briefings de Reunión', color: '#F9A8D4' },
     { id: 'kb', label: 'Base de Conocimiento', color: '#C4B5FD' },
   ];
 
@@ -497,6 +602,90 @@ const Nivel2Page = () => {
     </div>
   );
 
+  // ── BRIEFINGS DE REUNIÓN ──
+  const renderBriefings = () => {
+    const lp = briefingData[activeLP as keyof typeof briefingData] || briefingData.caf;
+
+    return (
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
+        <div style={{ width: 220, flexShrink: 0, borderRight: '1px solid #1E3A5A', overflowY: 'auto', padding: '12px 0' }}>
+          <div style={{ padding: '8px 16px 12px', fontSize: 15, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#4A6070' }}>Fondo Andino III</div>
+          {lps.map(l => (
+            <div
+              key={l.id}
+              onClick={() => setActiveLP(l.id)}
+              style={{ padding: '10px 16px', cursor: 'pointer', borderLeft: `2px solid ${activeLP === l.id ? '#B8860B' : 'transparent'}`, background: activeLP === l.id ? '#071B33' : 'transparent' }}
+            >
+              <div style={{ fontSize: 17, fontWeight: 600, color: '#F8F5F0', marginBottom: 2 }}>{l.name}</div>
+              <div style={{ fontSize: 14, color: '#4A6070' }}>{l.meta}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px' }}>
+          <div style={{ marginBottom: 20, paddingBottom: 16, borderBottom: '1px solid #1E3A5A' }}>
+            <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#F9A8D4', marginBottom: 8 }}>Briefing de Reunión</div>
+            <div style={{ fontFamily: 'Georgia, serif', fontSize: 31, fontWeight: 700, color: '#F8F5F0', marginBottom: 12 }}>
+              {lps.find(l => l.id === activeLP)?.name || 'CAF'} — {lp.proximaReunion}
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {[
+                { label: 'Asistentes', value: lp.asistentes },
+                { label: 'Objetivo', value: lp.objetivo },
+              ].map((item, i) => (
+                <div key={i} style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '10px 14px' }}>
+                  <div style={{ fontSize: 13, color: '#4A6070', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>{item.label}</div>
+                  <div style={{ fontSize: 17, color: '#C8D8E8', lineHeight: 1.5 }}>{item.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#B8860B', marginBottom: 12 }}>Narrativa para esta reunión</div>
+            <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '16px 18px', marginBottom: 8 }}>
+              <div style={{ fontSize: 14, color: '#4A6070', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6 }}>El momento</div>
+              <div style={{ fontSize: 18, color: '#8AAABB', lineHeight: 1.7 }}>{lp.tesis.momento}</div>
+            </div>
+            <div style={{ background: '#071B33', border: '1px solid #1E3A5A', borderRadius: 4, padding: '16px 18px' }}>
+              <div style={{ fontSize: 14, color: '#4A6070', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 6 }}>Por qué Ashmore</div>
+              <div style={{ fontSize: 18, color: '#8AAABB', lineHeight: 1.7 }}>{lp.tesis.porQueAshmore}</div>
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#B8860B', marginBottom: 12 }}>Preguntas difíciles esperadas</div>
+            {lp.objeciones.map((obj, i) => (
+              <div key={i} style={{ marginBottom: 10, background: '#071B33', border: '1px solid #1E3A5A', borderLeft: `3px solid ${obj.nivel === 'alta' ? '#FCA5A5' : obj.nivel === 'media' ? '#B8860B' : '#4A6070'}`, borderRadius: '0 4px 4px 0', padding: '14px 16px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, marginBottom: 8 }}>
+                  <span style={{ fontSize: 13, fontWeight: 700, padding: '2px 7px', borderRadius: 2, flexShrink: 0, marginTop: 1, background: obj.nivel === 'alta' ? 'rgba(239,68,68,0.1)' : obj.nivel === 'media' ? 'rgba(184,134,11,0.15)' : 'rgba(74,96,112,0.2)', color: obj.nivel === 'alta' ? '#FCA5A5' : obj.nivel === 'media' ? '#B8860B' : '#6A8AAA' }}>
+                    {obj.nivel === 'alta' ? 'Alta prob.' : obj.nivel === 'media' ? 'Media prob.' : 'Baja prob.'}
+                  </span>
+                  <div style={{ fontSize: 18, fontWeight: 600, color: '#C8D8E8', lineHeight: 1.5 }}>{obj.pregunta}</div>
+                </div>
+                <div style={{ fontSize: 17, color: '#6A8AAA', lineHeight: 1.7, paddingLeft: 0 }}>{obj.respuesta}</div>
+              </div>
+            ))}
+          </div>
+
+          <div>
+            <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#B8860B', marginBottom: 12 }}>Historial de interacciones</div>
+            {lp.historial.map((h, i) => (
+              <div key={i} style={{ display: 'flex', gap: 14, marginBottom: 10 }}>
+                <div style={{ flexShrink: 0, textAlign: 'right', width: 80 }}>
+                  <div style={{ fontSize: 15, color: '#B8860B', fontWeight: 600 }}>{h.fecha}</div>
+                  <div style={{ fontSize: 14, color: '#4A6070' }}>{h.tipo}</div>
+                </div>
+                <div style={{ width: 1, background: '#1E3A5A', flexShrink: 0 }} />
+                <div style={{ fontSize: 17, color: '#6A8AAA', lineHeight: 1.6, paddingBottom: 10 }}>{h.nota}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   // ── BASE DE CONOCIMIENTO ──
   const renderKB = () => (
     <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1, minHeight: 0 }}>
@@ -619,6 +808,7 @@ const Nivel2Page = () => {
         {activeTab === 'dashboard' && renderDashboard()}
         {activeTab === 'lp' && renderLP()}
         {activeTab === 'deal' && renderDeal()}
+        {activeTab === 'briefings' && renderBriefings()}
         {activeTab === 'kb' && renderKB()}
       </div>
     </div>
