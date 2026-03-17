@@ -69,7 +69,7 @@ export const journeyComponents: SystemComponent[] = [
     type: "JOURNEY",
     order: 3,
     description: "Due diligence formal del activo. Se abre el data room, se contratan asesores, se visita el proyecto.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "decidir-invertir",
