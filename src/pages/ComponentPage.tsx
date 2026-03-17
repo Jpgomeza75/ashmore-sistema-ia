@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import { getComponentById } from "@/data/components";
+import BuscarInvertirPage from "@/pages/BuscarInvertirPage";
 
 const LevantatCapitalPage = () => {
   const navigate = useNavigate();
@@ -434,6 +435,7 @@ const ComponentPage = () => {
   const { id } = useParams();
 
   if (id === 'levantar-capital') return <LevantatCapitalPage />;
+  if (id === 'buscar-invertir') return <BuscarInvertirPage />;
 
   const component = getComponentById(id || '');
   const navigate = useNavigate();
