@@ -78,7 +78,7 @@ export const journeyComponents: SystemComponent[] = [
     type: "JOURNEY",
     order: 4,
     description: "Investment Committee, memo de inversión, aprobación del deal, estructuración final y cierre.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "gestionar-invertido",
