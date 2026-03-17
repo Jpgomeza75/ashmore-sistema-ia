@@ -4,6 +4,7 @@ import { getComponentById } from "@/data/components";
 import BuscarInvertirPage from "@/pages/BuscarInvertirPage";
 import EvaluarInvertirPage from "@/pages/EvaluarInvertirPage";
 import DecidirInvertirPage from "@/pages/DecidirInvertirPage";
+import GestionarInvertidoPage from "@/pages/GestionarInvertidoPage";
 
 const LevantatCapitalPage = () => {
   const navigate = useNavigate();
@@ -440,6 +441,7 @@ const ComponentPage = () => {
   if (id === 'buscar-invertir') return <BuscarInvertirPage />;
   if (id === 'evaluar-invertir') return <EvaluarInvertirPage />;
   if (id === 'decidir-invertir') return <DecidirInvertirPage />;
+  if (id === 'gestionar-invertido') return <GestionarInvertidoPage />;
 
   const component = getComponentById(id || '');
   const navigate = useNavigate();
