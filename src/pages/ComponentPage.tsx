@@ -113,10 +113,10 @@ const LevantatCapitalPage = () => {
     {
       num: '3',
       tag: 'Prompt listo',
-      title: 'Anticipador de Objeciones',
-      desc: 'Dado el perfil de un LP, genera las 10 objeciones más probables con respuestas respaldadas en datos del portafolio y del mercado.',
+      title: 'Briefing de LP',
+      desc: 'Entra a cada reunión sabiendo exactamente qué va a preguntar el LP, cómo responderlo con datos de Ashmore, y qué no decir.',
       hasDemo: false,
-      demoId: 'anticipador-objeciones'
+      demoId: 'briefing-lp'
     }
   ];
 

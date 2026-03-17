@@ -7,6 +7,7 @@ import DemoPage from "./pages/DemoPage";
 import DdqPage from "./pages/DdqPage";
 import Nivel2Page from "./pages/Nivel2Page";
 import TesisPage from "./pages/TesisPage";
+import BriefingPage from "./pages/BriefingPage";
 
 function LoginRoute() {
   const { isAuthenticated } = useAuth();
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/demo/ddq-respondedor" element={<DdqPage />} />
             <Route path="/demo/tesis-inversion" element={<TesisPage />} />
             <Route path="/demo/nivel2-fundraising" element={<Nivel2Page />} />
+            <Route path="/demo/briefing-lp" element={<BriefingPage />} />
             <Route path="/demo/:demoId" element={<DemoPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
