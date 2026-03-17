@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import {
   Chart as ChartJS,
   CategoryScale, LinearScale, BarElement,
-  RadialLinearScale, PointElement, LineElement,
-  Filler, Tooltip, Legend
+  PointElement, LineElement, Filler,
+  Tooltip, Legend
 } from 'chart.js';
-import { Bar, Radar } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 
 ChartJS.register(
   CategoryScale, LinearScale, BarElement,
-  RadialLinearScale, PointElement, LineElement,
-  Filler, Tooltip, Legend
+  PointElement, LineElement, Filler,
+  Tooltip, Legend
 );
 
 const navy = '#0A2240';
@@ -239,271 +239,598 @@ const Nivel2DDPage = () => {
   );
 
   // ── FINANCIERO ───────────────────────────────────
-  const renderFinanciero = () => (
-    <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
+  const renderFinanciero = () => {
 
-      {/* KPIs */}
-      <div style={{ display: 'grid',
-        gridTemplateColumns: 'repeat(4,1fr)', gap: 12,
-        marginBottom: 24 }}>
-        {kpi('TIR modelo vendedor', '18.4%',
-          'Sobre objetivo del fondo', '#FCA5A5')}
-        {kpi('TIR caso base ajustado', '13.1%',
-          'Con supuestos de mercado', '#FCD34D')}
-        {kpi('TIR caso pesimista', '9.1%',
-          'Bajo hurdle rate', '#FCA5A5')}
-        {kpi('Hurdle rate fondo', '12.0%',
-          'Mínimo requerido', '#6A8AAA')}
-      </div>
+    const anos = ['2022','2023','2024','2025',
+      '2026','2027','2028','2029','2030','2031'];
 
-      <div style={{ display: 'grid',
-        gridTemplateColumns: '1fr 1fr', gap: 16,
-        marginBottom: 20 }}>
+    // FCLE por año (USD M) — curva J típica
+    const fclData = [
+      -55, -4.2, 3.1, 3.8, 4.3, 5.1,
+      5.9, 6.8, 7.4, 72.3
+    ];
 
-        {/* WATERFALL */}
-        <div style={{ background: dark,
-          border: `1px solid ${border}`,
-          borderRadius: 4, padding: 16 }}>
-          {sLabel('Cascada de valor — Año 5 (USD M)')}
-          <div style={{ height: 220 }}>
-            <Bar
-              data={{
-                labels: WATERFALL_LABELS,
-                datasets: [{
-                  data: WATERFALL_VALUES,
-                  backgroundColor: WATERFALL_COLORS,
-                  borderRadius: 2,
-                }]
-              }}
-              options={{
-                ...chartDefaults,
-                indexAxis: 'y' as const,
-                plugins: {
-                  ...chartDefaults.plugins,
-                  tooltip: {
-                    ...chartDefaults.plugins.tooltip,
-                    callbacks: {
-                      label: (ctx: { raw: number }) =>
-                        ` USD ${ctx.raw}M`
-                    }
-                  }
-                },
-                scales: {
-                  x: {
-                    ...chartDefaults.scales.x,
-                    ticks: {
-                      ...chartDefaults.scales.x.ticks,
-                      callback: (v: number) => `$${v}M`
-                    }
-                  },
-                  y: { ...chartDefaults.scales.y }
-                }
-              }}
-            />
-          </div>
+    // Línea de capital acumulado invertido
+    const capitalAcumulado = [
+      55, 59.2, 56.1, 52.3, 48.0,
+      42.9, 37.0, 30.2, 22.8, 0
+    ];
+
+    // BRIDGE TIR
+    const bridgeLabels = [
+      'Punto de\npartida',
+      'EBITDA\noperativo',
+      'Reducción\ndeuda',
+      'Crecimiento\ncontractual',
+      'Expansión\nmúltiplo',
+      'TIR\ntotal'
+    ];
+    const bridgeBase =  [0,    8.0,  8.0,  8.0,  11.2, 0];
+    const bridgeDelta = [8.0,  3.2,  2.4,  3.2,  1.6,  0];
+    const bridgeFinal = [0,    0,    0,    0,    0,  18.4];
+
+    // ESCENARIOS
+    const escenarios = [
+      {
+        nombre: 'Pesimista',
+        color: '#FCA5A5',
+        bg: 'rgba(239,68,68,0.08)',
+        border: 'rgba(239,68,68,0.3)',
+        tir: '9.1%',
+        moic: '1.6x',
+        dpi5: '0.3x',
+        breakeven: 'Año 8',
+        supuestos: [
+          'Crecimiento ingresos: 4% real',
+          'Múltiplo salida: 6x EV/EBITDA',
+          'Factor de planta: 20%',
+          'PPA no renovado al vencimiento',
+        ],
+        tirNum: 9.1,
+        aboveHurdle: false,
+      },
+      {
+        nombre: 'Base Ashmore',
+        color: '#FCD34D',
+        bg: 'rgba(184,134,11,0.08)',
+        border: 'rgba(184,134,11,0.5)',
+        tir: '13.1%',
+        moic: '2.4x',
+        dpi5: '0.6x',
+        breakeven: 'Año 6',
+        supuestos: [
+          'Crecimiento ingresos: 6% real',
+          'Múltiplo salida: 8x EV/EBITDA',
+          'Factor de planta: 22%',
+          'PPA renovado en términos similares',
+        ],
+        tirNum: 13.1,
+        aboveHurdle: true,
+      },
+      {
+        nombre: 'Modelo vendedor',
+        color: '#FCA5A5',
+        bg: 'rgba(239,68,68,0.05)',
+        border: 'rgba(239,68,68,0.2)',
+        tir: '18.4%',
+        moic: '3.8x',
+        dpi5: '0.9x',
+        breakeven: 'Año 5',
+        supuestos: [
+          'Crecimiento ingresos: 9.8% real',
+          'Múltiplo salida: 12.5x EV/EBITDA',
+          'Factor de planta: 26%',
+          'PPA renovado con upside de precio',
+        ],
+        tirNum: 18.4,
+        aboveHurdle: false,
+      },
+    ];
+
+    // TABLA DE SUPUESTOS
+    const supuestos = [
+      {
+        nombre: 'Múltiplo de salida EV/EBITDA',
+        modelo: '12.5x', min: '7x', max: '10x',
+        delta: '+2.5x - +5.5x',
+        impacto: '+3.2pp TIR',
+        status: 'rojo',
+        celda: 'Tab Salida · F8',
+      },
+      {
+        nombre: 'Crecimiento de ingresos (real anual)',
+        modelo: '9.8%', min: '3%', max: '8%',
+        delta: '+1.8pp - +6.8pp',
+        impacto: '+2.8pp TIR',
+        status: 'rojo',
+        celda: 'Tab Ingresos · C14',
+      },
+      {
+        nombre: 'Factor de planta (capacity factor)',
+        modelo: '26%', min: '20%', max: '24%',
+        delta: '+2pp - +6pp',
+        impacto: '+1.6pp TIR',
+        status: 'rojo',
+        celda: 'Tab Técnico · B22',
+      },
+      {
+        nombre: 'Margen EBITDA operativo',
+        modelo: '68%', min: '45%', max: '75%',
+        delta: '-7pp - +23pp',
+        impacto: '+0.4pp TIR',
+        status: 'amarillo',
+        celda: 'Tab P&L · D45',
+      },
+      {
+        nombre: 'WACC aplicado',
+        modelo: '9.5%', min: '9%', max: '12%',
+        delta: '+0.5pp - -2.5pp',
+        impacto: '-0.2pp TIR',
+        status: 'verde',
+        celda: 'Tab WACC · B5',
+      },
+      {
+        nombre: 'Capex de mantenimiento',
+        modelo: '2.1%', min: '2%', max: '5%',
+        delta: '-0.1pp - +2.9pp',
+        impacto: '+0.2pp TIR',
+        status: 'verde',
+        celda: 'Tab Capex · E12',
+      },
+    ];
+
+    const statusStyle = (s: string) => ({
+      rojo: { bg: 'rgba(239,68,68,0.1)', color: '#FCA5A5', label: 'Agresivo' },
+      amarillo: { bg: 'rgba(250,204,21,0.1)', color: '#FCD34D', label: 'En línea' },
+      verde: { bg: 'rgba(34,197,94,0.1)', color: '#86EFAC', label: 'Conservador' },
+    }[s] || { bg: '', color: '', label: '' });
+
+    return (
+      <div style={{ padding: '20px 24px',
+        overflowY: 'auto', flex: 1 }}>
+
+        {/* ── KPIs ── */}
+        <div style={{ display: 'grid',
+          gridTemplateColumns: 'repeat(4,1fr)',
+          gap: 12, marginBottom: 24 }}>
+          {[
+            { label: 'TIR modelo vendedor', val: '18.4%',
+              sub: 'Sobre objetivo del fondo',
+              color: '#FCA5A5' },
+            { label: 'TIR base Ashmore', val: '13.1%',
+              sub: 'Con supuestos de mercado',
+              color: '#FCD34D' },
+            { label: 'TIR caso pesimista', val: '9.1%',
+              sub: 'Bajo hurdle rate',
+              color: '#FCA5A5' },
+            { label: 'Hurdle rate fondo', val: '12.0%',
+              sub: 'Mínimo requerido',
+              color: '#6A8AAA' },
+          ].map((k,i) => (
+            <div key={i} style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4, padding: '14px 16px' }}>
+              <div style={{ fontSize: 11, color: '#4A6070',
+                textTransform: 'uppercase', letterSpacing: 1,
+                marginBottom: 6 }}>{k.label}</div>
+              <div style={{ fontFamily: 'Georgia, serif',
+                fontSize: 30, fontWeight: 700,
+                color: k.color, lineHeight: 1,
+                marginBottom: 4 }}>{k.val}</div>
+              <div style={{ fontSize: 11,
+                color: '#4A6070' }}>{k.sub}</div>
+            </div>
+          ))}
         </div>
 
-        {/* RADAR */}
-        <div style={{ background: dark,
-          border: `1px solid ${border}`,
-          borderRadius: 4, padding: 16 }}>
-          {sLabel('Supuestos vs benchmark LatAm')}
-          <div style={{ height: 220 }}>
-            <Radar
-              data={{
-                labels: RADAR_LABELS,
-                datasets: [
-                  {
-                    label: 'Modelo vendedor',
-                    data: [90, 95, 85, 65, 40, 55],
-                    borderColor: copper,
-                    backgroundColor: `${copper}22`,
-                    pointBackgroundColor: copper,
-                    borderWidth: 2,
-                  },
-                  {
-                    label: 'Benchmark LatAm',
-                    data: [50, 50, 50, 60, 50, 50],
-                    borderColor: '#6A8AAA',
-                    backgroundColor: 'rgba(106,138,170,0.1)',
-                    pointBackgroundColor: '#6A8AAA',
-                    borderWidth: 1.5,
-                  }
-                ]
-              }}
-              options={{
-                plugins: {
-                  legend: {
-                    display: true,
-                    labels: {
-                      color: '#8AAABB',
-                      font: { size: 11 },
-                      boxWidth: 12,
-                    }
-                  },
-                  tooltip: chartDefaults.plugins.tooltip,
-                },
-                scales: {
-                  r: {
-                    ticks: { display: false },
-                    grid: { color: border },
-                    angleLines: { color: border },
-                    pointLabels: {
-                      color: '#8AAABB',
-                      font: { size: 10 }
+        {/* ── FILA 1: Perfil de FCL + Bridge TIR ── */}
+        <div style={{ display: 'grid',
+          gridTemplateColumns: '1.2fr 1fr',
+          gap: 16, marginBottom: 16 }}>
+
+          {/* Perfil de flujos de caja */}
+          <div style={{ background: dark,
+            border: `1px solid ${border}`,
+            borderRadius: 4, padding: 16 }}>
+            <div style={{ fontSize: 10, fontWeight: 700,
+              letterSpacing: 2, textTransform: 'uppercase',
+              color: copper, marginBottom: 4 }}>
+              Perfil de flujos de caja al equity (USD M)
+            </div>
+            <div style={{ fontSize: 11, color: '#4A6070',
+              marginBottom: 12 }}>
+              Inversión inicial + distribuciones + desinversión año 10
+            </div>
+            <div style={{ height: 200 }}>
+              <Bar
+                data={{
+                  labels: anos,
+                  datasets: [
+                    {
+                      type: 'bar' as const,
+                      label: 'FCLE',
+                      data: fclData,
+                      backgroundColor: fclData.map(v =>
+                        v >= 0
+                          ? 'rgba(134,239,172,0.8)'
+                          : 'rgba(252,165,165,0.8)'
+                      ),
+                      borderRadius: 2,
+                      yAxisID: 'y',
                     },
-                    suggestedMin: 0,
-                    suggestedMax: 100,
+                    {
+                      type: 'line' as const,
+                      label: 'Capital en riesgo',
+                      data: capitalAcumulado,
+                      borderColor: copper,
+                      backgroundColor: 'transparent',
+                      borderWidth: 2,
+                      pointBackgroundColor: copper,
+                      pointRadius: 3,
+                      tension: 0.3,
+                      yAxisID: 'y',
+                    }
+                  ]
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: {
+                      display: true,
+                      labels: {
+                        color: '#8AAABB',
+                        font: { size: 10 },
+                        boxWidth: 10,
+                      }
+                    },
+                    tooltip: {
+                      backgroundColor: navy,
+                      titleColor: '#F8F5F0',
+                      bodyColor: '#8AAABB',
+                      borderColor: border,
+                      borderWidth: 1,
+                      callbacks: {
+                        label: (ctx: { raw: number }) =>
+                          ` USD ${ctx.raw}M`
+                      }
+                    }
+                  },
+                  scales: {
+                    x: {
+                      ticks: { color: '#8AAABB',
+                        font: { size: 10 } },
+                      grid: { color: border },
+                      border: { color: border }
+                    },
+                    y: {
+                      ticks: {
+                        color: '#8AAABB',
+                        font: { size: 10 },
+                        callback: (v: number) => `$${v}M`
+                      },
+                      grid: { color: border },
+                      border: { color: border }
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+            </div>
+            <div style={{ marginTop: 10, padding: '8px 12px',
+              background: 'rgba(184,134,11,0.06)',
+              border: '1px solid rgba(184,134,11,0.15)',
+              borderRadius: 3, fontSize: 11,
+              color: '#8AAABB', lineHeight: 1.6 }}>
+              El 78% del retorno del modelo se genera en el año 10
+              por la desinversión (USD 72.3M). El activo es
+              altamente dependiente del múltiplo de salida —
+              no del flujo operativo.
+            </div>
+          </div>
+
+          {/* Bridge TIR */}
+          <div style={{ background: dark,
+            border: `1px solid ${border}`,
+            borderRadius: 4, padding: 16 }}>
+            <div style={{ fontSize: 10, fontWeight: 700,
+              letterSpacing: 2, textTransform: 'uppercase',
+              color: copper, marginBottom: 4 }}>
+              Construcción de la TIR
+            </div>
+            <div style={{ fontSize: 11, color: '#4A6070',
+              marginBottom: 12 }}>
+              De dónde viene cada punto porcentual
+            </div>
+            <div style={{ height: 200 }}>
+              <Bar
+                data={{
+                  labels: bridgeLabels,
+                  datasets: [
+                    {
+                      label: 'Base',
+                      data: bridgeBase,
+                      backgroundColor: 'transparent',
+                      borderWidth: 0,
+                      stack: 'stack',
+                    },
+                    {
+                      label: 'Incremento',
+                      data: bridgeDelta,
+                      backgroundColor: bridgeDelta.map((_,i) =>
+                        i === 0 ? 'rgba(106,138,170,0.8)' :
+                        i === 4 ? 'rgba(252,165,165,0.8)' :
+                        'rgba(134,239,172,0.8)'
+                      ),
+                      borderRadius: 2,
+                      stack: 'stack',
+                    },
+                    {
+                      label: 'Total',
+                      data: bridgeFinal,
+                      backgroundColor: 'rgba(184,134,11,0.85)',
+                      borderRadius: 2,
+                      stack: 'stack',
+                    }
+                  ]
+                }}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                      backgroundColor: navy,
+                      titleColor: '#F8F5F0',
+                      bodyColor: '#8AAABB',
+                      borderColor: border,
+                      borderWidth: 1,
+                      callbacks: {
+                        label: (ctx: { raw: number }) =>
+                          ctx.raw > 0
+                            ? ` +${ctx.raw}pp`
+                            : ''
+                      }
+                    }
+                  },
+                  scales: {
+                    x: {
+                      stacked: true,
+                      ticks: { color: '#8AAABB',
+                        font: { size: 10 } },
+                      grid: { display: false },
+                      border: { color: border }
+                    },
+                    y: {
+                      stacked: true,
+                      ticks: {
+                        color: '#8AAABB',
+                        font: { size: 10 },
+                        callback: (v: number) => `${v}%`
+                      },
+                      grid: { color: border },
+                      border: { color: border },
+                      max: 22
+                    }
+                  }
+                }}
+              />
+            </div>
+            <div style={{ marginTop: 10, padding: '8px 12px',
+              background: 'rgba(239,68,68,0.06)',
+              border: '1px solid rgba(239,68,68,0.15)',
+              borderRadius: 3, fontSize: 11,
+              color: '#FCA5A5', lineHeight: 1.6 }}>
+              Solo 8.0pp del retorno son operativos
+              (EBITDA + reducción deuda). Los otros 10.4pp
+              dependen de supuestos de crecimiento y salida
+              no verificados.
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* HEATMAP */}
-      <div style={{ background: dark, border: `1px solid ${border}`,
-        borderRadius: 4, padding: 16, marginBottom: 16 }}>
-        {sLabel('Heatmap de sensibilidades — TIR del equity (%)')}
-        <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-          <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', gap: 8,
-              marginBottom: 4, paddingLeft: 80 }}>
-              {MULTIPLES.map(m => (
-                <div key={m} style={{ flex: 1, textAlign: 'center',
-                  fontSize: 10, color: '#4A6070',
-                  textTransform: 'uppercase' }}>
-                  {m}
+        {/* ── FILA 2: Escenarios ── */}
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 10, fontWeight: 700,
+            letterSpacing: 2, textTransform: 'uppercase',
+            color: copper, marginBottom: 12 }}>
+            Análisis de escenarios
+          </div>
+          <div style={{ display: 'grid',
+            gridTemplateColumns: 'repeat(3,1fr)',
+            gap: 12 }}>
+            {escenarios.map((esc, i) => (
+              <div key={i} style={{
+                background: esc.bg,
+                border: `1px solid ${esc.border}`,
+                borderRadius: 4, padding: 16,
+                borderTop: `3px solid ${esc.color}`,
+              }}>
+                <div style={{ display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: 14 }}>
+                  <div style={{ fontSize: 13,
+                    fontWeight: 700,
+                    color: esc.color }}>
+                    {esc.nombre}
+                  </div>
+                  <div style={{ fontSize: 9,
+                    fontWeight: 700, padding: '2px 7px',
+                    borderRadius: 2,
+                    background: esc.aboveHurdle
+                      ? 'rgba(134,239,172,0.15)'
+                      : 'rgba(239,68,68,0.15)',
+                    color: esc.aboveHurdle
+                      ? '#86EFAC' : '#FCA5A5' }}>
+                    {esc.aboveHurdle
+                      ? '✓ Sobre hurdle'
+                      : '✗ Bajo hurdle'}
+                  </div>
                 </div>
-              ))}
-            </div>
-            <div style={{ fontSize: 9, color: '#4A6070',
-              textTransform: 'uppercase', letterSpacing: 1,
-              marginBottom: 6, paddingLeft: 80 }}>
-              ← Múltiplo de salida EV/EBITDA
-            </div>
-            {HEATMAP.map((row, ri) => (
-              <div key={ri} style={{ display: 'flex',
-                alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                <div style={{ width: 72, textAlign: 'right',
-                  fontSize: 11, color: '#6A8AAA', flexShrink: 0,
-                  paddingRight: 8 }}>
-                  {CRECIMIENTOS[ri]}
-                </div>
-                {row.map((tir, ci) => {
-                  const { bg, text } = getHeatColor(tir);
-                  const isVendedor = ri === 3 && ci === 4;
-                  const enRango = tir >= 12 && tir <= 16;
-                  return (
-                    <div key={ci} style={{
-                      flex: 1, height: 44,
-                      background: bg,
+
+                <div style={{ display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: 8, marginBottom: 14 }}>
+                  {[
+                    { label: 'TIR equity', val: esc.tir },
+                    { label: 'MOIC', val: esc.moic },
+                    { label: 'DPI año 5', val: esc.dpi5 },
+                    { label: 'Break-even', val: esc.breakeven },
+                  ].map((m, j) => (
+                    <div key={j} style={{
+                      background: 'rgba(7,27,51,0.6)',
                       borderRadius: 3,
-                      display: 'flex', alignItems: 'center',
-                      justifyContent: 'center',
-                      flexDirection: 'column',
-                      border: isVendedor
-                        ? '2px solid #F8F5F0'
-                        : enRango
-                        ? `2px solid ${copper}`
-                        : '2px solid transparent',
-                      position: 'relative',
-                    }}>
-                      <div style={{ fontSize: 13, fontWeight: 700,
-                        color: text }}>{tir}%</div>
-                      {isVendedor && (
-                        <div style={{ fontSize: 8, color: '#F8F5F0',
-                          opacity: 0.8 }}>vendedor</div>
-                      )}
+                      padding: '8px 10px' }}>
+                      <div style={{ fontSize: 9,
+                        color: '#4A6070',
+                        textTransform: 'uppercase',
+                        letterSpacing: 1,
+                        marginBottom: 3 }}>
+                        {m.label}
+                      </div>
+                      <div style={{
+                        fontFamily: 'Georgia, serif',
+                        fontSize: j === 0 ? 22 : 16,
+                        fontWeight: 700,
+                        color: j === 0
+                          ? esc.color : '#F8F5F0' }}>
+                        {m.val}
+                      </div>
                     </div>
-                  );
-                })}
+                  ))}
+                </div>
+
+                <div style={{ borderTop:
+                  `1px solid ${esc.border}`,
+                  paddingTop: 10 }}>
+                  <div style={{ fontSize: 9,
+                    color: '#4A6070',
+                    textTransform: 'uppercase',
+                    letterSpacing: 1, marginBottom: 6 }}>
+                    Supuestos clave
+                  </div>
+                  {esc.supuestos.map((s, j) => (
+                    <div key={j} style={{
+                      display: 'flex', gap: 6,
+                      alignItems: 'flex-start',
+                      marginBottom: 3 }}>
+                      <div style={{ width: 4, height: 4,
+                        borderRadius: '50%',
+                        background: esc.color,
+                        flexShrink: 0,
+                        marginTop: 5 }} />
+                      <div style={{ fontSize: 11,
+                        color: '#6A8AAA',
+                        lineHeight: 1.5 }}>{s}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
-            <div style={{ paddingLeft: 80, marginTop: 8,
-              fontSize: 9, color: '#4A6070',
-              textTransform: 'uppercase', letterSpacing: 1 }}>
-              Crecimiento de ingresos ↑
+          </div>
+        </div>
+
+        {/* ── FILA 3: Tabla de supuestos ── */}
+        <div style={{ background: dark,
+          border: `1px solid ${border}`,
+          borderRadius: 4, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 16px',
+            borderBottom: `1px solid ${border}` }}>
+            <div style={{ fontSize: 10, fontWeight: 700,
+              letterSpacing: 2, textTransform: 'uppercase',
+              color: copper }}>
+              Supuestos críticos — Modelo vs benchmark LatAm
             </div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column',
-            gap: 6, flexShrink: 0, paddingTop: 28 }}>
-            {[
-              { bg: '#7F1D1D', text: '#FCA5A5', label: '< 10% — Bajo hurdle' },
-              { bg: '#991B1B', text: '#FCA5A5', label: '10-12% — Bajo hurdle' },
-              { bg: '#854F0B', text: '#FCD34D', label: '12-14% — En rango' },
-              { bg: '#166534', text: '#86EFAC', label: '14-16% — Sobre obj.' },
-              { bg: '#14532D', text: '#6EE7B7', label: '> 16% — Irreal' },
-            ].map((l, i) => (
-              <div key={i} style={{ display: 'flex',
-                alignItems: 'center', gap: 6 }}>
-                <div style={{ width: 16, height: 16,
-                  background: l.bg, borderRadius: 2,
-                  flexShrink: 0 }} />
-                <div style={{ fontSize: 10, color: l.text,
-                  whiteSpace: 'nowrap' }}>{l.label}</div>
-              </div>
-            ))}
-          </div>
+          <table style={{ width: '100%',
+            borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                {['Supuesto', 'Modelo vendedor',
+                  'Benchmark mín.', 'Benchmark máx.',
+                  'Delta', 'Impacto TIR', 'Estado',
+                  'Referencia'].map(h => (
+                  <th key={h} style={{
+                    fontSize: 9, fontWeight: 700,
+                    letterSpacing: 1,
+                    textTransform: 'uppercase',
+                    color: '#4A6070',
+                    padding: '8px 12px',
+                    textAlign: 'left',
+                    borderBottom: `1px solid ${border}` }}>
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {supuestos.map((s, i) => {
+                const st = statusStyle(s.status);
+                return (
+                  <tr key={i} style={{
+                    background: i % 2 === 0
+                      ? 'transparent'
+                      : 'rgba(255,255,255,0.02)' }}>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540',
+                      fontSize: 12, color: '#C8D8E8',
+                      fontWeight: 600 }}>
+                      {s.nombre}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540',
+                      fontSize: 13, fontWeight: 700,
+                      color: st.color }}>
+                      {s.modelo}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540',
+                      fontSize: 12, color: '#6A8AAA' }}>
+                      {s.min}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540',
+                      fontSize: 12, color: '#6A8AAA' }}>
+                      {s.max}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540',
+                      fontSize: 11, color: '#4A6070' }}>
+                      {s.delta}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540',
+                      fontSize: 12, fontWeight: 700,
+                      color: st.color }}>
+                      {s.impacto}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540' }}>
+                      <span style={{ fontSize: 10,
+                        fontWeight: 700,
+                        padding: '2px 8px',
+                        borderRadius: 2,
+                        background: st.bg,
+                        color: st.color }}>
+                        {st.label}
+                      </span>
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540',
+                      fontSize: 10, color: '#4A6070',
+                      fontFamily: 'monospace' }}>
+                      {s.celda}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
-      </div>
 
-      {/* IMPACTO */}
-      <div style={{ background: dark, border: `1px solid ${border}`,
-        borderRadius: 4, padding: 16 }}>
-        {sLabel('Descomposición del exceso de TIR vs benchmark (+6.4pp)')}
-        <div style={{ height: 200 }}>
-          <Bar
-            data={{
-              labels: IMPACTO_LABELS,
-              datasets: [{
-                data: IMPACTO_VALUES,
-                backgroundColor: IMPACTO_COLORS,
-                borderRadius: 2,
-              }]
-            }}
-            options={{
-              ...chartDefaults,
-              indexAxis: 'y' as const,
-              plugins: {
-                ...chartDefaults.plugins,
-                tooltip: {
-                  ...chartDefaults.plugins.tooltip,
-                  callbacks: {
-                    label: (ctx: { raw: number }) =>
-                      ` ${ctx.raw > 0 ? '+' : ''}${ctx.raw}pp`
-                  }
-                }
-              },
-              scales: {
-                x: {
-                  ...chartDefaults.scales.x,
-                  ticks: {
-                    ...chartDefaults.scales.x.ticks,
-                    callback: (v: number) =>
-                      `${Number(v) > 0 ? '+' : ''}${v}pp`
-                  }
-                },
-                y: { ...chartDefaults.scales.y }
-              }
-            }}
-          />
-        </div>
-        <div style={{ marginTop: 10, padding: '10px 14px',
-          background: 'rgba(184,134,11,0.08)',
-          border: '1px solid rgba(184,134,11,0.2)',
-          borderRadius: 4, fontSize: 12, color: copper,
-          lineHeight: 1.6 }}>
-          El exceso de TIR del modelo del vendedor (18.4% vs.
-          hurdle 12%) se explica en un 98% por tres supuestos:
-          múltiplo de salida agresivo (+3.2pp), crecimiento de
-          ingresos sin soporte contractual (+2.8pp), y factor
-          de planta sin verificación histórica (+1.6pp).
-        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // ── DATA ROOM ─────────────────────────────────────
   const renderDataRoom = () => (
