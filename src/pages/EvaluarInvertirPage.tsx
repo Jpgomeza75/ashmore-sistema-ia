@@ -258,6 +258,25 @@ const EvaluarInvertirPage = () => {
               </div>
             ))}
           </div>
+          <button
+            onClick={() => navigate('/demo/nivel2-dd')}
+            style={{ marginTop: 28, padding: '14px 32px',
+              border: `1.5px solid ${copper}`, borderRadius: 4,
+              fontSize: 13, fontWeight: 700, letterSpacing: 2,
+              color: copper, background: 'transparent',
+              cursor: 'pointer', textTransform: 'uppercase',
+              fontFamily: 'Inter, sans-serif' }}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = copper;
+              e.currentTarget.style.color = navy;
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = copper;
+            }}
+          >
+            Ver el sistema →
+          </button>
         </div>
 
       </div>

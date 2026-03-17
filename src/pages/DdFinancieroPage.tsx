@@ -324,7 +324,7 @@ const DdFinancieroPage = () => {
             </div>
           </div>
           <button
-            onClick={() => navigate('/')}
+            onClick={() => navigate('/demo/nivel2-dd')}
             style={{ padding: '12px 28px',
               border: `1.5px solid ${copper}`, borderRadius: 4,
               fontSize: 11, fontWeight: 700, letterSpacing: 1.5,
@@ -341,7 +341,7 @@ const DdFinancieroPage = () => {
               e.currentTarget.style.color = copper;
             }}
           >
-            Ver el mapa →
+            Ver el sistema →
           </button>
         </div>
 
