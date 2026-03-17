@@ -49,33 +49,103 @@ TONO: Brief interno de trabajo. Directo y sin adornos. El representante lo lee 3
 const OUTPUT_EJEMPLO_JUNTAS = [
   {
     num: '1',
-    titulo: 'Compromisos pendientes',
+    titulo: 'Compromisos pendientes de la última junta',
     color: '#FCA5A5',
-    texto: '• Plan de manejo de residuos Fase II — Responsable: Gerencia Técnica. Estado: INCUMPLIDO. Debía presentarse en esta sesión. Acción: exigir fecha comprometida antes de cerrar el punto de agenda correspondiente.\n\n• Actualización del modelo de valoración Q4 2025 — Responsable: CFO. Estado: CUMPLIDO. El modelo fue enviado a Ashmore el 28 de febrero.\n\n• Informe de auditoría ambiental ANLA — Responsable: Dirección ESG. Estado: PENDIENTE. Plazo original: marzo 15. Sin novedades del equipo.'
+    texto: `INCUMPLIDO — Plan de Manejo de Residuos Industriales Fase II
+Responsable: Gerencia Técnica (Ing. Ramírez) · Plazo original: Dic 31, 2025 · Reprogramado: Mar 25, 2026
+Estado: Segunda reprogramación consecutiva
+Acción: Exigir fecha definitiva con penalidad contractual si no se cumple. No aprobar nuevos puntos que dependan de esta gestión ambiental. Ashmore debe documentar en el acta que el incumplimiento es reiterado.
+
+PENDIENTE — Informe de auditoría ambiental ANLA (Compensación biótica)
+Responsable: Dirección ESG (Dra. Vargas) · Plazo: Mar 15, 2026
+Estado: 10 días vencido sin comunicación al directorio
+Acción: Solicitar al inicio de la junta estado actual del informe. Si hay observaciones de la ANLA, Ashmore debe ser informado de inmediato — es un riesgo de licencia ambiental del activo.
+
+CUMPLIDO — Actualización modelo de valoración Q4 2025 con nueva estructura de costos
+Responsable: CFO (Sr. Montenegro) · Plazo: Feb 28, 2026
+Estado: Modelo recibido por Ashmore el 28 de febrero. En revisión por equipo de inversiones.
+Sin acción requerida en la junta. El equipo de Ashmore enviará comentarios al CFO antes del 10 de abril.
+
+PENDIENTE — Contratación nuevo gerente de operaciones
+Responsable: Gerencia General · Plazo: Mar 1, 2026
+Estado: Proceso de selección en curso, dos candidatos finalistas
+Acción: Solicitar actualización del proceso. Ashmore debe asegurarse de que el nuevo gerente cumpla con el perfil aprobado por la junta en diciembre 2025.`
   },
   {
     num: '2',
-    titulo: 'Resumen ejecutivo del período',
+    titulo: 'Resumen ejecutivo del período Q1 2026',
     color: '#93C5FD',
-    texto: 'Q1 2026 cerró con ingresos de USD 8.4M, un 6% por debajo del plan (USD 8.9M) por menor despacho en enero debido a mantenimiento programado de la turbina 2. EBITDA: USD 5.6M (margen 67% vs. 71% plan). Caja operativa: USD 2.1M, en línea con plan.\n\nEvento material: Resolución CREG 101 100 de 2026 creó el MCE — oportunidad de optimizar ingresos de bolsa que requiere análisis legal antes de decidir participación.\n\nESG: Sin incidentes en el período. Plan de compensación biótica en ejecución (78% completado). Próxima auditoría ANLA: junio 2026.'
+    texto: `KPIs del período:
+- Ingresos Q1: USD 8.4M — 6% por debajo del plan (USD 8.9M)
+- EBITDA: USD 5.6M — Margen 67% vs. 71% en el plan
+- Caja operativa: USD 2.1M — En línea con el plan
+- Disponibilidad de planta: 91.2% vs. 95% garantizado contractualmente
+
+Causa del shortfall de ingresos: Mantenimiento no programado de la turbina 2 durante 18 días en enero por falla en el sistema de enfriamiento. El management reportó que la falla fue cubierta parcialmente por el contrato de O&M, pero el impacto neto en producción fue de ~42 GWh dejados de generar. ASHMORE AÚN NO HA RECIBIDO CONFIRMACIÓN ESCRITA DE QUÉ CUBRIÓ EL OPERADOR — esto es crítico para el Punto 3 de la agenda.
+
+Evento regulatorio relevante: Resolución CREG 101 100 de 2026 (MCE) expedida el 19 de febrero. El equipo de asset management de Ashmore está realizando análisis de impacto sobre el portafolio de energía — ver Punto 4 de la agenda.
+
+ESG: Sin incidentes ambientales o laborales en el período. Plan de compensación biótica: 78% completado, en línea con cronograma. Próxima auditoría ANLA programada para junio 2026 — ver compromiso pendiente sobre el informe de marzo.`
   },
   {
     num: '3',
-    titulo: 'Análisis de agenda',
+    titulo: 'Análisis punto por punto de la agenda',
     color: '#B8860B',
-    texto: 'PUNTO 3: Aprobación de capex extraordinario USD 2.3M — reparación turbina 2\nPosición Ashmore: SOLICITAR MÁS INFORMACIÓN antes de aprobar\nContexto: El presupuesto original no incluía este capex. El management argumenta que fue una falla no anticipada. Ashmore debe verificar si está cubierto por garantías del fabricante o por el contrato de O&M antes de comprometer capital adicional.\nRiesgo si se aprueba sin verificar: podría haber doble pago si la garantía aplica.'
+    texto: `PUNTO 2: Aprobación estados financieros Q1 2026 y gestión presupuestal
+Posición Ashmore: SOLICITAR ACLARACIÓN antes de aprobar
+Contexto: Los estados financieros muestran ingresos 6% bajo plan. Antes de aprobarlos, Ashmore debe entender cómo se contabilizó el impacto de la falla de la turbina 2 y si la recuperación por el contrato O&M fue registrada correctamente.
+Argumentos: El diferencial de USD 0.5M vs. plan requiere explicación que permita evaluar si es recuperable en Q2-Q4 o si afecta el pronóstico del año.
+Riesgo si se aprueba sin aclaración: Ashmore pierde la oportunidad de documentar que el shortfall fue por un evento no recurrente — relevante para la valoración del activo.
+
+PUNTO 3: Aprobación capex extraordinario USD 2.3M — reparación definitiva turbina 2
+Posición Ashmore: SOLICITAR MÁS INFORMACIÓN. No aprobar en esta sesión.
+Contexto: El presupuesto 2026 aprobado en diciembre no incluía este capex. Ashmore debe verificar PRIMERO si la reparación está cubierta por: (a) garantía del fabricante, (b) contrato de O&M, (c) póliza de seguro del activo.
+Argumentos: Si alguna cobertura aplica, TermoemCali no debería asumir este capex. Este monto equivale al 41% del EBITDA del trimestre.
+Riesgo si se aprueba sin verificar: Doble pago si la garantía o el seguro responden.
+
+PUNTO 4: Presentación impacto Resolución CREG 101 100 de 2026 (MCE)
+Posición Ashmore: ESCUCHAR E INFORMAR. No revelar aún la posición de Ashmore.
+Contexto: El management presentará su análisis del MCE. Ashmore tiene análisis propio en curso — escuchar primero la perspectiva del management antes de tomar posición pública.
+Pregunta clave que Ashmore debe hacer: ¿Ha revisado el management los contratos bilaterales vigentes para determinar si hay cláusulas de exclusividad que restrinjan la participación en el MCE?
+
+PUNTO 5: Aprobación plan de ventas Q2 2026 y estrategia de comercialización
+Posición Ashmore: CONDICIONAR aprobación a resolución del MCE.
+Contexto: El plan de ventas Q2 debería incorporar el análisis del MCE antes de aprobarse. Si TermoemCali puede participar en el MCE como vendedor, la estrategia de comercialización cambia materialmente.
+Propuesta: Que el plan de ventas incluya un escenario con MCE y otro sin MCE, y que la decisión de participar se tome en sesión extraordinaria antes del 30 de abril.`
   },
   {
     num: '4',
     titulo: 'Preguntas que Ashmore debería hacer',
     color: '#86EFAC',
-    texto: '1. "¿El contrato de O&M con [operador] cubre la falla de la turbina 2? ¿Cuál es la posición del operador?" → Verifica si el capex extraordinario es realmente necesario o si hay responsabilidad del operador.\n\n2. "¿Cuál fue el impacto exacto en ingresos del mantenimiento de enero? ¿Está recuperado en el plan del año?" → Evalúa si el shortfall de Q1 se recupera o afecta el año completo.\n\n3. "¿En qué estado está el informe de auditoría ANLA? ¿Hay riesgo de observaciones?" → Monitorea el compromiso pendiente y detecta riesgo regulatorio.'
+    texto: `1. "¿El contrato de O&M con el operador cubre la falla de la turbina 2? ¿Cuál fue la posición formal del operador cuando se notificó la falla?"
+Propósito: Determinar si el capex de USD 2.3M del Punto 3 es una obligación de TermoemCali o del operador.
+Respuesta esperada: El management debe tener documentada la comunicación con el operador. Si no la tiene, eso es una señal de alerta sobre la gestión del contrato O&M.
+
+2. "¿Cuál fue el impacto exacto en ingresos del mantenimiento de enero? ¿Cuántos GWh dejaron de generarse y a qué precio promedio de bolsa?"
+Propósito: Entender si el shortfall de USD 0.5M vs. plan es recuperable en los próximos trimestres o hay que ajustar el pronóstico del año completo.
+
+3. "¿Los contratos bilaterales vigentes de TermoemCali incluyen cláusulas de exclusividad que restrinjan la participación en el MCE?"
+Propósito: Es la información prerrequisito para evaluar la oportunidad del MCE. Si no lo han revisado, Ashmore debe exigir que se haga antes de la próxima sesión.
+
+4. "¿En qué estado está el informe de auditoría ANLA? ¿Hay observaciones pendientes de respuesta?"
+Propósito: El informe estaba comprometido para el 15 de marzo y no llegó. Si hay observaciones sobre el plan de compensación biótica, es un riesgo de licencia ambiental que Ashmore debe conocer de inmediato.
+
+5. "¿Cuándo se espera que el nuevo gerente de operaciones entre en funciones? ¿El gerente saliente permanece hasta el empalme?"
+Propósito: La vacante en operaciones es un riesgo, especialmente con la reparación de la turbina 2 en curso y el análisis del MCE simultáneos.`
   },
   {
     num: '5',
-    titulo: 'Alertas y seguimiento',
+    titulo: 'Alertas y seguimiento post-junta',
     color: '#F9A8D4',
-    texto: 'ASEGURARSE QUE QUEDE EN ACTA: La aprobación del capex de USD 2.3M debe condicionarse a confirmación escrita del operador sobre si aplica la garantía del contrato O&M.\n\nSEÑAL DE ALERTA: Si el management no tiene respuesta sobre la garantía, sugiere que no la consultaron — debilidad en la gestión de contratos que Ashmore debe documentar.\n\nSEGUIMIENTO POST-JUNTA: (1) Solicitar confirmación escrita del plan de manejo de residuos Fase II en los 5 días hábiles siguientes. (2) Confirmar con equipo de Ashmore si se va a explorar participación en el MCE.'
+    texto: `ASEGURARSE QUE QUEDE EN ACTA: La aprobación del capex de USD 2.3M (Punto 3) debe quedar condicionada a la confirmación escrita de que no existe cobertura por garantía del fabricante, contrato O&M o seguro. Si la junta aprueba sin esta condición, Ashmore debe votar en contra y documentar la razón.
+
+SEÑAL DE ALERTA: Si el management no tiene documentada la comunicación formal con el operador sobre la falla de la turbina 2, eso indica debilidad en la gestión del contrato O&M. Ashmore debe solicitar acceso a toda la documentación del incidente para revisión interna.
+
+SEGUIMIENTO SEMANA SIGUIENTE: Confirmar con el equipo jurídico de Ashmore que recibieron la tarea de revisar los contratos bilaterales de TermoemCali frente al MCE. Solicitar concepto preliminar antes del 10 de abril.
+
+SEGUIMIENTO 5 DÍAS HÁBILES: Si el Plan de Manejo de Residuos Fase II no tiene fecha definitiva aprobada en la junta, escalar al Director de Inversiones para evaluar si se requiere una sesión extraordinaria o una notificación formal a la gerencia general.
+
+DOCUMENTAR: La posición de Ashmore sobre el MCE debe quedar registrada en el acta como "en análisis — decisión pendiente de información contractual". Esto protege a Ashmore en caso de que el management tome decisiones unilaterales sobre la participación en el MCE antes de la próxima junta.`
   }
 ];
 
@@ -250,8 +320,7 @@ const PreparadorJuntasPage = () => {
                 </div>
                 <div style={{ fontSize: 10, color: '#4A6070',
                   marginTop: 2 }}>
-                  Marzo 25, 2026 · Junta Ordinaria ·
-                  5 secciones
+                  Junta Ordinaria · Marzo 25, 2026 · 5 secciones
                 </div>
               </div>
               <div style={{ fontSize: 9, fontWeight: 600,
@@ -259,7 +328,7 @@ const PreparadorJuntasPage = () => {
                 background: 'rgba(184,134,11,0.15)',
                 color: copper, borderRadius: 2,
                 border: '1px solid rgba(184,134,11,0.3)' }}>
-                Generado en 4 min
+                Output real generado con Claude
               </div>
             </div>
             {!showOutput ? (
@@ -278,7 +347,7 @@ const PreparadorJuntasPage = () => {
                     fontWeight: 700, color: '#F8F5F0',
                     cursor: 'pointer',
                     fontFamily: 'Inter, sans-serif' }}>
-                  Ver ejemplo de output →
+                  Ver brief completo →
                 </button>
               </div>
             ) : (
@@ -313,10 +382,42 @@ const PreparadorJuntasPage = () => {
                           background: sec.color }} />
                       </div>
                     </div>
-                    <div style={{ fontSize: 14,
-                      color: '#444', lineHeight: 1.8,
-                      whiteSpace: 'pre-line' }}>
-                      {sec.texto}
+                    <div style={{ fontSize: 13,
+                      lineHeight: 1.85, fontFamily: 'Inter, sans-serif' }}>
+                      {sec.texto.split('\n').map((line, li) => (
+                        <div key={li} style={{
+                          marginBottom: line === '' ? 8 : 2,
+                          fontWeight:
+                            line.startsWith('INCUMPLIDO') ||
+                            line.startsWith('PENDIENTE') ||
+                            line.startsWith('CUMPLIDO') ||
+                            line.startsWith('PUNTO') ||
+                            line.startsWith('Posición Ashmore') ||
+                            line.startsWith('ASEGURARSE') ||
+                            line.startsWith('SEÑAL') ||
+                            line.startsWith('SEGUIMIENTO') ||
+                            line.startsWith('DOCUMENTAR')
+                            ? 700 : 400,
+                          color:
+                            line.startsWith('INCUMPLIDO') ? '#991B1B' :
+                            line.startsWith('PENDIENTE') ? '#854D0E' :
+                            line.startsWith('CUMPLIDO') ? '#166534' :
+                            line.startsWith('PUNTO') ? '#0A2240' :
+                            line.startsWith('Posición Ashmore') ? '#B8860B' :
+                            line.startsWith('ASEGURARSE') ||
+                            line.startsWith('SEÑAL') ? '#991B1B' :
+                            line.startsWith('SEGUIMIENTO') ||
+                            line.startsWith('DOCUMENTAR') ? '#854D0E' :
+                            '#444',
+                          fontSize:
+                            line.startsWith('PUNTO') ||
+                            line.startsWith('INCUMPLIDO') ||
+                            line.startsWith('PENDIENTE') ||
+                            line.startsWith('CUMPLIDO') ? 14 : 13,
+                        }}>
+                          {line}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
@@ -328,6 +429,19 @@ const PreparadorJuntasPage = () => {
                     fontFamily: 'Inter, sans-serif' }}>
                   Ocultar ejemplo
                 </button>
+                <div style={{ marginTop: 20, padding: '12px 16px',
+                  background: '#F8F5F0', border: '1px solid #E0DBD0',
+                  borderLeft: '3px solid #B8860B',
+                  borderRadius: '0 4px 4px 0', fontSize: 12,
+                  color: '#8A8880', lineHeight: 1.6,
+                  fontStyle: 'italic' }}>
+                  Brief generado en 5 minutos a partir del acta
+                  de la junta de diciembre 2025, el informe
+                  trimestral Q1 2026 y la agenda enviada por
+                  la gerencia de TermoemCali. Documento de
+                  trabajo interno — no compartir con la
+                  compañía del portafolio.
+                </div>
               </div>
             )}
           </div>
