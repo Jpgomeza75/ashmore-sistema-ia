@@ -264,6 +264,165 @@ const TABS = [
     color: '#F9A8D4' },
 ];
 
+const PORTAFOLIO_CONSOLIDADO = {
+  tirObjetivo: 13.2,
+  tirActual: 12.8,
+  tirEntrada: 14.1,
+  moicObjetivo: 2.1,
+  moicActual: 1.8,
+  capitalDesplegado: 953,
+  navTotal: 1089,
+  ebitdaQ1: 22.7,
+  ebitdaQ1Plan: 24.1,
+  distribuciones: 0,
+};
+
+const ACTIVOS_DETALLE: Record<string, {
+  tirEntrada: number;
+  tirActual: number;
+  moicActual: number;
+  moicObjetivo: number;
+  ebitdaActual: number;
+  ebitdaPlan: number;
+  ingresoActual: number;
+  ingresoPlan: number;
+  deuda: number;
+  dscr: number;
+  dscrMinimo: number;
+  supuestosEntrada: Array<{
+    nombre: string;
+    valorEntrada: string;
+    valorActual: string;
+    cumplido: boolean | 'parcial';
+  }>;
+  valoracion: {
+    entryEV: number;
+    currentEV: number;
+    entryEbitdaMultiple: number;
+    currentEbitdaMultiple: number;
+  };
+}> = {
+  termoem: {
+    tirEntrada: 15.2, tirActual: 13.1,
+    moicActual: 1.6, moicObjetivo: 2.2,
+    ebitdaActual: 5.6, ebitdaPlan: 6.1,
+    ingresoActual: 8.4, ingresoPlan: 8.9,
+    deuda: 42, dscr: 1.42, dscrMinimo: 1.25,
+    supuestosEntrada: [
+      { nombre: 'Precio bolsa energía ($/MWh)',
+        valorEntrada: 'USD 185/MWh',
+        valorActual: 'USD 162/MWh',
+        cumplido: false },
+      { nombre: 'Factor de disponibilidad',
+        valorEntrada: '95%',
+        valorActual: '91.2%',
+        cumplido: false },
+      { nombre: 'Cargo por confiabilidad (OEF)',
+        valorEntrada: 'USD 14,200/MW-mes',
+        valorActual: 'USD 13,800/MW-mes',
+        cumplido: 'parcial' },
+      { nombre: 'Crecimiento ingresos real',
+        valorEntrada: '4% anual',
+        valorActual: '-6% Q1 2026',
+        cumplido: false },
+      { nombre: 'Margen EBITDA',
+        valorEntrada: '71%',
+        valorActual: '67%',
+        cumplido: 'parcial' },
+    ],
+    valoracion: {
+      entryEV: 185, currentEV: 172,
+      entryEbitdaMultiple: 8.2,
+      currentEbitdaMultiple: 7.7,
+    },
+  },
+  cacao: {
+    tirEntrada: 14.8, tirActual: 14.2,
+    moicActual: 1.9, moicObjetivo: 2.4,
+    ebitdaActual: 4.8, ebitdaPlan: 4.6,
+    ingresoActual: 6.2, ingresoPlan: 5.9,
+    deuda: 89, dscr: 1.61, dscrMinimo: 1.20,
+    supuestosEntrada: [
+      { nombre: 'Tráfico vehicular (VMD)',
+        valorEntrada: '18,500 veh/día',
+        valorActual: '19,200 veh/día',
+        cumplido: true },
+      { nombre: 'Peaje promedio ponderado',
+        valorEntrada: 'COP 12,800',
+        valorActual: 'COP 13,100',
+        cumplido: true },
+      { nombre: 'Disponibilidad vía',
+        valorEntrada: '98%',
+        valorActual: '97.8%',
+        cumplido: true },
+      { nombre: 'CAPEX de mantenimiento',
+        valorEntrada: '3.2% ingresos',
+        valorActual: '3.0% ingresos',
+        cumplido: true },
+    ],
+    valoracion: {
+      entryEV: 312, currentEV: 334,
+      entryEbitdaMultiple: 7.8,
+      currentEbitdaMultiple: 8.3,
+    },
+  },
+  atlas: {
+    tirEntrada: 16.1, tirActual: 15.4,
+    moicActual: 1.4, moicObjetivo: 2.6,
+    ebitdaActual: 1.4, ebitdaPlan: 1.3,
+    ingresoActual: 1.8, ingresoPlan: 1.7,
+    deuda: 28, dscr: 1.45, dscrMinimo: 1.20,
+    supuestosEntrada: [
+      { nombre: 'Factor de planta solar',
+        valorEntrada: '22%',
+        valorActual: '21.8%',
+        cumplido: true },
+      { nombre: 'Precio PPA',
+        valorEntrada: 'USD 48/MWh',
+        valorActual: 'USD 48/MWh',
+        cumplido: true },
+      { nombre: 'Crecimiento ingresos',
+        valorEntrada: '6% anual',
+        valorActual: '+8% Q1 2026',
+        cumplido: true },
+    ],
+    valoracion: {
+      entryEV: 68, currentEV: 74,
+      entryEbitdaMultiple: 9.1,
+      currentEbitdaMultiple: 9.8,
+    },
+  },
+  logika: {
+    tirEntrada: 13.8, tirActual: 11.2,
+    moicActual: 1.1, moicObjetivo: 2.1,
+    ebitdaActual: 2.1, ebitdaPlan: 2.3,
+    ingresoActual: 3.2, ingresoPlan: 3.5,
+    deuda: 18, dscr: 1.31, dscrMinimo: 1.25,
+    supuestosEntrada: [
+      { nombre: 'Ocupación del centro logístico',
+        valorEntrada: '92%',
+        valorActual: '78%',
+        cumplido: false },
+      { nombre: 'Tarifa arrendamiento',
+        valorEntrada: 'USD 8.2/m²/mes',
+        valorActual: 'USD 7.9/m²/mes',
+        cumplido: 'parcial' },
+      { nombre: 'Crecimiento demanda logística',
+        valorEntrada: '8% anual',
+        valorActual: '-8% Q1 2026',
+        cumplido: false },
+    ],
+    valoracion: {
+      entryEV: 42, currentEV: 38,
+      entryEbitdaMultiple: 7.2,
+      currentEbitdaMultiple: 6.5,
+    },
+  },
+};
+
+const getActiDetail = (id: string) =>
+  ACTIVOS_DETALLE[id] || ACTIVOS_DETALLE.cacao;
+
 const saludColor = (s: string) =>
   s === 'verde' ? '#22C55E' :
   s === 'amarillo' ? '#EAB308' : '#EF4444';
@@ -388,421 +547,577 @@ const Nivel2PortafolioPage = () => {
   );
 
   // ── TAB 1: DASHBOARD ─────────────────────────
-  const renderDashboard = () => (
-    <div style={{ flex: 1, overflow: 'hidden',
-      display: 'flex' }}>
-      {renderSidebar()}
-      <div style={{ flex: 1, overflowY: 'auto',
-        padding: '20px 24px' }}>
+  const renderDashboard = () => {
+    const pc = PORTAFOLIO_CONSOLIDADO;
+    const tirDelta = pc.tirActual - pc.tirObjetivo;
+    const ebitdaDelta = ((pc.ebitdaQ1 - pc.ebitdaQ1Plan)
+      / pc.ebitdaQ1Plan * 100);
 
-        {/* KPIs globales */}
-        <div style={{ display: 'grid',
-          gridTemplateColumns: 'repeat(4,1fr)',
-          gap: 10, marginBottom: 20 }}>
-          {kpiCard('Activos en portafolio', '11',
-            '3 fondos activos')}
-          {kpiCard('EBITDA consolidado Q1',
-            'USD 22.7M', '▲ +6% vs. Q1 2025',
-            '#86EFAC')}
-          {kpiCard('Alertas activas', '7',
-            '3 críticas hoy', '#FCA5A5')}
-          {kpiCard('Próxima junta',
-            'Mar 25', 'TermoemCali · 5 días')}
-        </div>
+    return (
+      <div style={{ flex: 1, overflow: 'hidden',
+        display: 'flex' }}>
+        {renderSidebar()}
+        <div style={{ flex: 1, overflowY: 'auto',
+          padding: '20px 24px' }}>
 
-        {/* Mapa de calor del portafolio */}
-        {sLabel('Estado del portafolio — ' +
-          'Salud por dimensión')}
-        <div style={{ background: dark,
-          border: `1px solid ${border}`,
-          borderRadius: 4, overflow: 'hidden',
-          marginBottom: 16 }}>
-          <div style={{ display: 'grid',
-            gridTemplateColumns:
-              '140px repeat(4,1fr) 60px',
-            padding: '8px 12px',
-            borderBottom: `1px solid ${border}` }}>
-            {['Activo','Financiero','Operativo',
-              'ESG','Regulatorio','Alertas'].map(h => (
-              <div key={h} style={{ fontSize: 9,
-                color: '#4A6070',
-                textTransform: 'uppercase',
-                letterSpacing: 1 }}>{h}</div>
-            ))}
-          </div>
-          {ACTIVOS.map((a, i) => (
-            <div key={a.id}
-              onClick={() => {
-                setActiveActivo(a.id);
-                setActiveTab('activos');
-              }}
-              style={{ display: 'grid',
-                gridTemplateColumns:
-                  '140px repeat(4,1fr) 60px',
-                padding: '8px 12px',
-                cursor: 'pointer',
-                background: i % 2 === 0
-                  ? 'transparent'
-                  : 'rgba(255,255,255,0.02)',
-                borderBottom:
-                  `1px solid #0D2540` }}
-              onMouseEnter={e =>
-                e.currentTarget.style.background =
-                  '#071B33'}
-              onMouseLeave={e =>
-                e.currentTarget.style.background =
-                  i % 2 === 0 ? 'transparent'
-                  : 'rgba(255,255,255,0.02)'}>
-              <div>
-                <div style={{ fontSize: 12,
-                  fontWeight: 600,
-                  color: '#F8F5F0' }}>
-                  {a.nombre}
-                </div>
-                <div style={{ fontSize: 9,
-                  color: '#4A6070' }}>
-                  {a.pais} · {a.fondo}
-                </div>
-              </div>
-              {Object.values(a.salud).map((s,si) => (
-                <div key={si} style={{
-                  display: 'flex',
-                  alignItems: 'center', gap: 5 }}>
-                  <div style={{ width: 10,
-                    height: 10, borderRadius: '50%',
-                    background: saludColor(s) }} />
-                  <span style={{ fontSize: 10,
-                    color: saludColor(s) }}>
-                    {s === 'verde' ? 'OK' :
-                     s === 'amarillo' ? 'Revisar'
-                     : 'Alerta'}
-                  </span>
+          {/* TIR y retorno — lo más importante */}
+          <div style={{ marginBottom: 20 }}>
+            {sLabel('Performance del fondo vs. ' +
+              'compromisos con LPs')}
+            <div style={{ display: 'grid',
+              gridTemplateColumns:
+                '1fr 1fr 1fr 1fr', gap: 10 }}>
+              {[
+                {
+                  label: 'TIR neta proyectada',
+                  val: `${pc.tirActual}%`,
+                  sub: `Objetivo: ${pc.tirObjetivo}%`,
+                  delta: `${tirDelta > 0 ? '+' : ''}${tirDelta.toFixed(1)}pp vs. objetivo`,
+                  deltaColor: tirDelta >= 0
+                    ? '#86EFAC' : '#FCA5A5',
+                },
+                {
+                  label: 'TIR de entrada promedio',
+                  val: `${pc.tirEntrada}%`,
+                  sub: 'Al momento de inversión',
+                  delta: `${(pc.tirActual - pc.tirEntrada).toFixed(1)}pp desde entrada`,
+                  deltaColor: pc.tirActual >= pc.tirEntrada
+                    ? '#86EFAC' : '#FCA5A5',
+                },
+                {
+                  label: 'MOIC actual',
+                  val: `${pc.moicActual}x`,
+                  sub: `Objetivo: ${pc.moicObjetivo}x`,
+                  delta: 'Período de inversión activo',
+                  deltaColor: '#4A6070',
+                },
+                {
+                  label: 'NAV total portafolio',
+                  val: `USD ${pc.navTotal}M`,
+                  sub: `Capital desplegado: USD ${pc.capitalDesplegado}M`,
+                  delta: `+${((pc.navTotal - pc.capitalDesplegado) / pc.capitalDesplegado * 100).toFixed(1)}% vs. costo`,
+                  deltaColor: '#86EFAC',
+                },
+              ].map((k, i) => (
+                <div key={i} style={{ background: dark,
+                  border: `1px solid ${border}`,
+                  borderTop: `3px solid ${k.deltaColor}`,
+                  borderRadius: 4,
+                  padding: '14px 16px' }}>
+                  <div style={{ fontSize: 10,
+                    color: '#4A6070',
+                    textTransform: 'uppercase',
+                    letterSpacing: 1,
+                    marginBottom: 6 }}>{k.label}</div>
+                  <div style={{ fontFamily:
+                    'Georgia, serif', fontSize: 28,
+                    fontWeight: 700,
+                    color: '#F8F5F0',
+                    lineHeight: 1,
+                    marginBottom: 4 }}>{k.val}</div>
+                  <div style={{ fontSize: 10,
+                    color: '#4A6070',
+                    marginBottom: 3 }}>{k.sub}</div>
+                  <div style={{ fontSize: 10,
+                    color: k.deltaColor,
+                    fontWeight: 600 }}>
+                    {k.delta}
+                  </div>
                 </div>
               ))}
-              <div style={{ fontSize: 11,
-                fontWeight: 700,
-                color: a.alertas > 0
-                  ? '#FCA5A5' : '#4A6070' }}>
-                {a.alertas > 0
-                  ? `${a.alertas} alerta${a.alertas > 1 ? 's' : ''}`
-                  : '—'}
-              </div>
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* Timeline semanal */}
-        {sLabel('Esta semana y próxima')}
-        <div style={{ display: 'flex',
-          flexDirection: 'column', gap: 6 }}>
-          {[
-            { fecha: 'Mar 25', tipo: 'Junta',
-              activo: 'TermoemCali',
-              desc: 'Junta Ordinaria Q1 2026 · Brief listo · 5 puntos en agenda',
-              color: copper, urgent: true },
-            { fecha: 'Mar 26', tipo: 'Regulatorio',
-              activo: 'CREG / Portafolio energía',
-              desc: 'Vence plazo para definir posición del portafolio frente al MCE',
-              color: '#FCA5A5', urgent: true },
-            { fecha: 'Mar 28', tipo: 'Reporte',
-              activo: 'CAF — Fondo III',
-              desc: 'Deadline reporte Q1 2026 para CAF · Generación en curso',
-              color: '#F9A8D4', urgent: false },
-            { fecha: 'Abr 8', tipo: 'Junta',
-              activo: 'Ruta del Cacao',
-              desc: 'Junta Ordinaria · Documentos pendientes de recibir',
-              color: '#FCD34D', urgent: false },
-            { fecha: 'Abr 15', tipo: 'Reporte',
-              activo: 'BID Invest — Fondo III',
-              desc: 'Deadline reporte Q1 2026 para BID Invest',
-              color: '#F9A8D4', urgent: false },
-          ].map((ev, i) => (
-            <div key={i} style={{
-              display: 'flex', gap: 12,
-              padding: '10px 14px',
-              background: dark,
-              border: `1px solid ${ev.urgent
-                ? ev.color + '55'
-                : border}`,
-              borderLeft: `3px solid ${ev.color}`,
-              borderRadius: '0 4px 4px 0' }}>
-              <div style={{ width: 44,
-                flexShrink: 0, textAlign: 'right' }}>
-                <div style={{ fontSize: 11,
-                  color: ev.color,
-                  fontWeight: 600 }}>{ev.fecha}</div>
+          {/* Activos por performance vs. plan */}
+          <div style={{ marginBottom: 20 }}>
+            {sLabel('Activos — Performance vs. ' +
+              'modelo de entrada')}
+            <div style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4,
+              overflow: 'hidden' }}>
+              <div style={{ display: 'grid',
+                gridTemplateColumns:
+                  '140px 80px 80px 80px 80px 1fr',
+                padding: '8px 14px',
+                borderBottom:
+                  `1px solid ${border}` }}>
+                {['Activo','TIR entrada','TIR actual',
+                  'EBITDA actual','vs. plan',
+                  'Supuestos'].map(h => (
+                  <div key={h} style={{ fontSize: 9,
+                    color: '#4A6070',
+                    textTransform: 'uppercase',
+                    letterSpacing: 1 }}>{h}</div>
+                ))}
               </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex',
-                  gap: 8, marginBottom: 3 }}>
-                  {badge(ev.tipo,
-                    `${ev.color}22`, ev.color)}
-                  <span style={{ fontSize: 11,
-                    fontWeight: 600,
-                    color: '#C8D8E8' }}>
-                    {ev.activo}
-                  </span>
-                  {ev.urgent && badge('HOY/URGENTE',
-                    'rgba(239,68,68,0.15)',
-                    '#FCA5A5')}
+              {ACTIVOS.filter(a =>
+                ACTIVOS_DETALLE[a.id]).map((a, i) => {
+                const d = ACTIVOS_DETALLE[a.id];
+                const tirDiff = d.tirActual
+                  - d.tirEntrada;
+                const ebitdaDiff = ((d.ebitdaActual
+                  - d.ebitdaPlan) / d.ebitdaPlan
+                  * 100);
+                const cumplidos = d.supuestosEntrada
+                  .filter(s => s.cumplido === true)
+                  .length;
+                const total = d.supuestosEntrada.length;
+                return (
+                  <div key={a.id}
+                    onClick={() => {
+                      setActiveActivo(a.id);
+                      setActiveTab('activos');
+                    }}
+                    style={{ display: 'grid',
+                      gridTemplateColumns:
+                        '140px 80px 80px 80px 80px 1fr',
+                      padding: '10px 14px',
+                      cursor: 'pointer',
+                      borderBottom:
+                        `1px solid #0D2540`,
+                      background: i % 2 === 0
+                        ? 'transparent'
+                        : 'rgba(255,255,255,0.02)' }}
+                    onMouseEnter={e =>
+                      e.currentTarget.style
+                        .background = '#071B33'}
+                    onMouseLeave={e =>
+                      e.currentTarget.style
+                        .background = i % 2 === 0
+                        ? 'transparent'
+                        : 'rgba(255,255,255,0.02)'}>
+                    <div>
+                      <div style={{ fontSize: 12,
+                        fontWeight: 600,
+                        color: '#F8F5F0' }}>
+                        {a.nombre}
+                      </div>
+                      <div style={{ fontSize: 9,
+                        color: '#4A6070' }}>
+                        {a.fondo}
+                      </div>
+                    </div>
+                    <div style={{ fontSize: 13,
+                      fontWeight: 600,
+                      color: '#6A8AAA' }}>
+                      {d.tirEntrada}%
+                    </div>
+                    <div style={{ fontSize: 13,
+                      fontWeight: 700,
+                      color: d.tirActual >= d.tirEntrada
+                        ? '#86EFAC' : '#FCA5A5' }}>
+                      {d.tirActual}%
+                    </div>
+                    <div style={{ fontSize: 12,
+                      color: '#C8D8E8' }}>
+                      USD {d.ebitdaActual}M
+                    </div>
+                    <div style={{ fontSize: 12,
+                      fontWeight: 600,
+                      color: ebitdaDiff >= 0
+                        ? '#86EFAC' : '#FCA5A5' }}>
+                      {ebitdaDiff > 0 ? '+' : ''}
+                      {ebitdaDiff.toFixed(1)}%
+                    </div>
+                    <div style={{ display: 'flex',
+                      alignItems: 'center', gap: 6 }}>
+                      <div style={{ flex: 1,
+                        height: 4, background:
+                          '#1E3A5A', borderRadius: 2,
+                        overflow: 'hidden' }}>
+                        <div style={{ height: '100%',
+                          width: `${(cumplidos/total)*100}%`,
+                          background: cumplidos === total
+                            ? '#86EFAC'
+                            : cumplidos >= total/2
+                            ? '#FCD34D' : '#FCA5A5',
+                          borderRadius: 2 }} />
+                      </div>
+                      <span style={{ fontSize: 10,
+                        color: '#6A8AAA',
+                        whiteSpace: 'nowrap' }}>
+                        {cumplidos}/{total} supuestos
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* EBITDA consolidado vs plan */}
+          <div style={{ display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 16 }}>
+            <div style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4,
+              padding: '16px' }}>
+              {sLabel('EBITDA consolidado Q1 2026')}
+              <div style={{ display: 'flex',
+                alignItems: 'baseline',
+                gap: 8, marginBottom: 12 }}>
+                <div style={{ fontFamily:
+                  'Georgia, serif', fontSize: 32,
+                  fontWeight: 700,
+                  color: '#F8F5F0' }}>
+                  USD {pc.ebitdaQ1}M
                 </div>
-                <div style={{ fontSize: 11,
-                  color: '#6A8AAA',
-                  lineHeight: 1.5 }}>{ev.desc}</div>
+                <div style={{ fontSize: 13,
+                  color: ebitdaDelta >= 0
+                    ? '#86EFAC' : '#FCA5A5',
+                  fontWeight: 600 }}>
+                  {ebitdaDelta.toFixed(1)}% vs. plan
+                </div>
+              </div>
+              <div style={{ fontSize: 12,
+                color: '#6A8AAA', marginBottom: 8 }}>
+                Plan: USD {pc.ebitdaQ1Plan}M
+              </div>
+              {ACTIVOS.filter(a =>
+                ACTIVOS_DETALLE[a.id]).map(a => {
+                const d = ACTIVOS_DETALLE[a.id];
+                const pct = (d.ebitdaActual /
+                  d.ebitdaPlan) * 100;
+                return (
+                  <div key={a.id}
+                    style={{ marginBottom: 6 }}>
+                    <div style={{ display: 'flex',
+                      justifyContent: 'space-between',
+                      marginBottom: 3 }}>
+                      <span style={{ fontSize: 11,
+                        color: '#8AAABB' }}>
+                        {a.nombre}
+                      </span>
+                      <span style={{ fontSize: 11,
+                        fontWeight: 600,
+                        color: pct >= 100
+                          ? '#86EFAC' : '#FCA5A5' }}>
+                        USD {d.ebitdaActual}M
+                        ({pct.toFixed(0)}% del plan)
+                      </span>
+                    </div>
+                    <div style={{ height: 4,
+                      background: '#1E3A5A',
+                      borderRadius: 2,
+                      overflow: 'hidden' }}>
+                      <div style={{ height: '100%',
+                        width: `${Math.min(pct,100)}%`,
+                        background: pct >= 100
+                          ? '#86EFAC'
+                          : pct >= 85
+                          ? '#FCD34D' : '#FCA5A5',
+                        borderRadius: 2 }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4, padding: '16px' }}>
+              {sLabel('Estructura de capital ' +
+                'del portafolio')}
+              {ACTIVOS.filter(a =>
+                ACTIVOS_DETALLE[a.id]).map(a => {
+                const d = ACTIVOS_DETALLE[a.id];
+                const dscrOk = d.dscr >= d.dscrMinimo;
+                return (
+                  <div key={a.id} style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10, padding: '7px 0',
+                    borderBottom:
+                      `1px solid #0D2540` }}>
+                    <div style={{ width: 90,
+                      flexShrink: 0, fontSize: 11,
+                      color: '#C8D8E8' }}>
+                      {a.nombre}
+                    </div>
+                    <div style={{ width: 60,
+                      flexShrink: 0, fontSize: 11,
+                      color: '#6A8AAA' }}>
+                      Deuda: ${d.deuda}M
+                    </div>
+                    <div style={{ flex: 1,
+                      height: 4, background: '#1E3A5A',
+                      borderRadius: 2,
+                      overflow: 'hidden' }}>
+                      <div style={{ height: '100%',
+                        width: `${Math.min(
+                          (d.deuda/100)*60,100)}%`,
+                        background: '#1E3A5A',
+                        borderRadius: 2 }} />
+                    </div>
+                    <div style={{ width: 60,
+                      flexShrink: 0, textAlign: 'right',
+                      fontSize: 12, fontWeight: 700,
+                      color: dscrOk
+                        ? '#86EFAC' : '#FCA5A5' }}>
+                      {d.dscr}x
+                    </div>
+                    <div style={{ fontSize: 9,
+                      color: dscrOk
+                        ? '#86EFAC' : '#FCA5A5',
+                      width: 40 }}>
+                      {dscrOk ? 'OK' : 'ALERT'}
+                    </div>
+                  </div>
+                );
+              })}
+              <div style={{ marginTop: 10,
+                fontSize: 10, color: '#4A6070' }}>
+                DSCR mínimo requerido por activo
+                según estructura de deuda
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // ── TAB 2: ACTIVOS ────────────────────────────
-  const renderActivos = () => (
-    <div style={{ flex: 1, overflow: 'hidden',
-      display: 'flex' }}>
-      {renderSidebar()}
-      <div style={{ flex: 1, overflowY: 'auto',
-        padding: '20px 24px' }}>
+  const renderActivos = () => {
+    const d = getActiDetail(activeActivo);
+    const tirDiff = d.tirActual - d.tirEntrada;
+    const ebitdaDiff = ((d.ebitdaActual - d.ebitdaPlan)
+      / d.ebitdaPlan * 100);
+    const evDiff = ((d.valoracion.currentEV
+      - d.valoracion.entryEV)
+      / d.valoracion.entryEV * 100);
 
-        {/* Header del activo */}
-        <div style={{ marginBottom: 20,
-          paddingBottom: 16,
-          borderBottom: `1px solid ${border}` }}>
-          <div style={{ display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'space-between' }}>
-            <div>
-              <div style={{ fontFamily:
-                'Georgia, serif', fontSize: 24,
-                fontWeight: 700, color: '#F8F5F0',
-                marginBottom: 4 }}>
-                {activo.nombre}
-              </div>
-              <div style={{ display: 'flex',
-                gap: 10, alignItems: 'center' }}>
-                <span style={{ fontSize: 11,
-                  color: '#4A6070' }}>
-                  {activo.pais} · {activo.tipo}
-                </span>
-                <div style={{ fontSize: 9,
-                  fontWeight: 700, padding: '2px 8px',
-                  borderRadius: 2,
-                  background: `${activo.fondoColor}22`,
-                  color: activo.fondoColor }}>
-                  {activo.fondo}
+    return (
+      <div style={{ flex: 1, overflow: 'hidden',
+        display: 'flex' }}>
+        {renderSidebar()}
+        <div style={{ flex: 1, overflowY: 'auto',
+          padding: '20px 24px' }}>
+
+          {/* Header del activo */}
+          <div style={{ marginBottom: 20,
+            paddingBottom: 16,
+            borderBottom: `1px solid ${border}` }}>
+            <div style={{ display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start' }}>
+              <div>
+                <div style={{ fontFamily:
+                  'Georgia, serif', fontSize: 24,
+                  fontWeight: 700,
+                  color: '#F8F5F0',
+                  marginBottom: 6 }}>
+                  {activo.nombre}
                 </div>
-                <span style={{ fontSize: 11,
-                  color: '#4A6070' }}>
-                  Desde {activo.desde}
-                </span>
-              </div>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 10,
-                color: '#4A6070', marginBottom: 4 }}>
-                Próxima junta
-              </div>
-              <div style={{ fontSize: 14,
-                fontWeight: 700, color: copper }}>
-                {activo.proximaJunta}
+                <div style={{ display: 'flex',
+                  gap: 10 }}>
+                  <span style={{ fontSize: 11,
+                    color: '#4A6070' }}>
+                    {activo.tipo} · {activo.pais}
+                  </span>
+                  <span style={{ fontSize: 9,
+                    fontWeight: 700,
+                    padding: '2px 8px',
+                    borderRadius: 2,
+                    background:
+                      `${activo.fondoColor}22`,
+                    color: activo.fondoColor }}>
+                    {activo.fondo}
+                  </span>
+                  <span style={{ fontSize: 11,
+                    color: '#4A6070' }}>
+                    En portafolio desde {activo.desde}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Semáforos de salud */}
-        <div style={{ display: 'grid',
-          gridTemplateColumns: 'repeat(4,1fr)',
-          gap: 8, marginBottom: 20 }}>
-          {[
-            { label: 'Financiero',
-              val: activo.salud.fin },
-            { label: 'Operativo',
-              val: activo.salud.op },
-            { label: 'ESG', val: activo.salud.esg },
-            { label: 'Regulatorio',
-              val: activo.salud.reg },
-          ].map((s, i) => (
-            <div key={i} style={{ background: dark,
-              border: `1px solid ${border}`,
-              borderTop: `3px solid ${saludColor(s.val)}`,
-              borderRadius: 4, padding: '10px 12px',
-              textAlign: 'center' }}>
-              <div style={{ fontSize: 9,
-                color: '#4A6070',
-                textTransform: 'uppercase',
-                letterSpacing: 1,
-                marginBottom: 6 }}>{s.label}</div>
-              <div style={{ width: 12, height: 12,
-                borderRadius: '50%',
-                background: saludColor(s.val),
-                margin: '0 auto 4px' }} />
-              <div style={{ fontSize: 10,
-                color: saludColor(s.val),
-                fontWeight: 600 }}>
-                {s.val === 'verde' ? 'En línea' :
-                 s.val === 'amarillo' ? 'Revisar'
-                 : 'Alerta'}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* KPIs financieros */}
-        {sLabel('KPIs financieros Q1 2026')}
-        <div style={{ display: 'grid',
-          gridTemplateColumns: 'repeat(3,1fr)',
-          gap: 10, marginBottom: 20 }}>
-          {[
-            { label: 'Ingresos Q1',
-              val: activo.kpis.ingresos,
-              sub: activo.kpis.ingresosDelta,
-              subColor: activo.kpis.ingresosDelta
-                .startsWith('+') ? '#86EFAC'
-                : activo.kpis.ingresosDelta
-                .startsWith('-') ? '#FCA5A5'
-                : '#4A6070' },
-            { label: 'EBITDA Q1',
-              val: activo.kpis.ebitda,
-              sub: `Margen ${activo.kpis.margen}`,
-              subColor: '#4A6070' },
-            { label: 'DSCR',
-              val: activo.kpis.dscr,
-              sub: activo.kpis.disponibilidad !== '—'
-                ? `Disponibilidad ${activo.kpis.disponibilidad}`
-                : 'N/A para este sector',
-              subColor: '#4A6070' },
-          ].map((k, i) => (
-            <div key={i} style={{ background: dark,
-              border: `1px solid ${border}`,
-              borderRadius: 4, padding: '14px 16px' }}>
-              <div style={{ fontSize: 10,
-                color: '#4A6070',
-                textTransform: 'uppercase',
-                letterSpacing: 1,
-                marginBottom: 5 }}>{k.label}</div>
-              <div style={{ fontFamily:
-                'Georgia, serif', fontSize: 24,
-                fontWeight: 700, color: '#F8F5F0',
-                marginBottom: 3 }}>{k.val}</div>
-              <div style={{ fontSize: 10,
-                color: k.subColor }}>{k.sub}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Timeline de eventos */}
-        {sLabel('Timeline de eventos — Últimos 6 meses')}
-        <div style={{ background: dark,
-          border: `1px solid ${border}`,
-          borderRadius: 4, padding: '16px',
-          marginBottom: 20 }}>
-          {(activo.id === 'termoem' ? [
-            { fecha: 'Sep 2025', tipo: 'Junta',
-              color: copper,
-              desc: 'Junta ordinaria Q3. Compromisos: Plan residuos Fase II (dic), modelo valoración (feb).' },
-            { fecha: 'Nov 2025', tipo: 'Operativo',
-              color: '#FCD34D',
-              desc: 'Cambio de gerente de operaciones anunciado — proceso de selección iniciado.' },
-            { fecha: 'Dic 2025', tipo: 'Junta',
-              color: copper,
-              desc: 'Junta ordinaria Q4. Aprobación presupuesto 2026. Plazo Plan Residuos prorrogado.' },
-            { fecha: 'Ene 2026', tipo: 'Operativo',
-              color: '#FCA5A5',
-              desc: 'Falla turbina 2 — 18 días fuera de servicio. Impacto: ~42 GWh. O&M notificado.' },
-            { fecha: 'Feb 2026', tipo: 'Regulatorio',
-              color: '#93C5FD',
-              desc: 'Resolución CREG 101 100/2026 (MCE) expedida. Análisis de impacto en curso.' },
-            { fecha: 'Mar 2026', tipo: 'Junta',
-              color: copper,
-              desc: 'Junta ordinaria Q1 — Mar 25. Brief listo. 2 compromisos vencidos pendientes.' },
-          ] : [
-            { fecha: 'Oct 2025', tipo: 'Junta',
-              color: copper,
-              desc: 'Junta ordinaria Q3. Desempeño en línea con el plan.' },
-            { fecha: 'Dic 2025', tipo: 'Junta',
-              color: copper,
-              desc: 'Junta ordinaria Q4. Aprobación presupuesto 2026.' },
-            { fecha: 'Mar 2026', tipo: 'Operativo',
-              color: '#86EFAC',
-              desc: 'Q1 2026 cerrado. Reportes en preparación.' },
-          ]).map((ev, i, arr) => (
-            <div key={i} style={{ display: 'flex',
-              gap: 12, marginBottom:
-                i < arr.length - 1 ? 12 : 0 }}>
-              <div style={{ display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                flexShrink: 0 }}>
-                <div style={{ width: 10, height: 10,
-                  borderRadius: '50%',
-                  background: ev.color }} />
-                {i < arr.length - 1 && (
-                  <div style={{ width: 1, flex: 1,
-                    background: border,
-                    minHeight: 20, marginTop: 2 }} />
-                )}
-              </div>
-              <div style={{ flex: 1,
-                paddingBottom:
-                  i < arr.length - 1 ? 0 : 0 }}>
-                <div style={{ display: 'flex',
-                  gap: 8, marginBottom: 3 }}>
-                  <span style={{ fontSize: 10,
-                    color: ev.color,
-                    fontWeight: 600 }}>
-                    {ev.fecha}
-                  </span>
-                  {badge(ev.tipo,
-                    `${ev.color}22`, ev.color)}
+          {/* TIR entrada vs actual — lo primero */}
+          <div style={{ marginBottom: 20 }}>
+            {sLabel('Retorno — Entrada vs. hoy')}
+            <div style={{ display: 'grid',
+              gridTemplateColumns: 'repeat(4,1fr)',
+              gap: 10 }}>
+              {[
+                {
+                  label: 'TIR de entrada',
+                  val: `${d.tirEntrada}%`,
+                  sub: 'Al momento de la inversión',
+                  color: '#6A8AAA',
+                },
+                {
+                  label: 'TIR proyectada hoy',
+                  val: `${d.tirActual}%`,
+                  sub: `${tirDiff > 0 ? '+' : ''}${tirDiff.toFixed(1)}pp vs. entrada`,
+                  color: d.tirActual >= d.tirEntrada
+                    ? '#86EFAC' : '#FCA5A5',
+                },
+                {
+                  label: 'MOIC actual',
+                  val: `${d.moicActual}x`,
+                  sub: `Objetivo al exit: ${d.moicObjetivo}x`,
+                  color: '#F8F5F0',
+                },
+                {
+                  label: 'EV actual vs. entrada',
+                  val: `USD ${d.valoracion.currentEV}M`,
+                  sub: `Entrada: USD ${d.valoracion.entryEV}M (${evDiff > 0 ? '+' : ''}${evDiff.toFixed(1)}%)`,
+                  color: evDiff >= 0
+                    ? '#86EFAC' : '#FCA5A5',
+                },
+              ].map((k, i) => (
+                <div key={i} style={{ background: dark,
+                  border: `1px solid ${border}`,
+                  borderTop:
+                    `3px solid ${k.color}`,
+                  borderRadius: 4,
+                  padding: '14px 16px' }}>
+                  <div style={{ fontSize: 10,
+                    color: '#4A6070',
+                    textTransform: 'uppercase',
+                    letterSpacing: 1,
+                    marginBottom: 5 }}>
+                    {k.label}
+                  </div>
+                  <div style={{ fontFamily:
+                    'Georgia, serif', fontSize: 26,
+                    fontWeight: 700,
+                    color: '#F8F5F0',
+                    lineHeight: 1,
+                    marginBottom: 4 }}>{k.val}</div>
+                  <div style={{ fontSize: 10,
+                    color: k.color }}>
+                    {k.sub}
+                  </div>
                 </div>
-                <div style={{ fontSize: 12,
-                  color: '#8AAABB',
-                  lineHeight: 1.5 }}>{ev.desc}</div>
+              ))}
+            </div>
+          </div>
+
+          {/* Valoración */}
+          <div style={{ marginBottom: 20,
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 12 }}>
+            <div style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4,
+              padding: '16px' }}>
+              {sLabel('Múltiplo EV/EBITDA')}
+              <div style={{ display: 'flex',
+                gap: 20, alignItems: 'center',
+                marginBottom: 12 }}>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 10,
+                    color: '#4A6070',
+                    marginBottom: 4 }}>
+                    Entrada
+                  </div>
+                  <div style={{ fontFamily:
+                    'Georgia, serif', fontSize: 28,
+                    fontWeight: 700,
+                    color: '#6A8AAA' }}>
+                    {d.valoracion.entryEbitdaMultiple}x
+                  </div>
+                </div>
+                <div style={{ fontSize: 20,
+                  color: '#1E3A5A' }}>→</div>
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ fontSize: 10,
+                    color: '#4A6070',
+                    marginBottom: 4 }}>
+                    Hoy
+                  </div>
+                  <div style={{ fontFamily:
+                    'Georgia, serif', fontSize: 28,
+                    fontWeight: 700,
+                    color: d.valoracion.currentEbitdaMultiple >= d.valoracion.entryEbitdaMultiple
+                      ? '#86EFAC' : '#FCA5A5' }}>
+                    {d.valoracion.currentEbitdaMultiple}x
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
 
-        {/* ESAP y próxima junta */}
-        <div style={{ display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 12 }}>
+            <div style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4, padding: '16px' }}>
+              {sLabel('Deuda y DSCR')}
+              <div style={{ display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center', marginBottom: 8 }}>
+                <span style={{ fontSize: 13,
+                  color: '#C8D8E8' }}>
+                  Deuda: USD {d.deuda}M
+                </span>
+                <span style={{ fontSize: 18,
+                  fontWeight: 700,
+                  fontFamily: 'Georgia, serif',
+                  color: d.dscr >= d.dscrMinimo
+                    ? '#86EFAC' : '#FCA5A5' }}>
+                  DSCR {d.dscr}x
+                </span>
+              </div>
+              <div style={{ fontSize: 11,
+                color: '#6A8AAA' }}>
+                Mínimo requerido: {d.dscrMinimo}x
+              </div>
+            </div>
+          </div>
+
+          {/* Supuestos de entrada */}
+          {sLabel('Supuestos de entrada vs. realidad')}
           <div style={{ background: dark,
             border: `1px solid ${border}`,
-            borderRadius: 4, padding: '14px 16px' }}>
-            {sLabel('Avance ESAP')}
-            <div style={{ display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: 8 }}>
-              <span style={{ fontSize: 13,
-                color: '#C8D8E8' }}>
-                IFC Performance Standards
-              </span>
-              <span style={{ fontSize: 18,
-                fontWeight: 700,
-                fontFamily: 'Georgia, serif',
-                color: activo.esgPct === 100
-                  ? '#86EFAC'
-                  : activo.esgPct >= 70
-                  ? '#FCD34D' : '#FCA5A5' }}>
-                {activo.esgPct}%
-              </span>
+            borderRadius: 4, overflow: 'hidden',
+            marginBottom: 20 }}>
+            <div style={{ display: 'grid',
+              gridTemplateColumns: '1fr 100px 100px 70px',
+              padding: '8px 14px',
+              borderBottom: `1px solid ${border}` }}>
+              {['Supuesto','Entrada','Actual',
+                'Cumplido'].map(h => (
+                <div key={h} style={{ fontSize: 9,
+                  color: '#4A6070',
+                  textTransform: 'uppercase',
+                  letterSpacing: 1 }}>{h}</div>
+              ))}
             </div>
-            <div style={{ height: 8,
-              background: '#1E3A5A',
-              borderRadius: 4, overflow: 'hidden' }}>
-              <div style={{ height: '100%',
-                width: `${activo.esgPct}%`,
-                background: activo.esgPct === 100
-                  ? '#86EFAC'
-                  : activo.esgPct >= 70
-                  ? '#FCD34D' : '#FCA5A5',
-                borderRadius: 4 }} />
-            </div>
+            {d.supuestosEntrada.map((s, i) => (
+              <div key={i} style={{ display: 'grid',
+                gridTemplateColumns:
+                  '1fr 100px 100px 70px',
+                padding: '10px 14px',
+                borderBottom: `1px solid #0D2540`,
+                background: i % 2 === 0
+                  ? 'transparent'
+                  : 'rgba(255,255,255,0.02)' }}>
+                <div style={{ fontSize: 12,
+                  color: '#C8D8E8' }}>{s.nombre}</div>
+                <div style={{ fontSize: 11,
+                  color: '#6A8AAA' }}>{s.valorEntrada}</div>
+                <div style={{ fontSize: 11,
+                  color: s.cumplido === true
+                    ? '#86EFAC' : s.cumplido === 'parcial'
+                    ? '#FCD34D' : '#FCA5A5' }}>
+                  {s.valorActual}
+                </div>
+                <div style={{ fontSize: 10,
+                  fontWeight: 700,
+                  color: s.cumplido === true
+                    ? '#86EFAC' : s.cumplido === 'parcial'
+                    ? '#FCD34D' : '#FCA5A5' }}>
+                  {s.cumplido === true ? '✓' :
+                   s.cumplido === 'parcial' ? '~' : '✗'}
+                </div>
+              </div>
+            ))}
           </div>
+
+          {/* Próxima junta */}
           <div style={{ background: dark,
             border: `1px solid ${border}`,
             borderRadius: 4, padding: '14px 16px' }}>
@@ -839,8 +1154,8 @@ const Nivel2PortafolioPage = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // ── TAB 3: REGULATORIO ────────────────────────
   const renderRegulatorio = () => (

@@ -111,7 +111,7 @@ export const transversalComponents: SystemComponent[] = [
     type: "TRANSVERSAL",
     order: 1,
     description: "Inteligencia continua sobre regulación, macroeconomía, política y mercados que afecta todas las etapas del ciclo de inversión.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "comunicar",
@@ -120,7 +120,7 @@ export const transversalComponents: SystemComponent[] = [
     type: "TRANSVERSAL",
     order: 2,
     description: "Comunicación estratégica con LPs, con Londres, y con las juntas de los activos.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "cumplir",
@@ -129,7 +129,7 @@ export const transversalComponents: SystemComponent[] = [
     type: "TRANSVERSAL",
     order: 3,
     description: "ESG bajo estándares IFC, regulación Superfinanciera, reportes a BID/CAF — compliance que cruza todas las etapas.",
-    hasContent: false,
+    hasContent: true,
   },
   {
     id: "aprender",
@@ -138,7 +138,7 @@ export const transversalComponents: SystemComponent[] = [
     type: "TRANSVERSAL",
     order: 4,
     description: "Memoria institucional — preservar el conocimiento acumulado de cada deal para que no se pierda con la rotación.",
-    hasContent: false,
+    hasContent: true,
   },
 ];
 
