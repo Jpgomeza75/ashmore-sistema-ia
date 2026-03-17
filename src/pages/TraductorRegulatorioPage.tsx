@@ -80,19 +80,89 @@ const OUTPUT_EJEMPLO = [
     num: '1',
     titulo: 'Qué dice la resolución',
     color: '#93C5FD',
-    texto: 'La Resolución CREG 101 100 de 2026 crea el Mecanismo de Comercialización de Energía (MCE) — un nuevo mercado de corto plazo operado por XM que permite a generadores y grandes consumidores negociar energía en bloques de 24 horas con liquidación diaria. El MCE opera en paralelo al mercado mayorista existente, no lo reemplaza. Los precios se forman por subasta de doble cara: generadores ofertan precio de venta, consumidores ofertan precio de compra. XM actúa como contraparte central. Aplica desde junio 2026 para participantes voluntarios.'
+    texto: `La Resolución CREG 101 100 de 2026 crea el Mecanismo de Comercialización de Energía (MCE) — un nuevo mercado de contratos de corto plazo para la compraventa de energía eléctrica en Colombia, operado por Conexión Energética (Art. 3).
+
+¿Qué se crea? Un mercado de ruedas anónimas donde generadores y comercializadores negocian energía en bloques horarios con liquidación diaria, en paralelo al mercado mayorista existente. No lo reemplaza — lo complementa.
+
+¿Cómo funciona? Las ruedas se realizan diariamente. Los vendedores (generadores) ofertan precio mínimo de venta y volumen disponible. Los compradores (comercializadores) ofertan precio máximo de compra y volumen requerido. Conexión Energética hace el calce al precio de equilibrio (Art. 4-5).
+
+¿Cómo se forman los precios? Por subasta de doble cara con precio marginal. El precio que paga el último comprador que entra al calce es el precio de la rueda. Todos los vendedores reciben ese precio (Art. 6).
+
+¿Cómo se trasladan a tarifa? El componente G de la tarifa al usuario final se calculará incorporando el precio promedio ponderado de las ruedas del MCE en la fórmula de liquidación de Conexión Energética (Arts. 6-8). Esto crea un mecanismo de traslado directo a usuarios regulados.
+
+¿Qué controles tiene? Auditoría anual del sistema (Art. 14). Si el MCE obtiene calificación "No cumple" dos años consecutivos en los indicadores de desempeño, la CREG puede suspenderlo (Art. 9, numeral ii). La CREG puede modificar los parámetros del mecanismo sin necesidad de nueva resolución (Art. 16, numeral v) — riesgo regulatorio relevante para el portafolio.
+
+¿Por qué existe? Implementa el mandato del Decreto 1072 de 2025 de reducir la exposición del mercado colombiano a la volatilidad de la bolsa de energía y generar señales de precio de largo plazo más estables para usuarios y generadores.
+
+¿Desde cuándo aplica? Vigencia inmediata desde la expedición (Art. 17). La operación efectiva del MCE está sujeta al desarrollo de la infraestructura tecnológica de Conexión Energética — plazo no definido explícitamente en la resolución.`
   },
   {
     num: '2',
-    titulo: 'Información requerida',
+    titulo: 'Información requerida para determinar la posición del portafolio',
     color: '#FCD34D',
-    texto: 'A. Información interna: (1) Contratos bilaterales vigentes de TermoemCali — cláusulas de exclusividad que podrían restringir participación en el MCE. (2) Posición actual en el mercado de bolsa — qué % de la energía de TermoemCali va a bolsa vs. contratos bilaterales. (3) OEF vigente de TermoemCali — el cargo por confiabilidad no interactúa con el MCE pero es relevante para el análisis de ingresos totales.\n\nB. Información a solicitar: (1) Al operador de TermoemCali: ¿tiene restricciones contractuales para participar como vendedor en el MCE? Solicitar copia de contratos con cláusulas de exclusividad. (2) A XM: cronograma de implementación del MCE y requisitos técnicos para participar como vendedor.'
+    texto: `A. INFORMACIÓN QUE ASHMORE YA TIENE O DEBERÍA TENER INTERNAMENTE:
+
+1. Estructura de ingresos de TermoemCali por fuente (bolsa vs. contratos bilaterales vs. OEF): para determinar qué fracción de los ingresos está expuesta al precio de bolsa que el MCE busca complementar, y estimar el impacto potencial si TermoemCali participa o no como vendedor.
+
+2. Contratos bilaterales vigentes de TermoemCali: fechas de vencimiento, precios pactados, cláusulas de exclusividad o restricciones de comercialización. Prerrequisito para evaluar si TermoemCali puede legalmente participar en el MCE como vendedor.
+
+3. OEF vigente de TermoemCali: monto en $/kWh-día, período de vigencia, condiciones de entrega. El OEF es el ingreso de respaldo del activo — el MCE no lo afecta directamente, pero es parte del análisis integral de ingresos.
+
+4. Costo variable de generación de TermoemCali ($/MWh): para determinar el precio mínimo al que puede ofertar en el MCE y seguir siendo rentable. Sin este dato no se puede evaluar si la participación genera valor o destruye margen.
+
+5. Capacidad instalada y contratos vigentes de Atlas Renewable Energy: para evaluar si Atlas podría participar como vendedor en el MCE y en qué condiciones.
+
+B. INFORMACIÓN QUE SE DEBE SOLICITAR:
+
+6. A la gerencia de TermoemCali: ¿Los contratos bilaterales vigentes incluyen cláusulas de exclusividad que restrinjan la participación en nuevos mecanismos de comercialización? Solicitar copia de las cláusulas relevantes. Para la decisión: si hay exclusividad, la participación en el MCE requería renegociación contractual.
+
+7. A Conexión Energética: cronograma de implementación técnica del MCE y requisitos de registro para participar como vendedor (volumen mínimo, infraestructura de medición, sistemas de comunicación). Para la decisión: establece si TermoemCali y Atlas pueden participar desde el inicio o requieren inversiones adicionales.
+
+8. Al equipo jurídico de Ashmore: análisis de los Artículos 5 (parágrafo sobre subcuentas independientes), 9 (numeral ii sobre suspensión) y 16 (numeral v sobre modificaciones) en relación con los contratos vigentes y las obligaciones fiduciarias con los LPs. Prerrequisito para cualquier decisión de participación.
+
+NOTA: Los puntos 2 (contratos bilaterales) y 8 (análisis legal) son prerrequisitos para los demás. Sin ellos, la evaluación de oportunidades y amenazas de la Sección 3 es especulativa.`
   },
   {
     num: '3',
     titulo: 'Oportunidades y amenazas',
     color: '#86EFAC',
-    texto: 'OPORTUNIDAD 1: Optimización de ingresos TermoemCali — si los precios del MCE son superiores a la bolsa, TermoemCali podría vender parte de su energía no contratada a mejores precios. Depende de la cláusula de exclusividad del PPA.\n\nOPORTUNIDAD 2: Posicionamiento de Atlas Renewable Energy — los activos de energía renovable sin PPA podrían beneficiarse de la mayor liquidez del MCE para colocar su energía.\n\nAMENAZA 1: Presión de precios en el mercado spot — mayor liquidez en el MCE podría comprimir los precios de bolsa donde TermoemCali vende su energía no contratada.\n\nAMENAZA 2: Riesgo de incumplimiento contractual — si TermoemCali participa en el MCE sin verificar las restricciones de sus contratos bilaterales, podría incurrir en breach.'
+    texto: `OPORTUNIDAD 1: Optimización de ingresos de TermoemCali en energía no contratada
+El MCE permite a TermoemCali vender su energía disponible no comprometida en contratos bilaterales a un precio potencialmente superior al de bolsa, en un mecanismo más ordenado y con menor volatilidad.
+Activos afectados: TermoemCali I S.A. ESP
+Variables que la habilitan: (a) Que los contratos bilaterales vigentes no incluyan cláusula de exclusividad total; (b) Que el precio de equilibrio del MCE sea consistentemente superior al precio de bolsa para energía de respaldo; (c) Que el costo de implementación técnica sea inferior al diferencial de precio esperado.
+Consideraciones: Discutir en la próxima junta directiva de TermoemCali una vez obtenida la información de los puntos 2 y 4 de la Sección 2.
+
+OPORTUNIDAD 2: Posicionamiento estratégico de Atlas Renewable Energy
+Los activos de energía renovable sin contratos de largo plazo (PPAs) se benefician del MCE como mecanismo de venta más estable y menos volátil que la bolsa spot.
+Activos afectados: Atlas Renewable Energy
+Variables que la habilitan: (a) Que Atlas tenga capacidad disponible sin contrato PPA; (b) Que el precio del MCE ofrezca prima sobre la bolsa para energía renovable; (c) Que los requisitos técnicos de Conexión Energética sean alcanzables por los activos de Atlas.
+Consideraciones: Evaluar en el Investment Committee del Fondo III si esta oportunidad justifica acelerar el desarrollo de Atlas o mantener la estrategia actual.
+
+OPORTUNIDAD 3: Hedge natural del portafolio de energía de Ashmore
+Ashmore tiene simultáneamente activos de generación térmica (TermoemCali, en potencial desventaja) y renovable (Atlas, en potencial ventaja). El MCE crea una dinámica donde la gestión activa de ambos activos puede generar valor neto positivo a nivel de portafolio.
+Activos afectados: TermoemCali + Atlas (combinado)
+Variables que la habilitan: Que ambos activos puedan participar en el MCE simultáneamente y que Ashmore pueda coordinar sus estrategias de oferta.
+Consideraciones: Analizar en el Investment Committee la estrategia de portafolio de energía. Involucrar al equipo de Londres dado el impacto en la valoración del Fondo I (TermoemCali) y del Fondo III (Atlas).
+
+---
+
+AMENAZA 1: Presión sobre los ingresos de bolsa de TermoemCali
+Si el MCE capta volumen significativo de compradores, el mercado de bolsa spot podría reducirse, afectando la demanda y el precio de la energía que TermoemCali vende a bolsa.
+Activos afectados: TermoemCali I S.A. ESP
+Variables que la activan: (a) Alta adopción del MCE por comercializadores que hoy compran en bolsa; (b) Que TermoemCali no pueda o no quiera participar como vendedor en el MCE.
+Consideraciones: Monitorear mensualmente el volumen transado en el MCE en las primeras ruedas. Evaluar umbral de impacto en el modelo financiero de TermoemCali.
+
+AMENAZA 2: Riesgo regulatorio sobre el cargo por confiabilidad (OEF)
+El MCE introduce señales de precio de largo plazo que podrían ser usadas por la CREG como argumento para revisar la metodología del cargo por confiabilidad en la próxima subasta de OEF.
+Activos afectados: TermoemCali I S.A. ESP
+Variables que la activan: (a) Que el MCE genere señales de precio consideradas "suficientes" por la CREG para el OEF; (b) Que la próxima subasta de OEF coincida con la maduración del MCE.
+Consideraciones: Incluir escenario de reducción del OEF en el análisis de sensibilidad del modelo de TermoemCali. Seguimiento con equipo legal.
+
+AMENAZA 3: Desplazamiento progresivo de las térmicas en la contratación base
+El MCE, combinado con la agenda de renovables del gobierno, podría acelerar la migración de contratos hacia energía renovable, dejando a TermoemCali en un rol exclusivo de respaldo con menores ingresos de comercialización.
+Activos afectados: TermoemCali I S.A. ESP
+Variables que la activan: (a) Penetración masiva de renovables como vendedores en el MCE; (b) Diferencial de costo significativo entre renovables y térmicas.
+Consideraciones: Esta amenaza es estructural, no coyuntural. Requiere discusión estratégica en el Investment Committee sobre el horizonte de inversión de TermoemCali y la estrategia de maximización de valor del Fondo I. Involucrar al equipo de Londres.`
   }
 ];
 
@@ -321,13 +391,11 @@ const TraductorRegulatorioPage = () => {
               <div>
                 <div style={{ fontSize: 12,
                   fontWeight: 700, color: '#F8F5F0' }}>
-                  Análisis de Impacto Regulatorio —
-                  CREG 101 100 de 2026
+                  Análisis de Impacto Regulatorio — CREG 101 100 de 2026
                 </div>
                 <div style={{ fontSize: 10,
                   color: '#4A6070', marginTop: 2 }}>
-                  Mecanismo de Comercialización de
-                  Energía (MCE) · Portafolio Ashmore
+                  Mecanismo de Comercialización de Energía (MCE) · Portafolio Ashmore · 3 secciones
                 </div>
               </div>
               <div style={{ fontSize: 9, fontWeight: 600,
@@ -335,7 +403,7 @@ const TraductorRegulatorioPage = () => {
                 background: 'rgba(184,134,11,0.15)',
                 color: copper, borderRadius: 2,
                 border: '1px solid rgba(184,134,11,0.3)' }}>
-                3 secciones · Action Memo
+                Output real generado con Claude
               </div>
             </div>
 
@@ -344,8 +412,9 @@ const TraductorRegulatorioPage = () => {
                 textAlign: 'center' }}>
                 <div style={{ fontSize: 14,
                   color: '#8A8880', marginBottom: 20 }}>
-                  Ver ejemplo real generado con la
-                  Resolución CREG 101 100 de 2026
+                  Este es el análisis real generado por
+                  Claude al adjuntar la Resolución CREG 101 100
+                  de 2026 y correr el prompt. Sin edición.
                 </div>
                 <button
                   onClick={() => setShowOutput(true)}
@@ -355,7 +424,7 @@ const TraductorRegulatorioPage = () => {
                     fontWeight: 700, color: '#F8F5F0',
                     cursor: 'pointer',
                     fontFamily: 'Inter, sans-serif' }}>
-                  Ver ejemplo de output →
+                  Ver análisis completo →
                 </button>
               </div>
             ) : (
@@ -390,13 +459,40 @@ const TraductorRegulatorioPage = () => {
                           background: sec.color }} />
                       </div>
                     </div>
-                    <div style={{ fontSize: 14,
-                      color: '#444', lineHeight: 1.8,
-                      whiteSpace: 'pre-line' }}>
-                      {sec.texto}
+                    <div style={{ fontSize: 13,
+                      lineHeight: 1.85, fontFamily: 'Inter, sans-serif' }}>
+                      {sec.texto.split('\n').map((line, li) => (
+                        <div key={li} style={{
+                          marginBottom: line === '' ? 8 : 2,
+                          fontWeight: line.startsWith('OPORTUNIDAD') ||
+                            line.startsWith('AMENAZA') ? 700 : 400,
+                          color: line.startsWith('OPORTUNIDAD')
+                            ? '#166534'
+                            : line.startsWith('AMENAZA')
+                            ? '#991B1B'
+                            : '#444',
+                          fontSize: line.startsWith('OPORTUNIDAD') ||
+                            line.startsWith('AMENAZA') ? 14 : 13,
+                        }}>
+                          {line}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
+                <div style={{ marginTop: 20, padding: '12px 16px',
+                  background: '#F8F5F0', border: '1px solid #E0DBD0',
+                  borderLeft: '3px solid #B8860B', borderRadius: '0 4px 4px 0',
+                  fontSize: 12, color: '#8A8880', lineHeight: 1.6,
+                  fontStyle: 'italic' }}>
+                  Este análisis fue generado en 4 minutos con Claude
+                  al adjuntar la Resolución CREG 101 100 de 2026
+                  (24 páginas). Es un insumo para discusión interna —
+                  no constituye una recomendación final de inversión.
+                  Las oportunidades y amenazas deben validarse con
+                  la información de la Sección 2 antes de tomar
+                  decisiones.
+                </div>
                 <button
                   onClick={() => setShowOutput(false)}
                   style={{ marginTop: 20, fontSize: 12,
