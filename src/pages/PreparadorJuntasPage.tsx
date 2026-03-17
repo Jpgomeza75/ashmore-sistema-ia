@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 
@@ -309,139 +309,449 @@ const PreparadorJuntasPage = () => {
           <div style={{ background: 'white',
             border: '1px solid #E0DBD0', borderRadius: 6,
             overflow: 'hidden' }}>
-            <div style={{ background: navy,
-              padding: '16px 24px', display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between' }}>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700,
-                  color: '#F8F5F0' }}>
-                  Brief de Junta — TermoemCali I S.A. ESP
-                </div>
-                <div style={{ fontSize: 10, color: '#4A6070',
-                  marginTop: 2 }}>
-                  Junta Ordinaria · Marzo 25, 2026 · 5 secciones
-                </div>
-              </div>
-              <div style={{ fontSize: 9, fontWeight: 600,
-                padding: '3px 10px',
-                background: 'rgba(184,134,11,0.15)',
-                color: copper, borderRadius: 2,
-                border: '1px solid rgba(184,134,11,0.3)' }}>
-                Output real generado con Claude
-              </div>
-            </div>
             {!showOutput ? (
-              <div style={{ padding: '32px 24px',
-                textAlign: 'center' }}>
-                <div style={{ fontSize: 14, color: '#8A8880',
-                  marginBottom: 20 }}>
-                  Ver ejemplo de brief para junta de
-                  TermoemCali — Marzo 2026
-                </div>
-                <button
-                  onClick={() => setShowOutput(true)}
-                  style={{ padding: '12px 32px',
-                    background: navy, border: 'none',
-                    borderRadius: 4, fontSize: 13,
-                    fontWeight: 700, color: '#F8F5F0',
-                    cursor: 'pointer',
-                    fontFamily: 'Inter, sans-serif' }}>
-                  Ver brief completo →
-                </button>
-              </div>
-            ) : (
-              <div style={{ padding: '24px' }}>
-                {OUTPUT_EJEMPLO_JUNTAS.map((sec, i) => (
-                  <div key={i} style={{
-                    marginBottom: i < OUTPUT_EJEMPLO_JUNTAS.length - 1
-                      ? 28 : 0,
-                    paddingBottom: i < OUTPUT_EJEMPLO_JUNTAS.length - 1
-                      ? 28 : 0,
-                    borderBottom: i < OUTPUT_EJEMPLO_JUNTAS.length - 1
-                      ? '1px solid #F0EDE6' : 'none' }}>
-                    <div style={{ display: 'flex',
-                      alignItems: 'baseline', gap: 12,
-                      marginBottom: 10 }}>
-                      <span style={{
-                        fontFamily: 'Georgia, serif',
-                        fontSize: 32, fontWeight: 700,
-                        color: '#E8E4DC', lineHeight: 1 }}>
-                        {sec.num}
-                      </span>
-                      <div style={{ display: 'flex',
-                        alignItems: 'center', gap: 8 }}>
-                        <span style={{ fontSize: 14,
-                          fontWeight: 700, color: navy,
-                          textTransform: 'uppercase',
-                          letterSpacing: 1 }}>
-                          {sec.titulo}
-                        </span>
-                        <div style={{ width: 8, height: 8,
-                          borderRadius: '50%',
-                          background: sec.color }} />
-                      </div>
+              <>
+                <div style={{ background: navy,
+                  padding: '16px 24px', display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ fontSize: 12, fontWeight: 700,
+                      color: '#F8F5F0' }}>
+                      Brief de Junta — TermoemCali I S.A. ESP
                     </div>
-                    <div style={{ fontSize: 13,
-                      lineHeight: 1.85, fontFamily: 'Inter, sans-serif' }}>
-                      {sec.texto.split('\n').map((line, li) => (
-                        <div key={li} style={{
-                          marginBottom: line === '' ? 8 : 2,
-                          fontWeight:
-                            line.startsWith('INCUMPLIDO') ||
-                            line.startsWith('PENDIENTE') ||
-                            line.startsWith('CUMPLIDO') ||
-                            line.startsWith('PUNTO') ||
-                            line.startsWith('Posición Ashmore') ||
-                            line.startsWith('ASEGURARSE') ||
-                            line.startsWith('SEÑAL') ||
-                            line.startsWith('SEGUIMIENTO') ||
-                            line.startsWith('DOCUMENTAR')
-                            ? 700 : 400,
-                          color:
-                            line.startsWith('INCUMPLIDO') ? '#991B1B' :
-                            line.startsWith('PENDIENTE') ? '#854D0E' :
-                            line.startsWith('CUMPLIDO') ? '#166534' :
-                            line.startsWith('PUNTO') ? '#0A2240' :
-                            line.startsWith('Posición Ashmore') ? '#B8860B' :
-                            line.startsWith('ASEGURARSE') ||
-                            line.startsWith('SEÑAL') ? '#991B1B' :
-                            line.startsWith('SEGUIMIENTO') ||
-                            line.startsWith('DOCUMENTAR') ? '#854D0E' :
-                            '#444',
-                          fontSize:
-                            line.startsWith('PUNTO') ||
-                            line.startsWith('INCUMPLIDO') ||
-                            line.startsWith('PENDIENTE') ||
-                            line.startsWith('CUMPLIDO') ? 14 : 13,
-                        }}>
-                          {line}
-                        </div>
-                      ))}
+                    <div style={{ fontSize: 10, color: '#4A6070',
+                      marginTop: 2 }}>
+                      Junta Ordinaria · Marzo 25, 2026 · 5 secciones
                     </div>
                   </div>
-                ))}
+                  <div style={{ fontSize: 9, fontWeight: 600,
+                    padding: '3px 10px',
+                    background: 'rgba(184,134,11,0.15)',
+                    color: copper, borderRadius: 2,
+                    border: '1px solid rgba(184,134,11,0.3)' }}>
+                    Output real generado con Claude
+                  </div>
+                </div>
+                <div style={{ padding: '32px 24px',
+                  textAlign: 'center' }}>
+                  <div style={{ fontSize: 14, color: '#8A8880',
+                    marginBottom: 20 }}>
+                    Ver ejemplo de brief para junta de
+                    TermoemCali — Marzo 2026
+                  </div>
+                  <button
+                    onClick={() => setShowOutput(true)}
+                    style={{ padding: '12px 32px',
+                      background: navy, border: 'none',
+                      borderRadius: 4, fontSize: 13,
+                      fontWeight: 700, color: '#F8F5F0',
+                      cursor: 'pointer',
+                      fontFamily: 'Inter, sans-serif' }}>
+                    Ver brief completo →
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div style={{ padding: '0' }}>
+                <div style={{ background: navy, borderRadius: '6px 6px 0 0',
+                  padding: '20px 24px', marginBottom: 0 }}>
+                  <div style={{ fontSize: 9, fontWeight: 700,
+                    letterSpacing: 3, textTransform: 'uppercase',
+                    color: copper, marginBottom: 8 }}>
+                    Ashmore Management Company Colombia S.A.S.
+                  </div>
+                  <div style={{ fontFamily: 'Georgia, serif',
+                    fontSize: 20, fontWeight: 700,
+                    color: '#F8F5F0', marginBottom: 4 }}>
+                    Brief de Junta Directiva — TermoemCali I S.A. ESP
+                  </div>
+                  <div style={{ fontSize: 11, color: '#4A6070',
+                    marginBottom: 12 }}>
+                    Generado por Claude · Sistema Operativo IA ·
+                    Ashmore Management Company Colombia
+                  </div>
+                  <div style={{ display: 'flex', gap: 24,
+                    paddingTop: 12,
+                    borderTop: '1px solid #1E3A5A',
+                    flexWrap: 'wrap' }}>
+                    {[
+                      { label: 'Junta', val: 'Ordinaria · Marzo 25, 2026' },
+                      { label: 'Representante Ashmore',
+                        val: 'Director de Asset Management' },
+                      { label: 'Tipo', val: 'Junta Ordinaria Q1 2026' },
+                      { label: 'Generado', val: 'Marzo 24, 2026 · 4 min' },
+                    ].map((m, i) => (
+                      <div key={i} style={{ fontSize: 10,
+                        color: '#6A8AAA' }}>
+                        {m.label}:{' '}
+                        <span style={{ color: copper,
+                          fontWeight: 600 }}>{m.val}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ padding: '24px',
+                  borderBottom: '1px solid #F0EDE6' }}>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center', gap: 10,
+                    marginBottom: 16 }}>
+                    <div style={{ fontFamily: 'Georgia, serif',
+                      fontSize: 28, fontWeight: 700,
+                      color: '#E8E4DC', lineHeight: 1 }}>1</div>
+                    <div style={{ width: 8, height: 8,
+                      borderRadius: '50%',
+                      background: '#FCA5A5' }} />
+                    <div style={{ fontSize: 13, fontWeight: 700,
+                      color: navy, textTransform: 'uppercase',
+                      letterSpacing: 1 }}>
+                      Compromisos pendientes de la última junta
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex',
+                    flexDirection: 'column', gap: 10 }}>
+                    {[
+                      { estado: 'INCUMPLIDO', estColor: '#991B1B', estBg: '#FEF2F2', borderColor: '#FCA5A5', titulo: 'Plan de Manejo de Residuos Industriales — Fase II', meta: 'Responsable: Gerencia Técnica (Ing. Ramírez) · Plazo original: Dic 31, 2025 · Reprogramado: Mar 25, 2026', estadoDesc: 'Segunda reprogramación consecutiva', accion: 'Exigir fecha definitiva con penalidad contractual si no se cumple. No aprobar nuevos puntos que dependan de esta gestión ambiental. Ashmore debe documentar en el acta que el incumplimiento es reiterado.' },
+                      { estado: 'PENDIENTE', estColor: '#854D0E', estBg: '#FFFBEB', borderColor: '#FCD34D', titulo: 'Informe de auditoría ambiental ANLA — Compensación biótica', meta: 'Responsable: Dirección ESG (Dra. Vargas) · Plazo: Mar 15, 2026', estadoDesc: '10 días vencido sin comunicación al directorio', accion: 'Solicitar al inicio de la junta estado actual del informe. Si hay observaciones de la ANLA, Ashmore debe ser informado de inmediato — es un riesgo de licencia ambiental del activo.' },
+                      { estado: 'CUMPLIDO', estColor: '#166534', estBg: '#F0FDF4', borderColor: '#86EFAC', titulo: 'Actualización modelo de valoración Q4 2025 con nueva estructura de costos', meta: 'Responsable: CFO (Sr. Montenegro) · Plazo: Feb 28, 2026', estadoDesc: 'Modelo recibido por Ashmore el 28 de febrero. En revisión por equipo de inversiones.', accion: 'Sin acción requerida en la junta. El equipo de Ashmore enviará comentarios al CFO antes del 10 de abril.' },
+                      { estado: 'PENDIENTE', estColor: '#854D0E', estBg: '#FFFBEB', borderColor: '#FCD34D', titulo: 'Contratación nuevo gerente de operaciones', meta: 'Responsable: Gerencia General · Plazo: Mar 1, 2026', estadoDesc: 'Proceso de selección en curso, dos candidatos finalistas', accion: 'Solicitar actualización del proceso. Ashmore debe asegurarse de que el nuevo gerente cumpla con el perfil aprobado por la junta en diciembre 2025.' },
+                    ].map((c, i) => (
+                      <div key={i} style={{ background: c.estBg,
+                        border: `1px solid ${c.borderColor}`,
+                        borderLeft: `4px solid ${c.borderColor}`,
+                        borderRadius: '0 6px 6px 0',
+                        padding: '14px 16px' }}>
+                        <div style={{ display: 'flex',
+                          alignItems: 'center', gap: 8,
+                          marginBottom: 6 }}>
+                          <span style={{ fontSize: 10,
+                            fontWeight: 700, padding: '2px 8px',
+                            borderRadius: 2,
+                            background: `${c.borderColor}33`,
+                            color: c.estColor }}>
+                            {c.estado}
+                          </span>
+                          <span style={{ fontSize: 14,
+                            fontWeight: 700, color: '#0A2240' }}>
+                            {c.titulo}
+                          </span>
+                        </div>
+                        <div style={{ fontSize: 11,
+                          color: '#6A7080', marginBottom: 4 }}>
+                          {c.meta}
+                        </div>
+                        <div style={{ fontSize: 11,
+                          color: c.estColor, fontWeight: 600,
+                          marginBottom: 6 }}>
+                          Estado: {c.estadoDesc}
+                        </div>
+                        <div style={{ fontSize: 12,
+                          color: '#444', lineHeight: 1.6,
+                          paddingLeft: 12,
+                          borderLeft: '2px solid #E0DBD0' }}>
+                          <strong>Acción:</strong> {c.accion}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div style={{ padding: '24px',
+                  borderBottom: '1px solid #F0EDE6' }}>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center', gap: 10,
+                    marginBottom: 16 }}>
+                    <div style={{ fontFamily: 'Georgia, serif',
+                      fontSize: 28, fontWeight: 700,
+                      color: '#E8E4DC', lineHeight: 1 }}>2</div>
+                    <div style={{ width: 8, height: 8,
+                      borderRadius: '50%',
+                      background: '#93C5FD' }} />
+                    <div style={{ fontSize: 13, fontWeight: 700,
+                      color: navy, textTransform: 'uppercase',
+                      letterSpacing: 1 }}>
+                      Resumen ejecutivo del período Q1 2026
+                    </div>
+                  </div>
+                  <div style={{ display: 'grid',
+                    gridTemplateColumns: 'repeat(4,1fr)',
+                    gap: 10, marginBottom: 16 }}>
+                    {[
+                      { label: 'Ingresos Q1', val: 'USD 8.4M', vs: '▼ 6% vs. plan (USD 8.9M)', vsColor: '#991B1B' },
+                      { label: 'EBITDA Q1', val: 'USD 5.6M', vs: 'Margen 67% vs. 71% plan', vsColor: '#854D0E' },
+                      { label: 'Caja operativa', val: 'USD 2.1M', vs: '▲ En línea con plan', vsColor: '#166534' },
+                      { label: 'Disponibilidad planta', val: '91.2%', vs: '▼ vs. 95% contractual', vsColor: '#991B1B' },
+                    ].map((k, i) => (
+                      <div key={i} style={{ background: 'white',
+                        border: '1px solid #E0DBD0',
+                        borderRadius: 6, padding: '12px 14px',
+                        textAlign: 'center' }}>
+                        <div style={{ fontSize: 9,
+                          color: '#6A7080',
+                          textTransform: 'uppercase',
+                          letterSpacing: 1, marginBottom: 5 }}>
+                          {k.label}
+                        </div>
+                        <div style={{ fontFamily: 'Georgia, serif',
+                          fontSize: 20, fontWeight: 700,
+                          color: navy, marginBottom: 3 }}>
+                          {k.val}
+                        </div>
+                        <div style={{ fontSize: 10,
+                          color: k.vsColor }}>
+                          {k.vs}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  {[
+                    { label: 'Causa del shortfall de ingresos', text: 'Mantenimiento no programado de la turbina 2 durante 18 días en enero por falla en el sistema de enfriamiento. El management reportó que la falla fue cubierta parcialmente por el contrato de O&M, pero el impacto neto en producción fue de ~42 GWh dejados de generar. ASHMORE AÚN NO HA RECIBIDO CONFIRMACIÓN ESCRITA DE QUÉ CUBRIÓ EL OPERADOR — esto es crítico para el Punto 3 de la agenda.', alert: true },
+                    { label: 'Evento regulatorio relevante', text: 'Resolución CREG 101 100 de 2026 (MCE) expedida el 19 de febrero. El equipo de asset management de Ashmore está realizando análisis de impacto sobre el portafolio de energía — ver Punto 4 de la agenda.', alert: false },
+                    { label: 'ESG', text: 'Sin incidentes ambientales o laborales en el período. Plan de compensación biótica: 78% completado, en línea con cronograma. Próxima auditoría ANLA programada para junio 2026 — ver compromiso pendiente sobre el informe de marzo.', alert: false },
+                  ].map((item, i) => (
+                    <div key={i} style={{ background: 'white',
+                      border: `1px solid ${item.alert ? '#FCA5A5' : '#E0DBD0'}`,
+                      borderRadius: 6, padding: '12px 16px',
+                      marginBottom: 8 }}>
+                      <div style={{ fontSize: 11, fontWeight: 700,
+                        color: item.alert ? '#991B1B' : navy,
+                        marginBottom: 4 }}>
+                        {item.label}:
+                      </div>
+                      <div style={{ fontSize: 13, color: '#444',
+                        lineHeight: 1.7 }}>{item.text}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ padding: '24px',
+                  borderBottom: '1px solid #F0EDE6' }}>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center', gap: 10,
+                    marginBottom: 16 }}>
+                    <div style={{ fontFamily: 'Georgia, serif',
+                      fontSize: 28, fontWeight: 700,
+                      color: '#E8E4DC', lineHeight: 1 }}>3</div>
+                    <div style={{ width: 8, height: 8,
+                      borderRadius: '50%',
+                      background: copper }} />
+                    <div style={{ fontSize: 13, fontWeight: 700,
+                      color: navy, textTransform: 'uppercase',
+                      letterSpacing: 1 }}>
+                      Análisis punto por punto de la agenda
+                    </div>
+                  </div>
+                  {[
+                    { punto: 'Punto 2', titulo: 'Aprobación estados financieros Q1 2026 y gestión presupuestal', posicion: 'SOLICITAR ACLARACIÓN', posColor: '#854D0E', posBg: '#FEF9C3', rows: [
+                      { label: 'Contexto', text: 'Los estados financieros muestran ingresos 6% bajo plan. Antes de aprobarlos, Ashmore debe entender cómo se contabilizó el impacto de la falla de la turbina 2 y si la recuperación por el contrato O&M fue registrada correctamente.' },
+                      { label: 'Argumentos', text: 'El diferencial de USD 0.5M vs. plan requiere explicación que permita evaluar si es recuperable en Q2-Q4 o si afecta el pronóstico del año.' },
+                      { label: 'Riesgo', text: 'Si se aprueba sin aclaración, Ashmore pierde la oportunidad de documentar que el shortfall fue por un evento no recurrente — relevante para la valoración del activo.' },
+                    ]},
+                    { punto: 'Punto 3', titulo: 'Aprobación capex extraordinario USD 2.3M — reparación definitiva turbina 2', posicion: 'SOLICITAR MÁS INFORMACIÓN. No aprobar en esta sesión.', posColor: '#991B1B', posBg: '#FEE2E2', rows: [
+                      { label: 'Contexto', text: 'El presupuesto 2026 aprobado en diciembre no incluía este capex. Ashmore debe verificar PRIMERO si la reparación está cubierta por: (a) garantía del fabricante, (b) contrato de O&M, (c) póliza de seguro del activo.' },
+                      { label: 'Argumentos', text: 'Si alguna cobertura aplica, TermoemCali no debería asumir este capex. Este monto equivale al 41% del EBITDA del trimestre.' },
+                      { label: 'Riesgo', text: 'Doble pago si la garantía o el seguro responden.' },
+                    ]},
+                    { punto: 'Punto 4', titulo: 'Presentación impacto Resolución CREG 101 100 de 2026 (MCE)', posicion: 'ESCUCHAR E INFORMAR. No revelar aún la posición de Ashmore.', posColor: '#075985', posBg: '#E0F2FE', rows: [
+                      { label: 'Contexto', text: 'El management presentará su análisis del MCE. Ashmore tiene análisis propio en curso — escuchar primero la perspectiva del management antes de tomar posición pública.' },
+                      { label: 'Pregunta clave', text: '¿Ha revisado el management los contratos bilaterales vigentes para determinar si hay cláusulas de exclusividad que restrinjan la participación en el MCE?' },
+                    ]},
+                    { punto: 'Punto 5', titulo: 'Aprobación plan de ventas Q2 2026 y estrategia de comercialización', posicion: 'CONDICIONAR aprobación a resolución del MCE', posColor: '#854D0E', posBg: '#FEF9C3', rows: [
+                      { label: 'Contexto', text: 'El plan de ventas Q2 debería incorporar el análisis del MCE antes de aprobarse. Si TermoemCali puede participar en el MCE como vendedor, la estrategia de comercialización cambia materialmente.' },
+                      { label: 'Propuesta', text: 'Que el plan incluya un escenario con MCE y otro sin MCE, y que la decisión de participar se tome en sesión extraordinaria antes del 30 de abril.' },
+                    ]},
+                  ].map((item, i) => (
+                    <div key={i} style={{ background: 'white',
+                      border: '1px solid #E0DBD0',
+                      borderRadius: 6, padding: '16px',
+                      marginBottom: 10 }}>
+                      <div style={{ fontSize: 10, fontWeight: 700,
+                        color: copper, textTransform: 'uppercase',
+                        letterSpacing: 1, marginBottom: 4 }}>
+                        {item.punto}
+                      </div>
+                      <div style={{ fontSize: 15, fontWeight: 700,
+                        color: navy, marginBottom: 10 }}>
+                        {item.titulo}
+                      </div>
+                      <div style={{ marginBottom: 12 }}>
+                        <span style={{ fontSize: 9,
+                          fontWeight: 700, letterSpacing: 1,
+                          textTransform: 'uppercase',
+                          color: '#6A7080', marginRight: 8 }}>
+                          Posición
+                        </span>
+                        <span style={{ fontSize: 11,
+                          fontWeight: 700, padding: '3px 10px',
+                          borderRadius: 3, background: item.posBg,
+                          color: item.posColor }}>
+                          {item.posicion}
+                        </span>
+                      </div>
+                      <div style={{ display: 'grid',
+                        gridTemplateColumns: '80px 1fr',
+                        gap: '6px 12px' }}>
+                        {item.rows.map((row, ri) => (
+                          <Fragment key={ri}>
+                            <div style={{
+                              fontSize: 9, fontWeight: 700,
+                              color: '#6A7080',
+                              textTransform: 'uppercase',
+                              letterSpacing: 1,
+                              paddingTop: 2 }}>
+                              {row.label}
+                            </div>
+                            <div style={{
+                              fontSize: 12, color: '#444',
+                              lineHeight: 1.65 }}>
+                              {row.text}
+                            </div>
+                          </Fragment>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ padding: '24px',
+                  borderBottom: '1px solid #F0EDE6' }}>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center', gap: 10,
+                    marginBottom: 16 }}>
+                    <div style={{ fontFamily: 'Georgia, serif',
+                      fontSize: 28, fontWeight: 700,
+                      color: '#E8E4DC', lineHeight: 1 }}>4</div>
+                    <div style={{ width: 8, height: 8,
+                      borderRadius: '50%',
+                      background: '#86EFAC' }} />
+                    <div style={{ fontSize: 13, fontWeight: 700,
+                      color: navy, textTransform: 'uppercase',
+                      letterSpacing: 1 }}>
+                      Preguntas que Ashmore debería hacer
+                    </div>
+                  </div>
+                  {[
+                    { num: '1', q: '"¿El contrato de O&M con el operador cubre la falla de la turbina 2? ¿Cuál fue la posición formal del operador cuando se notificó la falla?"', prop: 'Determinar si el capex de USD 2.3M del Punto 3 es una obligación de TermoemCali o del operador.', resp: 'El management debe tener documentada la comunicación con el operador. Si no la tiene, eso es una señal de alerta sobre la gestión del contrato O&M.' },
+                    { num: '2', q: '"¿Cuál fue el impacto exacto en ingresos del mantenimiento de enero? ¿Cuántos GWh dejaron de generarse y a qué precio promedio de bolsa?"', prop: 'Entender si el shortfall de USD 0.5M vs. plan es recuperable en los próximos trimestres o hay que ajustar el pronóstico del año completo.', resp: 'El CFO debe tener este dato. Si no está preparado, es una debilidad en la gestión financiera del activo.' },
+                    { num: '3', q: '"¿Los contratos bilaterales vigentes de TermoemCali incluyen cláusulas de exclusividad que restrinjan la participación en el MCE?"', prop: 'Es la información prerrequisito para evaluar la oportunidad del MCE. Si no lo han revisado, Ashmore debe exigir que se haga antes de la próxima sesión.', resp: 'El equipo jurídico de TermoemCali debe haber revisado esto desde el 19 de febrero. Si no lo han hecho, es una señal de alerta sobre la gestión regulatoria del activo.' },
+                    { num: '4', q: '"¿En qué estado está el informe de auditoría ANLA? ¿Hay observaciones pendientes de respuesta?"', prop: 'El informe estaba comprometido para el 15 de marzo y no llegó. Si hay observaciones sobre el plan de compensación biótica, es un riesgo de licencia ambiental.', resp: 'Estado del informe con fecha definitiva de entrega. Si hay observaciones, descripción de su naturaleza y plan de respuesta.' },
+                    { num: '5', q: '"¿Cuándo se espera que el nuevo gerente de operaciones entre en funciones? ¿El gerente saliente permanece hasta el empalme?"', prop: 'La vacante en operaciones es un riesgo, especialmente con la reparación de la turbina 2 en curso y el análisis del MCE simultáneos.', resp: 'Fecha de inicio del nuevo gerente y confirmación del empalme. Si el proceso se extiende más de 2 semanas, Ashmore debe proponer un gerente interino.' },
+                  ].map((p, i) => (
+                    <div key={i} style={{ background: 'white',
+                      border: '1px solid #E0DBD0',
+                      borderLeft: `3px solid ${navy}`,
+                      borderRadius: '0 6px 6px 0',
+                      padding: '14px 16px', marginBottom: 8 }}>
+                      <div style={{ display: 'flex',
+                        gap: 10, marginBottom: 8 }}>
+                        <div style={{ width: 24, height: 24,
+                          borderRadius: '50%',
+                          background: navy, color: '#F8F5F0',
+                          display: 'flex', alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: 11, fontWeight: 700,
+                          flexShrink: 0 }}>{p.num}</div>
+                        <div style={{ fontSize: 13,
+                          fontWeight: 600, color: navy,
+                          lineHeight: 1.5, fontStyle: 'italic' }}>
+                          {p.q}
+                        </div>
+                      </div>
+                      <div style={{ paddingLeft: 34,
+                        display: 'grid',
+                        gridTemplateColumns: '70px 1fr',
+                        gap: '4px 12px' }}>
+                        <div style={{ fontSize: 9,
+                          fontWeight: 700, color: '#6A7080',
+                          textTransform: 'uppercase',
+                          letterSpacing: 1, paddingTop: 2 }}>
+                          Propósito
+                        </div>
+                        <div style={{ fontSize: 12,
+                          color: '#444', lineHeight: 1.6 }}>
+                          {p.prop}
+                        </div>
+                        <div style={{ fontSize: 9,
+                          fontWeight: 700, color: '#6A7080',
+                          textTransform: 'uppercase',
+                          letterSpacing: 1, paddingTop: 2 }}>
+                          Respuesta
+                        </div>
+                        <div style={{ fontSize: 12,
+                          color: '#6A7080', lineHeight: 1.6,
+                          fontStyle: 'italic' }}>
+                          {p.resp}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ padding: '24px' }}>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center', gap: 10,
+                    marginBottom: 16 }}>
+                    <div style={{ fontFamily: 'Georgia, serif',
+                      fontSize: 28, fontWeight: 700,
+                      color: '#E8E4DC', lineHeight: 1 }}>5</div>
+                    <div style={{ width: 8, height: 8,
+                      borderRadius: '50%',
+                      background: '#F9A8D4' }} />
+                    <div style={{ fontSize: 13, fontWeight: 700,
+                      color: navy, textTransform: 'uppercase',
+                      letterSpacing: 1 }}>
+                      Alertas y seguimiento post-junta
+                    </div>
+                  </div>
+                  {[
+                    { tipo: 'ASEGURARSE QUE QUEDE EN ACTA', color: '#FCA5A5', bg: '#FEF2F2', text: 'La aprobación del capex de USD 2.3M (Punto 3) debe quedar condicionada a la confirmación escrita de que no existe cobertura por garantía del fabricante, contrato O&M o seguro. Si la junta aprueba sin esta condición, Ashmore debe votar en contra y documentar la razón.' },
+                    { tipo: 'SEÑAL DE ALERTA', color: '#FCA5A5', bg: '#FEF2F2', text: 'Si el management no tiene documentada la comunicación formal con el operador sobre la falla de la turbina 2, eso indica debilidad en la gestión del contrato O&M. Ashmore debe solicitar acceso a toda la documentación del incidente.' },
+                    { tipo: 'SEGUIMIENTO SEMANA SIGUIENTE', color: '#FCD34D', bg: '#FFFBEB', text: 'Confirmar con el equipo jurídico de Ashmore que recibieron la tarea de revisar los contratos bilaterales de TermoemCali frente al MCE. Solicitar concepto preliminar antes del 10 de abril.' },
+                    { tipo: 'SEGUIMIENTO 5 DÍAS HÁBILES', color: '#FCD34D', bg: '#FFFBEB', text: 'Si el Plan de Manejo de Residuos Fase II no tiene fecha definitiva aprobada en la junta, escalar al Director de Inversiones para evaluar si se requiere una sesión extraordinaria o una notificación formal a la gerencia general.' },
+                    { tipo: 'DOCUMENTAR EN EL ACTA', color: '#93C5FD', bg: '#E0F2FE', text: 'La posición de Ashmore sobre el MCE debe quedar registrada como "en análisis — decisión pendiente de información contractual". Esto protege a Ashmore en caso de que el management tome decisiones unilaterales antes de la próxima junta.' },
+                  ].map((a, i) => (
+                    <div key={i} style={{ background: a.bg,
+                      border: `1px solid ${a.color}`,
+                      borderLeft: `4px solid ${a.color}`,
+                      borderRadius: '0 6px 6px 0',
+                      padding: '12px 16px', marginBottom: 8 }}>
+                      <div style={{ fontSize: 10, fontWeight: 700,
+                        color: a.color, textTransform: 'uppercase',
+                        letterSpacing: 1, marginBottom: 6 }}>
+                        {a.tipo}
+                      </div>
+                      <div style={{ fontSize: 12, color: '#444',
+                        lineHeight: 1.65 }}>{a.text}</div>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ margin: '0 24px 24px',
+                  padding: '12px 16px',
+                  background: '#F8F5F0',
+                  border: '1px solid #E0DBD0',
+                  borderLeft: `3px solid ${copper}`,
+                  borderRadius: '0 4px 4px 0',
+                  fontSize: 12, color: '#8A8880',
+                  lineHeight: 1.6, fontStyle: 'italic' }}>
+                  Brief generado en 5 minutos a partir del
+                  acta de la junta de diciembre 2025, el
+                  informe trimestral Q1 2026 y la agenda
+                  enviada por la gerencia de TermoemCali.
+                  Documento de trabajo interno — no
+                  compartir con la compañía del portafolio.
+                </div>
+
                 <button
                   onClick={() => setShowOutput(false)}
-                  style={{ marginTop: 20, fontSize: 12,
-                    color: '#8A8880', background: 'none',
-                    border: 'none', cursor: 'pointer',
+                  style={{ margin: '0 24px 24px',
+                    fontSize: 12, color: '#8A8880',
+                    background: 'none', border: 'none',
+                    cursor: 'pointer',
                     fontFamily: 'Inter, sans-serif' }}>
                   Ocultar ejemplo
                 </button>
-                <div style={{ marginTop: 20, padding: '12px 16px',
-                  background: '#F8F5F0', border: '1px solid #E0DBD0',
-                  borderLeft: '3px solid #B8860B',
-                  borderRadius: '0 4px 4px 0', fontSize: 12,
-                  color: '#8A8880', lineHeight: 1.6,
-                  fontStyle: 'italic' }}>
-                  Brief generado en 5 minutos a partir del acta
-                  de la junta de diciembre 2025, el informe
-                  trimestral Q1 2026 y la agenda enviada por
-                  la gerencia de TermoemCali. Documento de
-                  trabajo interno — no compartir con la
-                  compañía del portafolio.
-                </div>
               </div>
             )}
           </div>
