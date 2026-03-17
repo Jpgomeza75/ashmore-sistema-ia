@@ -108,31 +108,6 @@ const Nivel2DDPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState<null|{titulo:string,frag:string,tag:string}>(null);
 
-  const handleSearch = (queryOverride?: string) => {
-    const q = (queryOverride ?? searchQuery).toLowerCase();
-    if (q.includes('ppa') || q.includes('contrato')) {
-      setSearchResult({
-        titulo: 'Contrato_PPA_REDACTED.pdf · Página 12',
-        tag: 'Legal',
-        frag: '...el vendedor de energía se compromete a vender el 100% de la energía generada por el Proyecto al comprador durante el término del contrato (15 años), con exclusividad geográfica en el departamento de Córdoba. El precio base es USD 42/MWh indexado al CPI de Estados Unidos...'
-      });
-    } else if (q.includes('factor') || q.includes('planta')) {
-      setSearchResult({
-        titulo: 'Informe_Interventoria_Tecnica_2024.pdf · Página 34',
-        tag: 'Técnico',
-        frag: '...el factor de planta registrado durante enero-diciembre 2024 fue de 22.3%, consistente con las mediciones de irradiación solar NASA POWER para Córdoba (rango histórico 20.1%-23.8%). El modelo financiero del vendedor asume 26%, un 16% por encima del histórico registrado...'
-      });
-    } else if (q.includes('anla') || q.includes('licencia')) {
-      setSearchResult({
-        titulo: 'Licencia_Ambiental_ANLA_2021.pdf · Página 3',
-        tag: 'ESG',
-        frag: '...la Autoridad Nacional de Licencias Ambientales otorga licencia ambiental al Proyecto Solar Córdoba por un período de 25 años a partir del 15 de marzo de 2021, sujeto al cumplimiento del Plan de Manejo Ambiental establecido en el Anexo 2 de la presente resolución...'
-      });
-    } else {
-      setSearchResult(null);
-    }
-  };
-
   const sLabel = (text: string) => (
     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2,
       textTransform: 'uppercase', color: copper, marginBottom: 12 }}>
@@ -161,82 +136,357 @@ const Nivel2DDPage = () => {
   );
 
   // ── DASHBOARD ────────────────────────────────────
-  const renderDashboard = () => (
-    <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
-      <div style={{ display: 'grid',
-        gridTemplateColumns: 'repeat(4,1fr)', gap: 12,
-        marginBottom: 20 }}>
-        {kpi('Deals en DD activo', '3', 'Fondo Andino III')}
-        {kpi('Documentos procesados', '147', 'Data room indexado')}
-        {kpi('Preguntas abiertas', '23', '8 vencidas hoy', '#FCA5A5')}
-        {kpi('Memos generados', '1', 'Solar Córdoba · Borrador')}
-      </div>
+  const renderDashboard = () => {
 
-      {sLabel('Deals activos — Estado por frente')}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {[
-          {
-            name: 'Proyecto Solar Córdoba', sub: 'Colombia · ~USD 55M · Energía renovable',
-            status: 'DD en curso', statusBg: 'rgba(184,134,11,0.15)', statusColor: '#B8860B',
-            frentes: [
-              { label: 'Financiero', status: 'En revisión', color: '#FCD34D', note: '3 supuestos agresivos' },
-              { label: 'Técnico', status: 'Completo', color: '#86EFAC', note: 'Sin hallazgos críticos' },
-              { label: 'Legal', status: 'Pendiente', color: '#FCA5A5', note: 'PPA bajo NDA' },
-              { label: 'ESG', status: 'Sin respuesta', color: '#FCA5A5', note: 'ANLA vencida 3 días' },
-            ]
-          },
-          {
-            name: 'Puerto Callao Logística', sub: 'Perú · ~USD 40M · Logística',
-            status: 'Screening', statusBg: 'rgba(147,197,253,0.1)', statusColor: '#93C5FD',
-            frentes: [
-              { label: 'Financiero', status: 'No iniciado', color: '#4A6070', note: '' },
-              { label: 'Técnico', status: 'No iniciado', color: '#4A6070', note: '' },
-              { label: 'Legal', status: 'En revisión', color: '#FCD34D', note: 'Estructura propiedad' },
-              { label: 'ESG', status: 'No iniciado', color: '#4A6070', note: '' },
-            ]
-          },
-        ].map((deal, i) => (
-          <div key={i} style={{ background: dark,
-            border: `1px solid ${border}`, borderRadius: 4,
-            padding: 16, cursor: 'pointer' }}
-            onClick={() => { setActiveDeal('solar'); setActiveTab('financiero'); }}>
-            <div style={{ display: 'flex', alignItems: 'center',
-              justifyContent: 'space-between', marginBottom: 12 }}>
-              <div>
-                <div style={{ fontSize: 15, fontWeight: 600,
-                  color: '#F8F5F0', marginBottom: 3 }}>{deal.name}</div>
-                <div style={{ fontSize: 11, color: '#4A6070' }}>{deal.sub}</div>
+    const deals = [
+      {
+        name: 'Proyecto Solar Córdoba',
+        sub: 'Colombia · ~USD 55M · Energía renovable',
+        etapa: 'DD en curso',
+        etapaColor: '#B8860B',
+        etapaBg: 'rgba(184,134,11,0.15)',
+        progreso: 65,
+        icFecha: 'Abr 15, 2026',
+        stages: [
+          { label: 'Screening', done: true },
+          { label: 'DD Financiero', done: true },
+          { label: 'DD Técnico', done: true },
+          { label: 'DD Legal', done: false, active: true },
+          { label: 'DD ESG', done: false },
+          { label: 'IC', done: false },
+          { label: 'Cierre', done: false },
+        ],
+        frentes: [
+          { label: 'Financiero', color: '#FCD34D',
+            status: 'En revisión', preguntas: 4 },
+          { label: 'Técnico', color: '#86EFAC',
+            status: 'Completo', preguntas: 0 },
+          { label: 'Legal', color: '#FCA5A5',
+            status: 'Bloqueado', preguntas: 6 },
+          { label: 'ESG', color: '#FCA5A5',
+            status: 'Sin respuesta', preguntas: 3 },
+        ]
+      },
+      {
+        name: 'Puerto Callao Logística',
+        sub: 'Perú · ~USD 40M · Logística',
+        etapa: 'Screening',
+        etapaColor: '#93C5FD',
+        etapaBg: 'rgba(147,197,253,0.1)',
+        progreso: 15,
+        icFecha: 'Jun 20, 2026',
+        stages: [
+          { label: 'Screening', done: false, active: true },
+          { label: 'DD Financiero', done: false },
+          { label: 'DD Técnico', done: false },
+          { label: 'DD Legal', done: false },
+          { label: 'DD ESG', done: false },
+          { label: 'IC', done: false },
+          { label: 'Cierre', done: false },
+        ],
+        frentes: [
+          { label: 'Financiero', color: '#4A6070',
+            status: 'No iniciado', preguntas: 0 },
+          { label: 'Técnico', color: '#4A6070',
+            status: 'No iniciado', preguntas: 0 },
+          { label: 'Legal', color: '#FCD34D',
+            status: 'En revisión', preguntas: 2 },
+          { label: 'ESG', color: '#4A6070',
+            status: 'No iniciado', preguntas: 0 },
+        ]
+      },
+    ];
+
+    const alertas = [
+      { color: '#FCA5A5', texto: 'PPA Solar Córdoba: contraparte sin revelar — bloquea valoración legal', accion: 'Escalar al vendedor', deal: 'Solar Córdoba', tiempo: 'Hoy · Crítico' },
+      { color: '#FCA5A5', texto: 'Plan de Manejo Ambiental ANLA: 3 días vencido sin respuesta del vendedor', accion: 'Enviar recordatorio', deal: 'Solar Córdoba', tiempo: 'Hoy · Crítico' },
+      { color: '#FCD34D', texto: 'Factor de planta: pendiente mediciones históricas de irradiación', accion: 'Solicitar a interventor', deal: 'Solar Córdoba', tiempo: 'Vence Mar 18' },
+      { color: '#93C5FD', texto: 'Callao Logística: reunión con management pendiente de agendar', accion: 'Coordinar con bancario', deal: 'Callao', tiempo: 'Sin fecha' },
+    ];
+
+    return (
+      <div style={{ padding: '20px 24px',
+        overflowY: 'auto', flex: 1 }}>
+
+        {/* KPIs */}
+        <div style={{ display: 'grid',
+          gridTemplateColumns: 'repeat(4,1fr)',
+          gap: 12, marginBottom: 24 }}>
+          {[
+            { label: 'Deals en DD activo', val: '3',
+              sub: 'Fondo Andino III' },
+            { label: 'Documentos procesados', val: '147',
+              sub: 'Data room indexado' },
+            { label: 'Preguntas abiertas', val: '23',
+              sub: '8 vencidas hoy',
+              subColor: '#FCA5A5' },
+            { label: 'Próximo IC', val: 'Abr 15',
+              sub: 'Solar Córdoba' },
+          ].map((k,i) => (
+            <div key={i} style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4, padding: '14px 16px' }}>
+              <div style={{ fontSize: 11, color: '#4A6070',
+                textTransform: 'uppercase', letterSpacing: 1,
+                marginBottom: 6 }}>{k.label}</div>
+              <div style={{ fontFamily: 'Georgia, serif',
+                fontSize: 30, fontWeight: 700,
+                color: '#F8F5F0', lineHeight: 1,
+                marginBottom: 4 }}>{k.val}</div>
+              <div style={{ fontSize: 11,
+                color: k.subColor || '#4A6070' }}>
+                {k.sub}
               </div>
-              {badge(deal.status, deal.statusBg, deal.statusColor)}
             </div>
-            <div style={{ display: 'grid',
-              gridTemplateColumns: 'repeat(4,1fr)', gap: 8 }}>
-              {deal.frentes.map((f, j) => (
-                <div key={j} style={{ background: navy,
-                  borderRadius: 3, padding: '10px 12px' }}>
-                  <div style={{ fontSize: 9, color: '#4A6070',
-                    textTransform: 'uppercase', letterSpacing: 1,
-                    marginBottom: 5 }}>{f.label}</div>
-                  <div style={{ display: 'flex', alignItems: 'center',
-                    gap: 6 }}>
-                    <div style={{ width: 8, height: 8,
-                      borderRadius: '50%', background: f.color,
-                      flexShrink: 0 }} />
-                    <div style={{ fontSize: 11, color: f.color,
-                      fontWeight: 600 }}>{f.status}</div>
+          ))}
+        </div>
+
+        <div style={{ display: 'grid',
+          gridTemplateColumns: '1.4fr 1fr', gap: 16 }}>
+
+          {/* Timeline deals */}
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700,
+              letterSpacing: 2, textTransform: 'uppercase',
+              color: copper, marginBottom: 16 }}>
+              Pipeline de DD — Estado del proceso
+            </div>
+            {deals.map((deal, di) => (
+              <div key={di} style={{ background: dark,
+                border: `1px solid ${border}`,
+                borderRadius: 4, padding: 16,
+                marginBottom: 12 }}>
+                <div style={{ display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: 14 }}>
+                  <div>
+                    <div style={{ fontSize: 14,
+                      fontWeight: 600, color: '#F8F5F0',
+                      marginBottom: 2 }}>{deal.name}</div>
+                    <div style={{ fontSize: 11,
+                      color: '#4A6070' }}>{deal.sub}</div>
                   </div>
-                  {f.note && (
-                    <div style={{ fontSize: 10, color: '#4A6070',
-                      marginTop: 3 }}>{f.note}</div>
-                  )}
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: 9,
+                      fontWeight: 700, padding: '2px 8px',
+                      borderRadius: 2,
+                      background: deal.etapaBg,
+                      color: deal.etapaColor,
+                      marginBottom: 4 }}>
+                      {deal.etapa}
+                    </div>
+                    <div style={{ fontSize: 10,
+                      color: '#4A6070' }}>
+                      IC objetivo: {deal.icFecha}
+                    </div>
+                  </div>
                 </div>
-              ))}
+
+                {/* Timeline horizontal */}
+                <div style={{ position: 'relative',
+                  marginBottom: 16 }}>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center',
+                    position: 'relative' }}>
+                    {deal.stages.map((stage, si) => (
+                      <div key={si} style={{ flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        position: 'relative' }}>
+                        {/* Línea conectora */}
+                        {si < deal.stages.length - 1 && (
+                          <div style={{
+                            position: 'absolute',
+                            top: 8, left: '50%',
+                            width: '100%', height: 2,
+                            background: stage.done
+                              ? copper : '#1E3A5A',
+                            zIndex: 0 }} />
+                        )}
+                        {/* Punto */}
+                        <div style={{
+                          width: 18, height: 18,
+                          borderRadius: '50%',
+                          background: stage.done
+                            ? copper
+                            : stage.active
+                            ? '#F8F5F0' : '#1E3A5A',
+                          border: stage.active
+                            ? `3px solid ${copper}`
+                            : 'none',
+                          zIndex: 1,
+                          flexShrink: 0,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}>
+                          {stage.done && (
+                            <div style={{ width: 6,
+                              height: 6, borderRadius: '50%',
+                              background: '#0A2240' }} />
+                          )}
+                        </div>
+                        {/* Label */}
+                        <div style={{ fontSize: 9,
+                          color: stage.done
+                            ? copper
+                            : stage.active
+                            ? '#F8F5F0' : '#4A6070',
+                          marginTop: 5, textAlign: 'center',
+                          fontWeight: stage.active
+                            ? 700 : 400,
+                          lineHeight: 1.3 }}>
+                          {stage.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Frentes summary */}
+                <div style={{ display: 'grid',
+                  gridTemplateColumns: 'repeat(4,1fr)',
+                  gap: 6 }}>
+                  {deal.frentes.map((f, fi) => (
+                    <div key={fi} style={{
+                      background: navy,
+                      borderRadius: 3,
+                      padding: '8px 10px' }}>
+                      <div style={{ fontSize: 9,
+                        color: '#4A6070',
+                        textTransform: 'uppercase',
+                        letterSpacing: 1,
+                        marginBottom: 4 }}>
+                        {f.label}
+                      </div>
+                      <div style={{ display: 'flex',
+                        alignItems: 'center', gap: 5 }}>
+                        <div style={{ width: 6, height: 6,
+                          borderRadius: '50%',
+                          background: f.color,
+                          flexShrink: 0 }} />
+                        <div style={{ fontSize: 10,
+                          color: f.color,
+                          fontWeight: 600 }}>
+                          {f.status}
+                        </div>
+                      </div>
+                      {f.preguntas > 0 && (
+                        <div style={{ fontSize: 9,
+                          color: '#FCA5A5', marginTop: 2 }}>
+                          {f.preguntas} preg. abiertas
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Alertas */}
+          <div>
+            <div style={{ fontSize: 10, fontWeight: 700,
+              letterSpacing: 2, textTransform: 'uppercase',
+              color: copper, marginBottom: 16 }}>
+              Alertas — Acción requerida hoy
+            </div>
+            {alertas.map((a, ai) => (
+              <div key={ai} style={{ background: dark,
+                border: `1px solid ${border}`,
+                borderLeft: `3px solid ${a.color}`,
+                borderRadius: '0 4px 4px 0',
+                padding: '12px 14px',
+                marginBottom: 8 }}>
+                <div style={{ fontSize: 11,
+                  color: '#4A6070', marginBottom: 4 }}>
+                  {a.deal} · {a.tiempo}
+                </div>
+                <div style={{ fontSize: 12,
+                  color: '#C8D8E8', lineHeight: 1.5,
+                  marginBottom: 10 }}>{a.texto}</div>
+                <button style={{ padding: '5px 12px',
+                  background: 'transparent',
+                  border: `1px solid ${a.color}`,
+                  borderRadius: 3, fontSize: 10,
+                  fontWeight: 700, color: a.color,
+                  cursor: 'pointer',
+                  fontFamily: 'Inter, sans-serif' }}>
+                  {a.accion} →
+                </button>
+              </div>
+            ))}
+
+            {/* Matriz preguntas abiertas */}
+            <div style={{ marginTop: 16 }}>
+              <div style={{ fontSize: 10, fontWeight: 700,
+                letterSpacing: 2, textTransform: 'uppercase',
+                color: copper, marginBottom: 10 }}>
+                Preguntas abiertas por frente
+              </div>
+              <table style={{ width: '100%',
+                borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>
+                    {['Frente','Vencidas',
+                      'Pendientes','Respondidas'].map(h => (
+                      <th key={h} style={{ fontSize: 9,
+                        color: '#4A6070',
+                        textTransform: 'uppercase',
+                        letterSpacing: 1,
+                        padding: '6px 10px',
+                        textAlign: 'left',
+                        borderBottom: `1px solid ${border}` }}>
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { f: 'Financiero', v: 0, p: 4, r: 8 },
+                    { f: 'Técnico', v: 0, p: 0, r: 10 },
+                    { f: 'Legal', v: 5, p: 2, r: 4 },
+                    { f: 'ESG', v: 3, p: 5, r: 2 },
+                  ].map((row, ri) => (
+                    <tr key={ri}>
+                      <td style={{ padding: '8px 10px',
+                        fontSize: 12, color: '#C8D8E8',
+                        borderBottom: '1px solid #0D2540' }}>
+                        {row.f}
+                      </td>
+                      <td style={{ padding: '8px 10px',
+                        fontSize: 13, fontWeight: 700,
+                        color: row.v > 0
+                          ? '#FCA5A5' : '#4A6070',
+                        borderBottom: '1px solid #0D2540' }}>
+                        {row.v}
+                      </td>
+                      <td style={{ padding: '8px 10px',
+                        fontSize: 13, fontWeight: 700,
+                        color: row.p > 0
+                          ? '#FCD34D' : '#4A6070',
+                        borderBottom: '1px solid #0D2540' }}>
+                        {row.p}
+                      </td>
+                      <td style={{ padding: '8px 10px',
+                        fontSize: 13, fontWeight: 700,
+                        color: '#86EFAC',
+                        borderBottom: '1px solid #0D2540' }}>
+                        {row.r}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   // ── FINANCIERO ───────────────────────────────────
   const renderFinanciero = () => {
@@ -833,279 +1083,1054 @@ const Nivel2DDPage = () => {
   };
 
   // ── DATA ROOM ─────────────────────────────────────
-  const renderDataRoom = () => (
-    <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
-      <div style={{ position: 'relative', marginBottom: 16 }}>
-        <input
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && handleSearch()}
-          placeholder='Busca en los 147 documentos — ej: "¿qué dice el PPA sobre exclusividad?" o "factor de planta histórico"'
-          style={{ width: '100%', padding: '12px 140px 12px 16px',
-            background: dark, border: `1px solid ${border}`,
-            borderRadius: 4, color: '#F8F5F0', fontSize: 13,
-            fontFamily: 'Inter, sans-serif', outline: 'none' }}
-          onFocus={e => { e.target.style.borderColor = copper; }}
-          onBlur={e => { e.target.style.borderColor = border; }}
-        />
-        <button
-          onClick={() => handleSearch()}
-          style={{ position: 'absolute', right: 8,
-            top: '50%', transform: 'translateY(-50%)',
-            padding: '7px 16px', background: copper,
-            border: 'none', borderRadius: 3, fontSize: 12,
-            fontWeight: 700, color: navy, cursor: 'pointer',
-            fontFamily: 'Inter, sans-serif' }}>
-          Buscar
-        </button>
-      </div>
+  const renderDataRoom = () => {
 
-      {searchResult ? (
-        <div style={{ marginBottom: 16 }}>
-          {sLabel('Resultado más relevante')}
-          <div style={{ background: dark,
+    const frentes = [
+      {
+        label: 'Financiero', color: '#86EFAC',
+        recibidos: 8, solicitados: 10,
+        docs: [
+          { nombre: 'ModeloFinanciero_SC_v3.xlsx',
+            estado: 'Analizado', stBg: 'rgba(134,239,172,0.1)',
+            stColor: '#86EFAC', paginas: '15 tabs' },
+          { nombre: 'Estados_Financieros_2023.pdf',
+            estado: 'Indexado', stBg: 'rgba(147,197,253,0.1)',
+            stColor: '#93C5FD', paginas: '42 págs' },
+          { nombre: 'Proyecciones_Auditadas_2024.pdf',
+            estado: 'Indexado', stBg: 'rgba(147,197,253,0.1)',
+            stColor: '#93C5FD', paginas: '28 págs' },
+          { nombre: 'Estructura_Deuda_Senior.pdf',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+          { nombre: 'Valoración_Independiente_2023.pdf',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+        ]
+      },
+      {
+        label: 'Técnico', color: '#93C5FD',
+        recibidos: 6, solicitados: 7,
+        docs: [
+          { nombre: 'Informe_Interventoria_2024.pdf',
+            estado: 'Indexado', stBg: 'rgba(147,197,253,0.1)',
+            stColor: '#93C5FD', paginas: '84 págs' },
+          { nombre: 'Estudio_Irradiacion_NASA.pdf',
+            estado: 'Indexado', stBg: 'rgba(147,197,253,0.1)',
+            stColor: '#93C5FD', paginas: '31 págs' },
+          { nombre: 'Informe_OyM_2024.pdf',
+            estado: 'Indexado', stBg: 'rgba(147,197,253,0.1)',
+            stColor: '#93C5FD', paginas: '19 págs' },
+          { nombre: 'Factor_Planta_Historico.xlsx',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+        ]
+      },
+      {
+        label: 'Legal', color: '#FCD34D',
+        recibidos: 5, solicitados: 9,
+        docs: [
+          { nombre: 'Contrato_PPA_REDACTED.pdf',
+            estado: 'Restringido', stBg: 'rgba(250,204,21,0.1)',
+            stColor: '#FCD34D', paginas: '38 págs' },
+          { nombre: 'Contrato_OyM_Operador.pdf',
+            estado: 'Indexado', stBg: 'rgba(147,197,253,0.1)',
+            stColor: '#93C5FD', paginas: '24 págs' },
+          { nombre: 'Escritura_Constitucion.pdf',
+            estado: 'Indexado', stBg: 'rgba(147,197,253,0.1)',
+            stColor: '#93C5FD', paginas: '18 págs' },
+          { nombre: 'Acuerdo_Accionistas.pdf',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+          { nombre: 'Contratos_Seguros.pdf',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+          { nombre: 'Permisos_Municipales.pdf',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+        ]
+      },
+      {
+        label: 'ESG', color: '#F9A8D4',
+        recibidos: 3, solicitados: 6,
+        docs: [
+          { nombre: 'Licencia_Ambiental_ANLA.pdf',
+            estado: 'Indexado', stBg: 'rgba(147,197,253,0.1)',
+            stColor: '#93C5FD', paginas: '52 págs' },
+          { nombre: 'Plan_Manejo_Ambiental.pdf',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+          { nombre: 'Informe_Cumplimiento_ANLA.pdf',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+          { nombre: 'Consulta_Comunidades.pdf',
+            estado: 'Pendiente recibir',
+            stBg: 'rgba(239,68,68,0.1)',
+            stColor: '#FCA5A5', paginas: '—' },
+        ]
+      },
+    ];
+
+    const searchQueries: Record<string, {
+      titulo: string; tag: string; frag: string
+    }> = {
+      ppa: {
+        titulo: 'Contrato_PPA_REDACTED.pdf · Página 12',
+        tag: 'Legal',
+        frag: '...el vendedor de energía se compromete a vender el 100% de la energía generada por el Proyecto al comprador durante el término del contrato (15 años), con exclusividad geográfica en el departamento de Córdoba. El precio base es USD 42/MWh indexado al CPI de Estados Unidos...'
+      },
+      factor: {
+        titulo: 'Informe_Interventoria_Tecnica_2024.pdf · Página 34',
+        tag: 'Técnico',
+        frag: '...el factor de planta registrado durante enero-diciembre 2024 fue de 22.3%, consistente con las mediciones de irradiación solar NASA POWER para Córdoba (rango histórico 20.1%-23.8%). El modelo financiero del vendedor asume 26%, un 16% por encima del histórico registrado...'
+      },
+      anla: {
+        titulo: 'Licencia_Ambiental_ANLA_2021.pdf · Página 3',
+        tag: 'ESG',
+        frag: '...la Autoridad Nacional de Licencias Ambientales otorga licencia ambiental al Proyecto Solar Córdoba por un período de 25 años a partir del 15 de marzo de 2021, sujeto al cumplimiento del Plan de Manejo Ambiental establecido en el Anexo 2...'
+      },
+      om: {
+        titulo: 'Contrato_OyM_Operador_Local.pdf · Página 8',
+        tag: 'Legal',
+        frag: '...el operador garantiza una disponibilidad mínima del activo del 95% anual. En caso de incumplimiento, se aplicará una penalidad equivalente al 0.5% del valor del contrato por cada punto porcentual de disponibilidad por debajo del mínimo garantizado...'
+      },
+    };
+
+    const getSearchResult = (q: string) => {
+      const ql = q.toLowerCase();
+      if (ql.includes('ppa') || ql.includes('contrato'))
+        return searchQueries.ppa;
+      if (ql.includes('factor') || ql.includes('planta'))
+        return searchQueries.factor;
+      if (ql.includes('anla') || ql.includes('licencia'))
+        return searchQueries.anla;
+      if (ql.includes('o&m') || ql.includes('operador')
+        || ql.includes('disponibilidad'))
+        return searchQueries.om;
+      return null;
+    };
+
+    return (
+      <div style={{ padding: '20px 24px',
+        overflowY: 'auto', flex: 1 }}>
+
+        {/* Buscador */}
+        <div style={{ position: 'relative',
+          marginBottom: 20 }}>
+          <input
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                const r = getSearchResult(searchQuery);
+                setSearchResult(r);
+              }
+            }}
+            placeholder='Busca en 147 documentos — ej: "¿qué dice el PPA sobre exclusividad?" o "factor de planta histórico"'
+            style={{ width: '100%',
+              padding: '12px 140px 12px 16px',
+              background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4, color: '#F8F5F0',
+              fontSize: 13,
+              fontFamily: 'Inter, sans-serif',
+              outline: 'none' }}
+            onFocus={e =>
+              e.target.style.borderColor = copper}
+            onBlur={e =>
+              e.target.style.borderColor = border}
+          />
+          <button
+            onClick={() => {
+              const r = getSearchResult(searchQuery);
+              setSearchResult(r);
+            }}
+            style={{ position: 'absolute', right: 8,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              padding: '7px 16px', background: copper,
+              border: 'none', borderRadius: 3,
+              fontSize: 12, fontWeight: 700,
+              color: navy, cursor: 'pointer',
+              fontFamily: 'Inter, sans-serif' }}>
+            Buscar
+          </button>
+        </div>
+
+        {/* Resultado búsqueda */}
+        {searchResult && (
+          <div style={{ marginBottom: 20,
+            background: dark,
             border: `1px solid ${copper}`,
             borderRadius: 4, padding: 16 }}>
-            <div style={{ display: 'flex', alignItems: 'center',
-              gap: 8, marginBottom: 10 }}>
-              <span style={{ fontSize: 9, fontWeight: 700,
-                padding: '2px 6px',
+            <div style={{ display: 'flex',
+              alignItems: 'center', gap: 8,
+              marginBottom: 10 }}>
+              <span style={{ fontSize: 9,
+                fontWeight: 700, padding: '2px 6px',
                 background: 'rgba(250,204,21,0.1)',
                 color: '#FCD34D', borderRadius: 2 }}>
                 {searchResult.tag}
               </span>
-              <span style={{ fontSize: 13, fontWeight: 600,
-                color: '#C8D8E8' }}>{searchResult.titulo}</span>
+              <span style={{ fontSize: 13,
+                fontWeight: 600, color: '#C8D8E8' }}>
+                {searchResult.titulo}
+              </span>
             </div>
             <div style={{ fontSize: 13, color: '#6A8AAA',
               lineHeight: 1.75, fontStyle: 'italic' }}>
               "{searchResult.frag}"
             </div>
+            <div style={{ display: 'flex', gap: 8,
+              marginTop: 10 }}>
+              {['PPA exclusividad','factor de planta',
+                'licencia ANLA','O&M disponibilidad'].map(s => (
+                <button key={s}
+                  onClick={() => {
+                    setSearchQuery(s);
+                    const r = getSearchResult(s);
+                    setSearchResult(r);
+                  }}
+                  style={{ padding: '4px 10px',
+                    background: 'transparent',
+                    border: `1px solid ${border}`,
+                    borderRadius: 3, fontSize: 10,
+                    color: '#6A8AAA', cursor: 'pointer',
+                    fontFamily: 'Inter, sans-serif' }}>
+                  {s}
+                </button>
+              ))}
+            </div>
           </div>
+        )}
+
+        {/* Cobertura general */}
+        <div style={{ display: 'grid',
+          gridTemplateColumns: 'repeat(4,1fr)',
+          gap: 10, marginBottom: 20 }}>
+          {frentes.map((f, fi) => (
+            <div key={fi} style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4, padding: '12px 14px' }}>
+              <div style={{ display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 8 }}>
+                <div style={{ fontSize: 12,
+                  fontWeight: 600, color: f.color }}>
+                  {f.label}
+                </div>
+                <div style={{ fontSize: 11,
+                  color: '#4A6070' }}>
+                  {f.recibidos}/{f.solicitados}
+                </div>
+              </div>
+              <div style={{ height: 4,
+                background: '#1E3A5A',
+                borderRadius: 2, overflow: 'hidden',
+                marginBottom: 6 }}>
+                <div style={{ height: '100%',
+                  width: `${(f.recibidos/f.solicitados)*100}%`,
+                  background: f.color,
+                  borderRadius: 2 }} />
+              </div>
+              <div style={{ fontSize: 10,
+                color: f.recibidos < f.solicitados
+                  ? '#FCA5A5' : '#86EFAC' }}>
+                {f.solicitados - f.recibidos > 0
+                  ? `${f.solicitados - f.recibidos} pendientes de recibir`
+                  : 'Data room completo'}
+              </div>
+            </div>
+          ))}
         </div>
-      ) : (
-        <div style={{ marginBottom: 16 }}>
-          <div style={{ fontSize: 10, color: '#4A6070',
-            textTransform: 'uppercase', letterSpacing: 1,
-            marginBottom: 8 }}>
-            Sugerencias de búsqueda
-          </div>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            {['PPA exclusividad', 'factor de planta histórico',
-              'licencia ANLA', 'O&M garantías',
-              'cláusula reversión'].map(s => (
-              <button key={s}
-                onClick={() => {
-                  setSearchQuery(s);
-                  handleSearch(s);
-                }}
-                style={{ padding: '5px 12px',
-                  background: dark,
+
+        {/* Docs por frente */}
+        <div style={{ display: 'grid',
+          gridTemplateColumns: 'repeat(4,1fr)',
+          gap: 12 }}>
+          {frentes.map((f, fi) => (
+            <div key={fi}>
+              <div style={{ fontSize: 10,
+                fontWeight: 700, letterSpacing: 2,
+                textTransform: 'uppercase',
+                color: f.color, marginBottom: 8 }}>
+                {f.label}
+              </div>
+              {f.docs.map((doc, di) => (
+                <div key={di} style={{ background: dark,
                   border: `1px solid ${border}`,
-                  borderRadius: 3, fontSize: 11,
-                  color: '#6A8AAA', cursor: 'pointer',
-                  fontFamily: 'Inter, sans-serif' }}>
-                {s}
-              </button>
+                  borderRadius: 3,
+                  padding: '8px 10px',
+                  marginBottom: 6 }}>
+                  <div style={{ fontSize: 11,
+                    color: doc.estado === 'Pendiente recibir'
+                      ? '#4A6070' : '#C8D8E8',
+                    marginBottom: 4,
+                    lineHeight: 1.4 }}>
+                    {doc.nombre}
+                  </div>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between' }}>
+                    <div style={{ fontSize: 9,
+                      color: '#4A6070' }}>
+                      {doc.paginas}
+                    </div>
+                    <span style={{ fontSize: 8,
+                      fontWeight: 700,
+                      padding: '1px 5px',
+                      borderRadius: 2,
+                      background: doc.stBg,
+                      color: doc.stColor }}>
+                      {doc.estado}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // ── PREGUNTAS ─────────────────────────────────────
+  const renderPreguntas = () => {
+
+    const preguntas = [
+      {
+        id: 'P-001',
+        q: '¿Puede confirmar por escrito la identidad de la contraparte del PPA y compartir el contrato completo bajo NDA?',
+        frente: 'Legal', frColor: '#FCD34D',
+        enviada: 'Mar 10', limite: 'Mar 13',
+        estado: 'Vencida', estColor: '#FCA5A5',
+        estBg: 'rgba(239,68,68,0.1)',
+        borderColor: '#FCA5A5',
+        nota: 'Sin respuesta · 3 días vencida',
+        notaColor: '#FCA5A5',
+        respuesta: null,
+        evaluacion: null,
+      },
+      {
+        id: 'P-002',
+        q: 'Adjuntar el Plan de Manejo Ambiental vigente y el último informe de cumplimiento ante ANLA.',
+        frente: 'ESG', frColor: '#F9A8D4',
+        enviada: 'Mar 11', limite: 'Mar 14',
+        estado: 'Vencida', estColor: '#FCA5A5',
+        estBg: 'rgba(239,68,68,0.1)',
+        borderColor: '#FCA5A5',
+        nota: 'Sin respuesta · 2 días vencida',
+        notaColor: '#FCA5A5',
+        respuesta: null,
+        evaluacion: null,
+      },
+      {
+        id: 'P-003',
+        q: '¿En qué se basa el crecimiento de ingresos del 9.8% real anual? ¿Hay contratos firmados o es proyección de mercado?',
+        frente: 'Financiero', frColor: '#86EFAC',
+        enviada: 'Mar 13', limite: 'Mar 17',
+        estado: 'Pendiente', estColor: '#FCD34D',
+        estBg: 'rgba(250,204,21,0.1)',
+        borderColor: '#FCD34D',
+        nota: 'Plazo: 1 día',
+        notaColor: '#FCD34D',
+        respuesta: null,
+        evaluacion: null,
+      },
+      {
+        id: 'P-004',
+        q: '¿Cuál es el factor de planta histórico de los últimos 3 años? El modelo asume 26% — ¿hay mediciones de irradiación que lo soporten?',
+        frente: 'Técnico', frColor: '#93C5FD',
+        enviada: 'Mar 14', limite: 'Mar 18',
+        estado: 'Pendiente', estColor: '#FCD34D',
+        estBg: 'rgba(250,204,21,0.1)',
+        borderColor: '#FCD34D',
+        nota: 'Plazo: 2 días',
+        notaColor: '#FCD34D',
+        respuesta: null,
+        evaluacion: null,
+      },
+      {
+        id: 'P-005',
+        q: '¿Cuál es el contrato de O&M vigente? ¿Incluye garantías de disponibilidad y penalidades al operador?',
+        frente: 'Legal', frColor: '#FCD34D',
+        enviada: 'Mar 9', limite: 'Mar 12',
+        estado: 'Respondida', estColor: '#86EFAC',
+        estBg: 'rgba(134,239,172,0.1)',
+        borderColor: '#86EFAC',
+        nota: 'Respondida Mar 12',
+        notaColor: '#86EFAC',
+        respuesta: 'El contrato de O&M con el operador local cubre el período 2022-2030 (8 años). Garantía de disponibilidad del 95% anual. Penalidad: 0.5% del valor del contrato por punto porcentual bajo el mínimo. El contrato fue adjuntado en el data room.',
+        evaluacion: { ok: true, texto: 'Respuesta satisfactoria — términos de O&M están en línea con el mercado. Disponibilidad del 95% es estándar para activos solares. Penalidades adecuadas.' },
+      },
+      {
+        id: 'P-006',
+        q: '¿Cuál es la estructura de la deuda senior del proyecto? ¿Cuál es el DSCR mínimo requerido por los bancos?',
+        frente: 'Financiero', frColor: '#86EFAC',
+        enviada: 'Mar 9', limite: 'Mar 13',
+        estado: 'Respondida', estColor: '#86EFAC',
+        estBg: 'rgba(134,239,172,0.1)',
+        borderColor: '#86EFAC',
+        nota: 'Respondida Mar 11',
+        notaColor: '#86EFAC',
+        respuesta: 'Deuda senior: USD 35M con Bancolombia (70% LTV). Plazo: 15 años. Tasa: IBR + 3.8%. DSCR mínimo requerido: 1.25x. Actualmente DSCR proyectado: 1.42x en caso base.',
+        evaluacion: { ok: true, texto: 'Estructura de deuda razonable. LTV del 70% y DSCR de 1.42x son conservadores. El IBR + 3.8% es consistente con el mercado colombiano para proyectos energéticos.' },
+      },
+    ];
+
+    return (
+      <div style={{ padding: '20px 24px',
+        overflowY: 'auto', flex: 1 }}>
+
+        {/* Matriz frente × estado */}
+        <div style={{ display: 'grid',
+          gridTemplateColumns: '1fr 1fr', gap: 16,
+          marginBottom: 24 }}>
+
+          {/* Tabla matriz */}
+          <div style={{ background: dark,
+            border: `1px solid ${border}`,
+            borderRadius: 4, overflow: 'hidden' }}>
+            <div style={{ padding: '12px 16px',
+              borderBottom: `1px solid ${border}`,
+              fontSize: 10, fontWeight: 700,
+              letterSpacing: 2,
+              textTransform: 'uppercase',
+              color: copper }}>
+              Preguntas por frente × estado
+            </div>
+            <table style={{ width: '100%',
+              borderCollapse: 'collapse' }}>
+              <thead>
+                <tr>
+                  {['Frente','Vencidas',
+                    'Pendientes','Respondidas',
+                    'Total'].map(h => (
+                    <th key={h} style={{ fontSize: 9,
+                      color: '#4A6070',
+                      textTransform: 'uppercase',
+                      letterSpacing: 1,
+                      padding: '8px 12px',
+                      textAlign: 'left',
+                      borderBottom:
+                        `1px solid ${border}` }}>
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { f: 'Financiero',
+                    fc: '#86EFAC',
+                    v: 0, p: 4, r: 8 },
+                  { f: 'Técnico',
+                    fc: '#93C5FD',
+                    v: 0, p: 1, r: 10 },
+                  { f: 'Legal',
+                    fc: '#FCD34D',
+                    v: 5, p: 2, r: 4 },
+                  { f: 'ESG',
+                    fc: '#F9A8D4',
+                    v: 3, p: 4, r: 2 },
+                ].map((row, ri) => (
+                  <tr key={ri}>
+                    <td style={{ padding: '10px 12px',
+                      borderBottom: '1px solid #0D2540' }}>
+                      <div style={{ display: 'flex',
+                        alignItems: 'center', gap: 6 }}>
+                        <div style={{ width: 6, height: 6,
+                          borderRadius: '50%',
+                          background: row.fc }} />
+                        <span style={{ fontSize: 12,
+                          color: '#C8D8E8',
+                          fontWeight: 600 }}>
+                          {row.f}
+                        </span>
+                      </div>
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      fontSize: 14, fontWeight: 700,
+                      color: row.v > 0
+                        ? '#FCA5A5' : '#4A6070',
+                      borderBottom: '1px solid #0D2540' }}>
+                      {row.v}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      fontSize: 14, fontWeight: 700,
+                      color: row.p > 0
+                        ? '#FCD34D' : '#4A6070',
+                      borderBottom: '1px solid #0D2540' }}>
+                      {row.p}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      fontSize: 14, fontWeight: 700,
+                      color: '#86EFAC',
+                      borderBottom: '1px solid #0D2540' }}>
+                      {row.r}
+                    </td>
+                    <td style={{ padding: '10px 12px',
+                      fontSize: 12, color: '#6A8AAA',
+                      borderBottom: '1px solid #0D2540' }}>
+                      {row.v + row.p + row.r}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Timeline comunicaciones */}
+          <div style={{ background: dark,
+            border: `1px solid ${border}`,
+            borderRadius: 4, padding: 16 }}>
+            <div style={{ fontSize: 10, fontWeight: 700,
+              letterSpacing: 2, textTransform: 'uppercase',
+              color: copper, marginBottom: 14 }}>
+              Timeline de comunicaciones
+            </div>
+            {[
+              { fecha: 'Mar 9', tipo: 'Ronda 1 enviada',
+                desc: '8 preguntas — Legal y Técnico',
+                color: '#B8860B' },
+              { fecha: 'Mar 11', tipo: 'Respuesta parcial',
+                desc: 'Vendedor respondió 2 de 8 (O&M + Deuda)',
+                color: '#86EFAC' },
+              { fecha: 'Mar 13', tipo: 'Límite ronda 1',
+                desc: '6 preguntas sin respuesta — 5 vencidas',
+                color: '#FCA5A5' },
+              { fecha: 'Mar 13', tipo: 'Ronda 2 enviada',
+                desc: '4 preguntas nuevas — Financiero y ESG',
+                color: '#B8860B' },
+              { fecha: 'Mar 16', tipo: 'Hoy',
+                desc: 'Sin nuevas respuestas del vendedor',
+                color: '#4A6070' },
+            ].map((item, i) => (
+              <div key={i} style={{ display: 'flex',
+                gap: 12, marginBottom: 12 }}>
+                <div style={{ flexShrink: 0,
+                  textAlign: 'right', width: 50 }}>
+                  <div style={{ fontSize: 10,
+                    color: item.color,
+                    fontWeight: 600 }}>{item.fecha}</div>
+                </div>
+                <div style={{ display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center', width: 16 }}>
+                  <div style={{ width: 10, height: 10,
+                    borderRadius: '50%',
+                    background: item.color,
+                    flexShrink: 0 }} />
+                  {i < 4 && (
+                    <div style={{ width: 1, flex: 1,
+                      background: '#1E3A5A',
+                      minHeight: 20,
+                      marginTop: 2 }} />
+                  )}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 12,
+                    fontWeight: 600,
+                    color: '#C8D8E8',
+                    marginBottom: 2 }}>{item.tipo}</div>
+                  <div style={{ fontSize: 11,
+                    color: '#6A8AAA',
+                    lineHeight: 1.5 }}>{item.desc}</div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
-      )}
 
-      {sLabel('Documentos en el data room')}
-      <div style={{ display: 'flex', flexDirection: 'column',
-        gap: 6 }}>
-        {[
-          { icon: 'XLS', name: 'ModeloFinanciero_SC_v3.xlsx',
-            meta: 'Financiero · 15 tabs · Analizado automáticamente',
-            tag: 'Analizado', tagBg: 'rgba(134,239,172,0.1)',
-            tagColor: '#86EFAC' },
-          { icon: 'PDF', name: 'Informe_Interventoria_Tecnica_2024.pdf',
-            meta: 'Técnico · 84 páginas · Indexado',
-            tag: 'Indexado', tagBg: 'rgba(147,197,253,0.1)',
-            tagColor: '#93C5FD' },
-          { icon: 'PDF', name: 'Contrato_PPA_REDACTED.pdf',
-            meta: 'Legal · Bajo NDA · Acceso restringido',
-            tag: 'Restringido', tagBg: 'rgba(250,204,21,0.1)',
-            tagColor: '#FCD34D' },
-          { icon: 'PDF', name: 'Licencia_Ambiental_ANLA_2021.pdf',
-            meta: 'ESG · Vigente hasta 2031 · Indexado',
-            tag: 'Indexado', tagBg: 'rgba(249,168,212,0.1)',
-            tagColor: '#F9A8D4' },
-          { icon: 'PDF', name: 'Contrato_OyM_Operador_Local.pdf',
-            meta: 'Legal · Firmado · Indexado · Respondida',
-            tag: 'Indexado', tagBg: 'rgba(147,197,253,0.1)',
-            tagColor: '#93C5FD' },
-        ].map((doc, i) => (
-          <div key={i} style={{ display: 'flex',
-            alignItems: 'center', gap: 10, padding: '10px 12px',
-            background: dark, border: `1px solid ${border}`,
-            borderRadius: 4 }}>
-            <div style={{ width: 32, height: 32, background: border,
-              borderRadius: 3, display: 'flex',
-              alignItems: 'center', justifyContent: 'center',
-              fontSize: 9, color: copper, fontWeight: 700,
-              flexShrink: 0 }}>{doc.icon}</div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontSize: 12, color: '#C8D8E8' }}>
-                {doc.name}
-              </div>
-              <div style={{ fontSize: 10, color: '#4A6070' }}>
-                {doc.meta}
-              </div>
-            </div>
-            <span style={{ fontSize: 9, fontWeight: 700,
-              padding: '2px 7px', borderRadius: 2,
-              background: doc.tagBg, color: doc.tagColor,
-              flexShrink: 0 }}>{doc.tag}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  // ── PREGUNTAS ─────────────────────────────────────
-  const renderPreguntas = () => (
-    <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
-      <div style={{ display: 'grid',
-        gridTemplateColumns: 'repeat(3,1fr)', gap: 10,
-        marginBottom: 20 }}>
-        {kpi('Vencidas', '8', 'Sin respuesta del vendedor', '#FCA5A5')}
-        {kpi('Pendientes', '11', 'Dentro del plazo', '#FCD34D')}
-        {kpi('Respondidas', '24', 'Satisfactorias', '#86EFAC')}
-      </div>
-      {sLabel('Tracker de preguntas al vendedor')}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {[
-          {
-            q: '¿Puede confirmar por escrito la identidad de la contraparte del PPA y compartir el contrato completo bajo NDA?',
-            frente: 'Legal', enviada: 'Mar 10',
-            limite: 'Mar 13', estado: 'Vencida',
-            estadoColor: '#FCA5A5', note: 'Sin respuesta · 3 días vencida',
-            borderColor: '#FCA5A5'
-          },
-          {
-            q: 'Adjuntar el Plan de Manejo Ambiental vigente y el último informe de cumplimiento ante ANLA.',
-            frente: 'ESG', enviada: 'Mar 11',
-            limite: 'Mar 14', estado: 'Vencida',
-            estadoColor: '#FCA5A5', note: 'Sin respuesta · 2 días vencida',
-            borderColor: '#FCA5A5'
-          },
-          {
-            q: '¿En qué se basa el crecimiento de ingresos del 9.8% real anual? ¿Hay contratos firmados o es proyección de mercado?',
-            frente: 'Financiero', enviada: 'Mar 13',
-            limite: 'Mar 17', estado: 'Pendiente',
-            estadoColor: '#FCD34D', note: 'Plazo: 1 día',
-            borderColor: '#FCD34D'
-          },
-          {
-            q: '¿Cuál es el factor de planta histórico de los últimos 3 años? El modelo asume 26% — ¿hay mediciones de irradiación que lo soporten?',
-            frente: 'Técnico', enviada: 'Mar 14',
-            limite: 'Mar 18', estado: 'Pendiente',
-            estadoColor: '#FCD34D', note: 'Plazo: 2 días',
-            borderColor: '#FCD34D'
-          },
-          {
-            q: '¿Cuál es el contrato de O&M vigente? ¿Incluye garantías de disponibilidad y penalidades al operador?',
-            frente: 'Legal', enviada: 'Mar 9',
-            limite: 'Mar 12', estado: 'Respondida',
-            estadoColor: '#86EFAC',
-            note: 'Respuesta recibida Mar 12 · Satisfactoria',
-            borderColor: '#86EFAC'
-          },
-        ].map((item, i) => (
+        {/* Lista de preguntas */}
+        <div style={{ fontSize: 10, fontWeight: 700,
+          letterSpacing: 2, textTransform: 'uppercase',
+          color: copper, marginBottom: 12 }}>
+          Todas las preguntas
+        </div>
+        {preguntas.map((p, i) => (
           <div key={i} style={{ background: dark,
             border: `1px solid ${border}`,
-            borderLeft: `3px solid ${item.borderColor}`,
-            borderRadius: '0 4px 4px 0', padding: '14px 16px' }}>
+            borderLeft: `3px solid ${p.borderColor}`,
+            borderRadius: '0 4px 4px 0',
+            padding: '14px 16px', marginBottom: 8 }}>
             <div style={{ display: 'flex',
               alignItems: 'flex-start',
-              justifyContent: 'space-between', marginBottom: 8 }}>
-              <div style={{ fontSize: 13, fontWeight: 600,
-                color: '#C8D8E8', flex: 1, marginRight: 12,
-                lineHeight: 1.5 }}>{item.q}</div>
-              {badge(item.estado,
-                `${item.estadoColor}22`, item.estadoColor)}
-            </div>
-            <div style={{ display: 'flex', gap: 16,
-              fontSize: 10, color: '#4A6070' }}>
-              <span>Frente: {item.frente}</span>
-              <span>Enviada: {item.enviada}</span>
-              <span>Límite: {item.limite}</span>
-              <span style={{ color: item.estadoColor }}>
-                {item.note}
+              justifyContent: 'space-between',
+              marginBottom: 8 }}>
+              <div style={{ display: 'flex',
+                alignItems: 'center', gap: 8,
+                marginBottom: 6 }}>
+                <span style={{ fontSize: 9,
+                  color: '#4A6070',
+                  fontFamily: 'monospace' }}>
+                  {p.id}
+                </span>
+                <span style={{ fontSize: 9,
+                  fontWeight: 700, padding: '1px 6px',
+                  borderRadius: 2,
+                  background: `${p.frColor}22`,
+                  color: p.frColor }}>
+                  {p.frente}
+                </span>
+              </div>
+              <span style={{ fontSize: 10,
+                fontWeight: 700, padding: '2px 8px',
+                borderRadius: 2,
+                background: p.estBg,
+                color: p.estColor,
+                flexShrink: 0, marginLeft: 12 }}>
+                {p.estado}
               </span>
+            </div>
+            <div style={{ fontSize: 13, fontWeight: 600,
+              color: '#C8D8E8', lineHeight: 1.5,
+              marginBottom: 8 }}>{p.q}</div>
+            <div style={{ display: 'flex', gap: 16,
+              fontSize: 10, color: '#4A6070',
+              marginBottom: p.respuesta ? 10 : 0 }}>
+              <span>Enviada: {p.enviada}</span>
+              <span>Límite: {p.limite}</span>
+              <span style={{ color: p.notaColor }}>
+                {p.nota}
+              </span>
+            </div>
+            {p.respuesta && (
+              <div style={{ marginTop: 10,
+                paddingTop: 10,
+                borderTop: '1px solid #1E3A5A' }}>
+                <div style={{ fontSize: 9,
+                  color: '#4A6070',
+                  textTransform: 'uppercase',
+                  letterSpacing: 1, marginBottom: 6 }}>
+                  Respuesta del vendedor
+                </div>
+                <div style={{ fontSize: 12,
+                  color: '#8AAABB', lineHeight: 1.6,
+                  marginBottom: 8,
+                  fontStyle: 'italic' }}>
+                  "{p.respuesta}"
+                </div>
+                {p.evaluacion && (
+                  <div style={{ padding: '8px 10px',
+                    background: p.evaluacion.ok
+                      ? 'rgba(134,239,172,0.06)'
+                      : 'rgba(239,68,68,0.06)',
+                    border: `1px solid ${p.evaluacion.ok
+                      ? 'rgba(134,239,172,0.2)'
+                      : 'rgba(239,68,68,0.2)'}`,
+                    borderRadius: 3,
+                    fontSize: 11,
+                    color: p.evaluacion.ok
+                      ? '#86EFAC' : '#FCA5A5',
+                    lineHeight: 1.5 }}>
+                    {p.evaluacion.ok ? '✓' : '✗'}{' '}
+                    {p.evaluacion.texto}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // ── MEMO ──────────────────────────────────────────
+  const renderMemo = () => {
+
+    const condiciones = [
+      {
+        id: 'C-01',
+        texto: 'Vendedor revela identidad de contraparte del PPA bajo NDA extendido',
+        estado: 'Bloqueada',
+        estColor: '#FCA5A5',
+        estBg: 'rgba(239,68,68,0.1)',
+        responsable: 'Vendedor',
+        deadline: 'Antes del IC',
+      },
+      {
+        id: 'C-02',
+        texto: 'Factor de planta histórico confirmado con mediciones de irradiación (últimos 3 años)',
+        estado: 'Bloqueada',
+        estColor: '#FCA5A5',
+        estBg: 'rgba(239,68,68,0.1)',
+        responsable: 'Vendedor / Interventor',
+        deadline: 'Antes del IC',
+      },
+      {
+        id: 'C-03',
+        texto: 'Plan de Manejo Ambiental vigente recibido y revisado por asesor ESG',
+        estado: 'Pendiente',
+        estColor: '#FCD34D',
+        estBg: 'rgba(250,204,21,0.1)',
+        responsable: 'Ashmore / Asesor ESG',
+        deadline: 'Mar 25',
+      },
+      {
+        id: 'C-04',
+        texto: 'Estructura de capital confirmada — Acuerdo de accionistas recibido y revisado',
+        estado: 'Pendiente',
+        estColor: '#FCD34D',
+        estBg: 'rgba(250,204,21,0.1)',
+        responsable: 'Asesor Legal',
+        deadline: 'Mar 28',
+      },
+    ];
+
+    const riesgos = [
+      {
+        nombre: 'Concentración de ingresos en un PPA',
+        prob: 'Alta', impacto: 'Alto',
+        probColor: '#FCA5A5', impactoColor: '#FCA5A5',
+        mitigante: 'Verificar diversificación post-2037 antes del cierre. Modelar escenario sin renovación del PPA.',
+      },
+      {
+        nombre: 'Factor de planta optimista sin soporte histórico',
+        prob: 'Alta', impacto: 'Alto',
+        probColor: '#FCA5A5', impactoColor: '#FCA5A5',
+        mitigante: 'Condicionar valoración a confirmación de mediciones históricas. Ajustar modelo a 22% como caso base.',
+      },
+      {
+        nombre: 'Dependencia del múltiplo de salida a 2034',
+        prob: 'Media', impacto: 'Alto',
+        probColor: '#FCD34D', impactoColor: '#FCA5A5',
+        mitigante: 'Negociar mecanismos de salida alternativos. Evaluar atractivo del activo en escenario de retención.',
+      },
+      {
+        nombre: 'Riesgo regulatorio CREG en tarifa de transmisión',
+        prob: 'Baja', impacto: 'Medio',
+        probColor: '#86EFAC', impactoColor: '#FCD34D',
+        mitigante: 'Monitorear resoluciones CREG. Incluir covenant en SHA sobre cambios regulatorios materiales.',
+      },
+    ];
+
+    const ddCompletitud = [
+      { label: 'Financiero', pct: 80, color: '#FCD34D',
+        status: 'En revisión' },
+      { label: 'Técnico', pct: 95, color: '#86EFAC',
+        status: 'Completo' },
+      { label: 'Legal', pct: 45, color: '#FCA5A5',
+        status: 'Bloqueado' },
+      { label: 'ESG', pct: 30, color: '#FCA5A5',
+        status: 'Incompleto' },
+    ];
+
+    return (
+      <div style={{ padding: '20px 24px',
+        overflowY: 'auto', flex: 1 }}>
+
+        {/* Deal snapshot */}
+        <div style={{ background: dark,
+          border: `1px solid ${border}`,
+          borderRadius: 4, padding: 20,
+          marginBottom: 16 }}>
+          <div style={{ display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            marginBottom: 16 }}>
+            <div>
+              <div style={{ fontSize: 9,
+                fontWeight: 700, letterSpacing: 2,
+                textTransform: 'uppercase',
+                color: '#4A6070', marginBottom: 6 }}>
+                Investment Memo — Borrador para IC
+              </div>
+              <div style={{ fontFamily: 'Georgia, serif',
+                fontSize: 28, fontWeight: 700,
+                color: '#F8F5F0', marginBottom: 4 }}>
+                Proyecto Solar Córdoba
+              </div>
+              <div style={{ fontSize: 13,
+                color: '#6A8AAA' }}>
+                Colombia · Energía renovable · 80 MW
+              </div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <span style={{ fontSize: 9,
+                fontWeight: 700, padding: '3px 10px',
+                borderRadius: 2,
+                background: 'rgba(249,168,212,0.1)',
+                color: '#F9A8D4',
+                display: 'inline-block',
+                marginBottom: 8 }}>
+                Generado por IA · Requiere revisión
+              </span>
+              <div style={{ fontSize: 11,
+                color: '#4A6070' }}>
+                IC objetivo: Abr 15, 2026
+              </div>
+            </div>
+          </div>
+          <div style={{ display: 'grid',
+            gridTemplateColumns: 'repeat(6,1fr)',
+            gap: 10 }}>
+            {[
+              { label: 'Ticket Ashmore', val: '~USD 55M' },
+              { label: 'Participación', val: 'Control' },
+              { label: 'TIR ajustada', val: '13.1%',
+                color: '#FCD34D' },
+              { label: 'MOIC base', val: '2.4x',
+                color: '#FCD34D' },
+              { label: 'TIR pesimista', val: '9.1%',
+                color: '#FCA5A5' },
+              { label: 'Break-even', val: 'Año 6' },
+            ].map((m, i) => (
+              <div key={i} style={{ background: navy,
+                borderRadius: 3, padding: '10px 12px' }}>
+                <div style={{ fontSize: 9,
+                  color: '#4A6070',
+                  textTransform: 'uppercase',
+                  letterSpacing: 1, marginBottom: 4 }}>
+                  {m.label}
+                </div>
+                <div style={{ fontFamily: 'Georgia, serif',
+                  fontSize: 18, fontWeight: 700,
+                  color: m.color || '#F8F5F0' }}>
+                  {m.val}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Estado DD + Condiciones para IC */}
+        <div style={{ display: 'grid',
+          gridTemplateColumns: '1fr 1.4fr',
+          gap: 16, marginBottom: 16 }}>
+
+          {/* Semáforo DD */}
+          <div style={{ background: dark,
+            border: `1px solid ${border}`,
+            borderRadius: 4, padding: 16 }}>
+            <div style={{ fontSize: 10, fontWeight: 700,
+              letterSpacing: 2, textTransform: 'uppercase',
+              color: copper, marginBottom: 14 }}>
+              Completitud del DD
+            </div>
+            {ddCompletitud.map((f, fi) => (
+              <div key={fi} style={{ marginBottom: 12 }}>
+                <div style={{ display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  marginBottom: 5 }}>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center', gap: 6 }}>
+                    <div style={{ width: 6, height: 6,
+                      borderRadius: '50%',
+                      background: f.color }} />
+                    <span style={{ fontSize: 12,
+                      color: '#C8D8E8' }}>{f.label}</span>
+                  </div>
+                  <div style={{ display: 'flex',
+                    alignItems: 'center', gap: 8 }}>
+                    <span style={{ fontSize: 11,
+                      color: f.color,
+                      fontWeight: 600 }}>{f.status}</span>
+                    <span style={{ fontSize: 11,
+                      color: '#4A6070' }}>{f.pct}%</span>
+                  </div>
+                </div>
+                <div style={{ height: 5,
+                  background: '#1E3A5A',
+                  borderRadius: 3, overflow: 'hidden' }}>
+                  <div style={{ height: '100%',
+                    width: `${f.pct}%`,
+                    background: f.color,
+                    borderRadius: 3,
+                    transition: 'width 0.5s' }} />
+                </div>
+              </div>
+            ))}
+            <div style={{ marginTop: 14, padding: '10px 12px',
+              background: 'rgba(239,68,68,0.06)',
+              border: '1px solid rgba(239,68,68,0.2)',
+              borderRadius: 3, fontSize: 11,
+              color: '#FCA5A5', lineHeight: 1.5 }}>
+              El DD Legal y ESG están incompletos —
+              el IC no debería convocarse hasta resolver
+              las condiciones C-01 y C-02.
+            </div>
+          </div>
+
+          {/* Condiciones para el IC */}
+          <div style={{ background: dark,
+            border: `1px solid ${border}`,
+            borderRadius: 4, padding: 16 }}>
+            <div style={{ fontSize: 10, fontWeight: 700,
+              letterSpacing: 2, textTransform: 'uppercase',
+              color: copper, marginBottom: 14 }}>
+              Condiciones para el IC
+            </div>
+            {condiciones.map((c, ci) => (
+              <div key={ci} style={{ display: 'flex',
+                gap: 10, alignItems: 'flex-start',
+                padding: '10px 0',
+                borderBottom: ci < condiciones.length - 1
+                  ? '1px solid #0D2540' : 'none' }}>
+                <div style={{ width: 24, height: 24,
+                  borderRadius: 3, flexShrink: 0,
+                  background: c.estBg,
+                  display: 'flex', alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 9, fontWeight: 700,
+                  color: c.estColor }}>
+                  {c.id.replace('C-','')}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 12,
+                    color: '#C8D8E8', lineHeight: 1.5,
+                    marginBottom: 4 }}>{c.texto}</div>
+                  <div style={{ display: 'flex',
+                    gap: 12, fontSize: 10,
+                    color: '#4A6070' }}>
+                    <span>Resp: {c.responsable}</span>
+                    <span>Plazo: {c.deadline}</span>
+                  </div>
+                </div>
+                <span style={{ fontSize: 9,
+                  fontWeight: 700, padding: '2px 7px',
+                  borderRadius: 2,
+                  background: c.estBg,
+                  color: c.estColor,
+                  flexShrink: 0 }}>
+                  {c.estado}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Matriz de riesgos */}
+        <div style={{ background: dark,
+          border: `1px solid ${border}`,
+          borderRadius: 4, overflow: 'hidden',
+          marginBottom: 16 }}>
+          <div style={{ padding: '12px 16px',
+            borderBottom: `1px solid ${border}`,
+            fontSize: 10, fontWeight: 700,
+            letterSpacing: 2, textTransform: 'uppercase',
+            color: copper }}>
+            Matriz de riesgos principales
+          </div>
+          <table style={{ width: '100%',
+            borderCollapse: 'collapse' }}>
+            <thead>
+              <tr>
+                {['Riesgo','Probabilidad',
+                  'Impacto','Mitigante'].map(h => (
+                  <th key={h} style={{ fontSize: 9,
+                    color: '#4A6070',
+                    textTransform: 'uppercase',
+                    letterSpacing: 1,
+                    padding: '8px 14px',
+                    textAlign: 'left',
+                    borderBottom:
+                      `1px solid ${border}` }}>
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {riesgos.map((r, ri) => (
+                <tr key={ri} style={{ background:
+                  ri % 2 === 0
+                    ? 'transparent'
+                    : 'rgba(255,255,255,0.02)' }}>
+                  <td style={{ padding: '10px 14px',
+                    fontSize: 12, fontWeight: 600,
+                    color: '#C8D8E8',
+                    borderBottom: '1px solid #0D2540',
+                    maxWidth: 220 }}>
+                    {r.nombre}
+                  </td>
+                  <td style={{ padding: '10px 14px',
+                    borderBottom: '1px solid #0D2540' }}>
+                    <span style={{ fontSize: 10,
+                      fontWeight: 700,
+                      padding: '2px 8px', borderRadius: 2,
+                      background: `${r.probColor}22`,
+                      color: r.probColor }}>
+                      {r.prob}
+                    </span>
+                  </td>
+                  <td style={{ padding: '10px 14px',
+                    borderBottom: '1px solid #0D2540' }}>
+                    <span style={{ fontSize: 10,
+                      fontWeight: 700,
+                      padding: '2px 8px', borderRadius: 2,
+                      background: `${r.impactoColor}22`,
+                      color: r.impactoColor }}>
+                      {r.impacto}
+                    </span>
+                  </td>
+                  <td style={{ padding: '10px 14px',
+                    fontSize: 11, color: '#6A8AAA',
+                    lineHeight: 1.5,
+                    borderBottom: '1px solid #0D2540' }}>
+                    {r.mitigante}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Secciones del memo */}
+        {[
+          {
+            num: '1', titulo: 'Resumen ejecutivo',
+            texto: 'Proyecto Solar Córdoba es un parque solar fotovoltaico de 80 MW-dc en Montería, Colombia, en operación desde enero 2022. El activo tiene un PPA de 40 MW con contraparte no divulgada (bajo NDA) a USD 42/MWh indexado a inflación USA por 15 años. La energía restante se vende en la bolsa XM. Ashmore evalúa un ticket de ~USD 55M por una participación de control.',
+            highlight: false,
+          },
+          {
+            num: '2', titulo: 'Análisis financiero',
+            texto: 'El modelo del vendedor muestra una TIR del equity de 18.4% USD — materialmente por encima del objetivo del Fondo III (12-16%). El análisis de supuestos identifica tres variables agresivas que explican el exceso de retorno: crecimiento de ingresos de 9.8% real (benchmark: 3-8%), múltiplo de salida de 12.5x EV/EBITDA (benchmark: 7-10x), y factor de planta de 26% sin soporte histórico. Ajustando las tres variables al caso base razonable, la TIR converge a 11.2-13.1%.',
+            highlight: false,
+          },
+          {
+            num: '3', titulo: 'Riesgos principales',
+            texto: 'Cuatro riesgos requieren resolución antes del IC: (1) Identidad de la contraparte del PPA — el 50% de los ingresos depende de un contrato cuya contraparte permanece bajo NDA. (2) Factor de planta no verificado — el supuesto del 26% no tiene soporte histórico. (3) Plan de manejo ambiental — ANLA no confirmada para el período post-2024. (4) Múltiplo de salida — la valoración requiere compradores a múltiplos de 12.5x a 2034.',
+            highlight: false,
+          },
+          {
+            num: '4', titulo: 'Recomendación',
+            texto: 'CONTINUAR EL DD CON CONDICIÓN: el vendedor debe (1) revelar la identidad de la contraparte del PPA bajo NDA extendido y (2) proporcionar el historial de factor de planta de los últimos 3 años con soporte de mediciones de irradiación, antes de la sesión del IC. Sin esta información, la valoración no puede confirmarse y el activo no debería presentarse al comité.',
+            highlight: true,
+          },
+        ].map((sec, i) => (
+          <div key={i} style={{
+            background: sec.highlight
+              ? 'rgba(184,134,11,0.06)' : dark,
+            border: `1px solid ${border}`,
+            borderLeft: `3px solid ${copper}`,
+            borderRadius: '0 4px 4px 0',
+            padding: '14px 16px', marginBottom: 8 }}>
+            <div style={{ fontSize: 10, color: copper,
+              textTransform: 'uppercase', letterSpacing: 1,
+              marginBottom: 8 }}>
+              {sec.num}. {sec.titulo}
+            </div>
+            <div style={{ fontSize: 13,
+              color: sec.highlight ? '#FCD34D' : '#8AAABB',
+              lineHeight: 1.75,
+              fontWeight: sec.highlight ? 600 : 400 }}>
+              {sec.texto}
             </div>
           </div>
         ))}
       </div>
-    </div>
-  );
-
-  // ── MEMO ──────────────────────────────────────────
-  const renderMemo = () => (
-    <div style={{ padding: '20px 24px', overflowY: 'auto', flex: 1 }}>
-      <div style={{ display: 'flex', alignItems: 'center',
-        justifyContent: 'space-between', marginBottom: 16 }}>
-        {sLabel('Investment Memo — Borrador para IC')}
-        <div style={{ display: 'flex', gap: 8 }}>
-          {badge('Generado por IA · Requiere revisión del equipo',
-            'rgba(249,168,212,0.1)', '#F9A8D4')}
-        </div>
-      </div>
-      <div style={{ display: 'grid',
-        gridTemplateColumns: '1fr 1fr', gap: 10,
-        marginBottom: 16 }}>
-        {kpi('Deal', 'Solar Córdoba', 'Colombia · Energía renovable')}
-        {kpi('Ticket Ashmore', '~USD 55M', 'Participación de control')}
-        {kpi('TIR ajustada', '13.1%', 'Con supuestos de mercado', '#FCD34D')}
-        {kpi('IC recomendado', 'Condicional', '2 condiciones previas', '#FCD34D')}
-      </div>
-      {[
-        {
-          num: '1', titulo: 'Resumen ejecutivo',
-          texto: 'Proyecto Solar Córdoba es un parque solar fotovoltaico de 80 MW-dc en Montería, Colombia, en operación desde enero 2022. El activo tiene un PPA de 40 MW con contraparte no divulgada (bajo NDA) a USD 42/MWh indexado a inflación USA por 15 años. La energía restante se vende en la bolsa XM a precio spot. Ashmore evalúa un ticket de ~USD 55M por una participación de control.'
-        },
-        {
-          num: '2', titulo: 'Análisis financiero',
-          texto: 'El modelo del vendedor muestra una TIR del equity de 18.4% USD — materialmente por encima del objetivo del Fondo III (12-16%). El análisis de supuestos identifica tres variables agresivas: crecimiento de ingresos de 9.8% real (benchmark: 3-8%), múltiplo de salida de 12.5x EV/EBITDA (benchmark: 7-10x), y factor de planta de 26% sin soporte histórico. Ajustando las tres variables al caso base razonable, la TIR converge a 11.2-13.1% dependiendo del escenario de salida.'
-        },
-        {
-          num: '3', titulo: 'Riesgos principales',
-          texto: 'Cuatro riesgos requieren resolución antes del IC: (1) Identidad de la contraparte del PPA — el 50% de los ingresos depende de un contrato cuya contraparte permanece bajo NDA. (2) Factor de planta no verificado — el supuesto del 26% no tiene soporte histórico de irradiación. (3) Plan de manejo ambiental — ANLA no ha sido confirmada para el período post-2024. (4) Múltiplo de salida — la valoración requiere un mercado de compradores a 2034 a múltiplos de 12.5x.'
-        },
-        {
-          num: '4', titulo: 'Recomendación',
-          texto: 'CONTINUAR EL DD CON CONDICIÓN: el vendedor debe (1) revelar la identidad de la contraparte del PPA bajo NDA extendido y (2) proporcionar el historial de factor de planta de los últimos 3 años con soporte de mediciones de irradiación, antes de la sesión del IC. Sin esta información, la valoración no puede confirmarse.',
-          highlight: true
-        },
-      ].map((sec, i) => (
-        <div key={i} style={{
-          background: dark,
-          border: `1px solid ${border}`,
-          borderLeft: `3px solid ${copper}`,
-          borderRadius: '0 4px 4px 0',
-          padding: '14px 16px', marginBottom: 10,
-          ...(sec.highlight ? {
-            background: 'rgba(184,134,11,0.06)',
-            borderLeft: `3px solid ${copper}`
-          } : {})
-        }}>
-          <div style={{ fontSize: 10, color: copper,
-            textTransform: 'uppercase', letterSpacing: 1,
-            marginBottom: 8 }}>
-            {sec.num}. {sec.titulo}
-          </div>
-          <div style={{ fontSize: 13,
-            color: sec.highlight ? '#FCD34D' : '#8AAABB',
-            lineHeight: 1.75,
-            fontWeight: sec.highlight ? 600 : 400 }}>
-            {sec.texto}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+    );
+  };
 
   return (
     <div style={{ height: '100vh', display: 'flex',
