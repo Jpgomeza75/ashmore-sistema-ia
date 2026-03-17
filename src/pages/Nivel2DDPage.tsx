@@ -108,6 +108,229 @@ const Nivel2DDPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState<null|{titulo:string,frag:string,tag:string}>(null);
 
+  const DEALS = [
+    {
+      id: 'solar',
+      nombre: 'Solar Córdoba',
+      pais: '🇨🇴 Colombia',
+      monto: '~USD 55M',
+      sector: 'Energía renovable',
+      sectorColor: '#FCD34D',
+      etapa: 'DD en curso',
+      etapaColor: '#B8860B',
+      etapaBg: 'rgba(184,134,11,0.15)',
+      icFecha: 'Abr 15, 2026',
+      progreso: 65,
+      alertas: 2,
+      stages: [
+        { label: 'Screening', done: true },
+        { label: 'DD Financiero', done: true },
+        { label: 'DD Técnico', done: true },
+        { label: 'DD Legal', done: false, active: true },
+        { label: 'DD ESG', done: false },
+        { label: 'IC', done: false },
+        { label: 'Cierre', done: false },
+      ],
+      frentes: [
+        { label: 'Financiero', color: '#FCD34D', status: 'En revisión', preguntas: 4 },
+        { label: 'Técnico', color: '#86EFAC', status: 'Completo', preguntas: 0 },
+        { label: 'Legal', color: '#FCA5A5', status: 'Bloqueado', preguntas: 6 },
+        { label: 'ESG', color: '#FCA5A5', status: 'Sin respuesta', preguntas: 3 },
+      ],
+    },
+    {
+      id: 'callao',
+      nombre: 'Callao Logística',
+      pais: '🇵🇪 Perú',
+      monto: '~USD 40M',
+      sector: 'Logística',
+      sectorColor: '#93C5FD',
+      etapa: 'Screening',
+      etapaColor: '#93C5FD',
+      etapaBg: 'rgba(147,197,253,0.1)',
+      icFecha: 'Jun 20, 2026',
+      progreso: 15,
+      alertas: 0,
+      stages: [
+        { label: 'Screening', done: false, active: true },
+        { label: 'DD Financiero', done: false },
+        { label: 'DD Técnico', done: false },
+        { label: 'DD Legal', done: false },
+        { label: 'DD ESG', done: false },
+        { label: 'IC', done: false },
+        { label: 'Cierre', done: false },
+      ],
+      frentes: [
+        { label: 'Financiero', color: '#4A6070', status: 'No iniciado', preguntas: 0 },
+        { label: 'Técnico', color: '#4A6070', status: 'No iniciado', preguntas: 0 },
+        { label: 'Legal', color: '#FCD34D', status: 'En revisión', preguntas: 2 },
+        { label: 'ESG', color: '#4A6070', status: 'No iniciado', preguntas: 0 },
+      ],
+    },
+    {
+      id: 'agua',
+      nombre: 'Agua Guatemala',
+      pais: '🇬🇹 Guatemala',
+      monto: '~USD 35M',
+      sector: 'Agua y residuos',
+      sectorColor: '#6EE7B7',
+      etapa: 'IC preliminar',
+      etapaColor: '#86EFAC',
+      etapaBg: 'rgba(134,239,172,0.1)',
+      icFecha: 'May 8, 2026',
+      progreso: 85,
+      alertas: 0,
+      stages: [
+        { label: 'Screening', done: true },
+        { label: 'DD Financiero', done: true },
+        { label: 'DD Técnico', done: true },
+        { label: 'DD Legal', done: true },
+        { label: 'DD ESG', done: true },
+        { label: 'IC', done: false, active: true },
+        { label: 'Cierre', done: false },
+      ],
+      frentes: [
+        { label: 'Financiero', color: '#86EFAC', status: 'Completo', preguntas: 0 },
+        { label: 'Técnico', color: '#86EFAC', status: 'Completo', preguntas: 0 },
+        { label: 'Legal', color: '#86EFAC', status: 'Completo', preguntas: 0 },
+        { label: 'ESG', color: '#86EFAC', status: 'Completo', preguntas: 0 },
+      ],
+    },
+  ];
+
+  const renderSidebar = () => (
+    <div style={{
+      width: 220, flexShrink: 0,
+      background: '#071B33',
+      borderRight: '1px solid #1E3A5A',
+      display: 'flex', flexDirection: 'column',
+      overflow: 'hidden',
+    }}>
+      <div style={{
+        padding: '12px 16px',
+        borderBottom: '1px solid #1E3A5A',
+        fontSize: 9, fontWeight: 700,
+        letterSpacing: 2, textTransform: 'uppercase',
+        color: '#4A6070',
+      }}>
+        Deals activos · Fondo III
+      </div>
+      <div style={{ overflowY: 'auto', flex: 1 }}>
+        {DEALS.map(deal => (
+          <div
+            key={deal.id}
+            onClick={() => setActiveDeal(deal.id)}
+            style={{
+              padding: '12px 16px',
+              cursor: 'pointer',
+              borderLeft: `2px solid ${
+                activeDeal === deal.id
+                  ? '#B8860B' : 'transparent'
+              }`,
+              background: activeDeal === deal.id
+                ? '#0A2240' : 'transparent',
+              borderBottom: '1px solid #071B33',
+              transition: 'all 0.15s',
+            }}
+          >
+            <div style={{
+              display: 'flex', alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: 4,
+            }}>
+              <div style={{
+                fontSize: 13, fontWeight: 600,
+                color: '#F8F5F0',
+              }}>
+                {deal.nombre}
+              </div>
+              {deal.alertas > 0 && (
+                <div style={{
+                  width: 18, height: 18,
+                  borderRadius: '50%',
+                  background: '#FCA5A5',
+                  display: 'flex', alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 9, fontWeight: 700,
+                  color: '#7F1D1D', flexShrink: 0,
+                }}>
+                  {deal.alertas}
+                </div>
+              )}
+            </div>
+            <div style={{
+              fontSize: 10, color: '#4A6070',
+              marginBottom: 6,
+            }}>
+              {deal.pais} · {deal.monto}
+            </div>
+            <div style={{
+              display: 'inline-block',
+              fontSize: 9, fontWeight: 700,
+              padding: '1px 6px', borderRadius: 2,
+              background: deal.etapaBg,
+              color: deal.etapaColor,
+              marginBottom: 8,
+            }}>
+              {deal.etapa}
+            </div>
+            <div style={{
+              height: 3, background: '#1E3A5A',
+              borderRadius: 2, overflow: 'hidden',
+            }}>
+              <div style={{
+                height: '100%',
+                width: `${deal.progreso}%`,
+                background: deal.etapaColor,
+                borderRadius: 2,
+              }} />
+            </div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              marginTop: 4,
+            }}>
+              <div style={{
+                fontSize: 9, color: '#4A6070',
+              }}>
+                {deal.progreso}% completo
+              </div>
+              <div style={{
+                fontSize: 9, color: '#4A6070',
+              }}>
+                IC: {deal.icFecha.split(',')[0]}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{
+        padding: '12px 16px',
+        borderTop: '1px solid #1E3A5A',
+      }}>
+        <div style={{
+          fontSize: 9, color: '#4A6070',
+          textTransform: 'uppercase', letterSpacing: 1,
+          marginBottom: 6,
+        }}>
+          Deal seleccionado
+        </div>
+        <div style={{
+          fontSize: 12, fontWeight: 600,
+          color: '#F8F5F0', marginBottom: 2,
+        }}>
+          {DEALS.find(d => d.id === activeDeal)?.nombre}
+        </div>
+        <div style={{
+          fontSize: 10, color: '#4A6070',
+        }}>
+          {DEALS.find(d => d.id === activeDeal)?.sector}
+        </div>
+      </div>
+    </div>
+  );
+
   const sLabel = (text: string) => (
     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 2,
       textTransform: 'uppercase', color: copper, marginBottom: 12 }}>
@@ -137,76 +360,64 @@ const Nivel2DDPage = () => {
 
   // ── DASHBOARD ────────────────────────────────────
   const renderDashboard = () => {
+    const deal = DEALS.find(d => d.id === activeDeal) || DEALS[0];
 
-    const deals = [
-      {
-        name: 'Proyecto Solar Córdoba',
-        sub: 'Colombia · ~USD 55M · Energía renovable',
-        etapa: 'DD en curso',
-        etapaColor: '#B8860B',
-        etapaBg: 'rgba(184,134,11,0.15)',
-        progreso: 65,
-        icFecha: 'Abr 15, 2026',
-        stages: [
-          { label: 'Screening', done: true },
-          { label: 'DD Financiero', done: true },
-          { label: 'DD Técnico', done: true },
-          { label: 'DD Legal', done: false, active: true },
-          { label: 'DD ESG', done: false },
-          { label: 'IC', done: false },
-          { label: 'Cierre', done: false },
-        ],
-        frentes: [
-          { label: 'Financiero', color: '#FCD34D',
-            status: 'En revisión', preguntas: 4 },
-          { label: 'Técnico', color: '#86EFAC',
-            status: 'Completo', preguntas: 0 },
-          { label: 'Legal', color: '#FCA5A5',
-            status: 'Bloqueado', preguntas: 6 },
-          { label: 'ESG', color: '#FCA5A5',
-            status: 'Sin respuesta', preguntas: 3 },
-        ]
-      },
-      {
-        name: 'Puerto Callao Logística',
-        sub: 'Perú · ~USD 40M · Logística',
-        etapa: 'Screening',
-        etapaColor: '#93C5FD',
-        etapaBg: 'rgba(147,197,253,0.1)',
-        progreso: 15,
-        icFecha: 'Jun 20, 2026',
-        stages: [
-          { label: 'Screening', done: false, active: true },
-          { label: 'DD Financiero', done: false },
-          { label: 'DD Técnico', done: false },
-          { label: 'DD Legal', done: false },
-          { label: 'DD ESG', done: false },
-          { label: 'IC', done: false },
-          { label: 'Cierre', done: false },
-        ],
-        frentes: [
-          { label: 'Financiero', color: '#4A6070',
-            status: 'No iniciado', preguntas: 0 },
-          { label: 'Técnico', color: '#4A6070',
-            status: 'No iniciado', preguntas: 0 },
-          { label: 'Legal', color: '#FCD34D',
-            status: 'En revisión', preguntas: 2 },
-          { label: 'ESG', color: '#4A6070',
-            status: 'No iniciado', preguntas: 0 },
-        ]
-      },
-    ];
-
-    const alertas = [
+    const alertasAll = [
       { color: '#FCA5A5', texto: 'PPA Solar Córdoba: contraparte sin revelar — bloquea valoración legal', accion: 'Escalar al vendedor', deal: 'Solar Córdoba', tiempo: 'Hoy · Crítico' },
       { color: '#FCA5A5', texto: 'Plan de Manejo Ambiental ANLA: 3 días vencido sin respuesta del vendedor', accion: 'Enviar recordatorio', deal: 'Solar Córdoba', tiempo: 'Hoy · Crítico' },
       { color: '#FCD34D', texto: 'Factor de planta: pendiente mediciones históricas de irradiación', accion: 'Solicitar a interventor', deal: 'Solar Córdoba', tiempo: 'Vence Mar 18' },
       { color: '#93C5FD', texto: 'Callao Logística: reunión con management pendiente de agendar', accion: 'Coordinar con bancario', deal: 'Callao', tiempo: 'Sin fecha' },
     ];
+    const alertas = alertasAll.filter(a =>
+      a.deal.includes(deal.nombre.split(' ')[0])
+    );
 
     return (
-      <div style={{ padding: '20px 24px',
+      <div style={{ display: 'flex', flexDirection: 'column',
         overflowY: 'auto', flex: 1 }}>
+        <div style={{
+          padding: '12px 24px',
+          borderBottom: '1px solid #1E3A5A',
+          background: '#071B33',
+          display: 'flex', alignItems: 'center',
+          gap: 16, flexShrink: 0,
+        }}>
+          <div style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: 18, fontWeight: 700,
+            color: '#F8F5F0',
+          }}>
+            {deal.nombre}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <div style={{
+            fontSize: 11, color: '#4A6070',
+          }}>
+            {deal.pais} · {deal.monto}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <span style={{
+            fontSize: 9, fontWeight: 700,
+            padding: '2px 8px', borderRadius: 2,
+            background: deal.etapaBg,
+            color: deal.etapaColor,
+          }}>
+            {deal.etapa}
+          </span>
+          <div style={{ flex: 1 }} />
+          <div style={{
+            fontSize: 10, color: '#4A6070',
+          }}>
+            IC objetivo: {deal.icFecha}
+          </div>
+        </div>
+        <div style={{ padding: '20px 24px', flex: 1 }}>
 
         {/* KPIs */}
         <div style={{ display: 'grid',
@@ -244,146 +455,141 @@ const Nivel2DDPage = () => {
         <div style={{ display: 'grid',
           gridTemplateColumns: '1.4fr 1fr', gap: 16 }}>
 
-          {/* Timeline deals */}
+          {/* Timeline deal activo */}
           <div>
             <div style={{ fontSize: 10, fontWeight: 700,
               letterSpacing: 2, textTransform: 'uppercase',
               color: copper, marginBottom: 16 }}>
               Pipeline de DD — Estado del proceso
             </div>
-            {deals.map((deal, di) => (
-              <div key={di} style={{ background: dark,
-                border: `1px solid ${border}`,
-                borderRadius: 4, padding: 16,
-                marginBottom: 12 }}>
+            <div style={{ background: dark,
+              border: `1px solid ${border}`,
+              borderRadius: 4, padding: 16,
+              marginBottom: 12 }}>
+              <div style={{ display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 14 }}>
+                <div>
+                  <div style={{ fontSize: 14,
+                    fontWeight: 600, color: '#F8F5F0',
+                    marginBottom: 2 }}>{deal.nombre}</div>
+                  <div style={{ fontSize: 11,
+                    color: '#4A6070' }}>{deal.pais} · {deal.monto} · {deal.sector}</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: 9,
+                    fontWeight: 700, padding: '2px 8px',
+                    borderRadius: 2,
+                    background: deal.etapaBg,
+                    color: deal.etapaColor,
+                    marginBottom: 4 }}>
+                    {deal.etapa}
+                  </div>
+                  <div style={{ fontSize: 10,
+                    color: '#4A6070' }}>
+                    IC objetivo: {deal.icFecha}
+                  </div>
+                </div>
+              </div>
+
+              {/* Timeline horizontal */}
+              <div style={{ position: 'relative',
+                marginBottom: 16 }}>
                 <div style={{ display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: 14 }}>
-                  <div>
-                    <div style={{ fontSize: 14,
-                      fontWeight: 600, color: '#F8F5F0',
-                      marginBottom: 2 }}>{deal.name}</div>
-                    <div style={{ fontSize: 11,
-                      color: '#4A6070' }}>{deal.sub}</div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: 9,
-                      fontWeight: 700, padding: '2px 8px',
-                      borderRadius: 2,
-                      background: deal.etapaBg,
-                      color: deal.etapaColor,
-                      marginBottom: 4 }}>
-                      {deal.etapa}
-                    </div>
-                    <div style={{ fontSize: 10,
-                      color: '#4A6070' }}>
-                      IC objetivo: {deal.icFecha}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Timeline horizontal */}
-                <div style={{ position: 'relative',
-                  marginBottom: 16 }}>
-                  <div style={{ display: 'flex',
-                    alignItems: 'center',
-                    position: 'relative' }}>
-                    {deal.stages.map((stage, si) => (
-                      <div key={si} style={{ flex: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        position: 'relative' }}>
-                        {/* Línea conectora */}
-                        {si < deal.stages.length - 1 && (
-                          <div style={{
-                            position: 'absolute',
-                            top: 8, left: '50%',
-                            width: '100%', height: 2,
-                            background: stage.done
-                              ? copper : '#1E3A5A',
-                            zIndex: 0 }} />
-                        )}
-                        {/* Punto */}
+                  position: 'relative' }}>
+                  {deal.stages!.map((stage, si) => (
+                    <div key={si} style={{ flex: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      position: 'relative' }}>
+                      {si < deal.stages!.length - 1 && (
                         <div style={{
-                          width: 18, height: 18,
-                          borderRadius: '50%',
+                          position: 'absolute',
+                          top: 8, left: '50%',
+                          width: '100%', height: 2,
                           background: stage.done
-                            ? copper
-                            : stage.active
-                            ? '#F8F5F0' : '#1E3A5A',
-                          border: stage.active
-                            ? `3px solid ${copper}`
-                            : 'none',
-                          zIndex: 1,
-                          flexShrink: 0,
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}>
-                          {stage.done && (
-                            <div style={{ width: 6,
-                              height: 6, borderRadius: '50%',
-                              background: '#0A2240' }} />
-                          )}
-                        </div>
-                        {/* Label */}
-                        <div style={{ fontSize: 9,
-                          color: stage.done
-                            ? copper
-                            : stage.active
-                            ? '#F8F5F0' : '#4A6070',
-                          marginTop: 5, textAlign: 'center',
-                          fontWeight: stage.active
-                            ? 700 : 400,
-                          lineHeight: 1.3 }}>
-                          {stage.label}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Frentes summary */}
-                <div style={{ display: 'grid',
-                  gridTemplateColumns: 'repeat(4,1fr)',
-                  gap: 6 }}>
-                  {deal.frentes.map((f, fi) => (
-                    <div key={fi} style={{
-                      background: navy,
-                      borderRadius: 3,
-                      padding: '8px 10px' }}>
-                      <div style={{ fontSize: 9,
-                        color: '#4A6070',
-                        textTransform: 'uppercase',
-                        letterSpacing: 1,
-                        marginBottom: 4 }}>
-                        {f.label}
-                      </div>
-                      <div style={{ display: 'flex',
-                        alignItems: 'center', gap: 5 }}>
-                        <div style={{ width: 6, height: 6,
-                          borderRadius: '50%',
-                          background: f.color,
-                          flexShrink: 0 }} />
-                        <div style={{ fontSize: 10,
-                          color: f.color,
-                          fontWeight: 600 }}>
-                          {f.status}
-                        </div>
-                      </div>
-                      {f.preguntas > 0 && (
-                        <div style={{ fontSize: 9,
-                          color: '#FCA5A5', marginTop: 2 }}>
-                          {f.preguntas} preg. abiertas
-                        </div>
+                            ? copper : '#1E3A5A',
+                          zIndex: 0 }} />
                       )}
+                      <div style={{
+                        width: 18, height: 18,
+                        borderRadius: '50%',
+                        background: stage.done
+                          ? copper
+                          : stage.active
+                          ? '#F8F5F0' : '#1E3A5A',
+                        border: stage.active
+                          ? `3px solid ${copper}`
+                          : 'none',
+                        zIndex: 1,
+                        flexShrink: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                        {stage.done && (
+                          <div style={{ width: 6,
+                            height: 6, borderRadius: '50%',
+                            background: '#0A2240' }} />
+                        )}
+                      </div>
+                      <div style={{ fontSize: 9,
+                        color: stage.done
+                          ? copper
+                          : stage.active
+                          ? '#F8F5F0' : '#4A6070',
+                        marginTop: 5, textAlign: 'center',
+                        fontWeight: stage.active
+                          ? 700 : 400,
+                        lineHeight: 1.3 }}>
+                        {stage.label}
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
-            ))}
+
+              {/* Frentes summary */}
+              <div style={{ display: 'grid',
+                gridTemplateColumns: 'repeat(4,1fr)',
+                gap: 6 }}>
+                {deal.frentes!.map((f, fi) => (
+                  <div key={fi} style={{
+                    background: navy,
+                    borderRadius: 3,
+                    padding: '8px 10px' }}>
+                    <div style={{ fontSize: 9,
+                      color: '#4A6070',
+                      textTransform: 'uppercase',
+                      letterSpacing: 1,
+                      marginBottom: 4 }}>
+                      {f.label}
+                    </div>
+                    <div style={{ display: 'flex',
+                      alignItems: 'center', gap: 5 }}>
+                      <div style={{ width: 6, height: 6,
+                        borderRadius: '50%',
+                        background: f.color,
+                        flexShrink: 0 }} />
+                      <div style={{ fontSize: 10,
+                        color: f.color,
+                        fontWeight: 600 }}>
+                        {f.status}
+                      </div>
+                    </div>
+                    {f.preguntas > 0 && (
+                      <div style={{ fontSize: 9,
+                        color: '#FCA5A5', marginTop: 2 }}>
+                        {f.preguntas} preg. abiertas
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Alertas */}
@@ -484,12 +690,14 @@ const Nivel2DDPage = () => {
             </div>
           </div>
         </div>
+        </div>
       </div>
     );
   };
 
   // ── FINANCIERO ───────────────────────────────────
   const renderFinanciero = () => {
+    const deal = DEALS.find(d => d.id === activeDeal) || DEALS[0];
 
     const anos = ['2022','2023','2024','2025',
       '2026','2027','2028','2029','2030','2031'];
@@ -636,8 +844,51 @@ const Nivel2DDPage = () => {
     }[s] || { bg: '', color: '', label: '' });
 
     return (
-      <div style={{ padding: '20px 24px',
+      <div style={{ display: 'flex', flexDirection: 'column',
         overflowY: 'auto', flex: 1 }}>
+        <div style={{
+          padding: '12px 24px',
+          borderBottom: '1px solid #1E3A5A',
+          background: '#071B33',
+          display: 'flex', alignItems: 'center',
+          gap: 16, flexShrink: 0,
+        }}>
+          <div style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: 18, fontWeight: 700,
+            color: '#F8F5F0',
+          }}>
+            {deal.nombre}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <div style={{
+            fontSize: 11, color: '#4A6070',
+          }}>
+            {deal.pais} · {deal.monto}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <span style={{
+            fontSize: 9, fontWeight: 700,
+            padding: '2px 8px', borderRadius: 2,
+            background: deal.etapaBg,
+            color: deal.etapaColor,
+          }}>
+            {deal.etapa}
+          </span>
+          <div style={{ flex: 1 }} />
+          <div style={{
+            fontSize: 10, color: '#4A6070',
+          }}>
+            IC objetivo: {deal.icFecha}
+          </div>
+        </div>
+        <div style={{ padding: '20px 24px', flex: 1 }}>
 
         {/* ── KPIs ── */}
         <div style={{ display: 'grid',
@@ -1078,12 +1329,14 @@ const Nivel2DDPage = () => {
           </table>
         </div>
 
+        </div>
       </div>
     );
   };
 
   // ── DATA ROOM ─────────────────────────────────────
   const renderDataRoom = () => {
+    const deal = DEALS.find(d => d.id === activeDeal) || DEALS[0];
 
     const frentes = [
       {
@@ -1218,8 +1471,51 @@ const Nivel2DDPage = () => {
     };
 
     return (
-      <div style={{ padding: '20px 24px',
+      <div style={{ display: 'flex', flexDirection: 'column',
         overflowY: 'auto', flex: 1 }}>
+        <div style={{
+          padding: '12px 24px',
+          borderBottom: '1px solid #1E3A5A',
+          background: '#071B33',
+          display: 'flex', alignItems: 'center',
+          gap: 16, flexShrink: 0,
+        }}>
+          <div style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: 18, fontWeight: 700,
+            color: '#F8F5F0',
+          }}>
+            {deal.nombre}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <div style={{
+            fontSize: 11, color: '#4A6070',
+          }}>
+            {deal.pais} · {deal.monto}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <span style={{
+            fontSize: 9, fontWeight: 700,
+            padding: '2px 8px', borderRadius: 2,
+            background: deal.etapaBg,
+            color: deal.etapaColor,
+          }}>
+            {deal.etapa}
+          </span>
+          <div style={{ flex: 1 }} />
+          <div style={{
+            fontSize: 10, color: '#4A6070',
+          }}>
+            IC objetivo: {deal.icFecha}
+          </div>
+        </div>
+        <div style={{ padding: '20px 24px', flex: 1 }}>
 
         {/* Buscador */}
         <div style={{ position: 'relative',
@@ -1398,12 +1694,14 @@ const Nivel2DDPage = () => {
             </div>
           ))}
         </div>
+        </div>
       </div>
     );
   };
 
   // ── PREGUNTAS ─────────────────────────────────────
   const renderPreguntas = () => {
+    const deal = DEALS.find(d => d.id === activeDeal) || DEALS[0];
 
     const preguntas = [
       {
@@ -1487,8 +1785,51 @@ const Nivel2DDPage = () => {
     ];
 
     return (
-      <div style={{ padding: '20px 24px',
+      <div style={{ display: 'flex', flexDirection: 'column',
         overflowY: 'auto', flex: 1 }}>
+        <div style={{
+          padding: '12px 24px',
+          borderBottom: '1px solid #1E3A5A',
+          background: '#071B33',
+          display: 'flex', alignItems: 'center',
+          gap: 16, flexShrink: 0,
+        }}>
+          <div style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: 18, fontWeight: 700,
+            color: '#F8F5F0',
+          }}>
+            {deal.nombre}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <div style={{
+            fontSize: 11, color: '#4A6070',
+          }}>
+            {deal.pais} · {deal.monto}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <span style={{
+            fontSize: 9, fontWeight: 700,
+            padding: '2px 8px', borderRadius: 2,
+            background: deal.etapaBg,
+            color: deal.etapaColor,
+          }}>
+            {deal.etapa}
+          </span>
+          <div style={{ flex: 1 }} />
+          <div style={{
+            fontSize: 10, color: '#4A6070',
+          }}>
+            IC objetivo: {deal.icFecha}
+          </div>
+        </div>
+        <div style={{ padding: '20px 24px', flex: 1 }}>
 
         {/* Matriz frente × estado */}
         <div style={{ display: 'grid',
@@ -1740,12 +2081,14 @@ const Nivel2DDPage = () => {
             )}
           </div>
         ))}
+        </div>
       </div>
     );
   };
 
   // ── MEMO ──────────────────────────────────────────
   const renderMemo = () => {
+    const deal = DEALS.find(d => d.id === activeDeal) || DEALS[0];
 
     const condiciones = [
       {
@@ -1825,8 +2168,51 @@ const Nivel2DDPage = () => {
     ];
 
     return (
-      <div style={{ padding: '20px 24px',
+      <div style={{ display: 'flex', flexDirection: 'column',
         overflowY: 'auto', flex: 1 }}>
+        <div style={{
+          padding: '12px 24px',
+          borderBottom: '1px solid #1E3A5A',
+          background: '#071B33',
+          display: 'flex', alignItems: 'center',
+          gap: 16, flexShrink: 0,
+        }}>
+          <div style={{
+            fontFamily: 'Georgia, serif',
+            fontSize: 18, fontWeight: 700,
+            color: '#F8F5F0',
+          }}>
+            {deal.nombre}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <div style={{
+            fontSize: 11, color: '#4A6070',
+          }}>
+            {deal.pais} · {deal.monto}
+          </div>
+          <div style={{
+            width: 1, height: 16,
+            background: '#1E3A5A',
+          }} />
+          <span style={{
+            fontSize: 9, fontWeight: 700,
+            padding: '2px 8px', borderRadius: 2,
+            background: deal.etapaBg,
+            color: deal.etapaColor,
+          }}>
+            {deal.etapa}
+          </span>
+          <div style={{ flex: 1 }} />
+          <div style={{
+            fontSize: 10, color: '#4A6070',
+          }}>
+            IC objetivo: {deal.icFecha}
+          </div>
+        </div>
+        <div style={{ padding: '20px 24px', flex: 1 }}>
 
         {/* Deal snapshot */}
         <div style={{ background: dark,
@@ -2128,6 +2514,7 @@ const Nivel2DDPage = () => {
             </div>
           </div>
         ))}
+        </div>
       </div>
     );
   };
@@ -2202,12 +2589,18 @@ const Nivel2DDPage = () => {
 
       {/* CONTENT */}
       <div style={{ flex: 1, overflow: 'hidden',
-        display: 'flex', flexDirection: 'column' }}>
-        {activeTab === 'dashboard' && renderDashboard()}
-        {activeTab === 'financiero' && renderFinanciero()}
-        {activeTab === 'dataroom' && renderDataRoom()}
-        {activeTab === 'preguntas' && renderPreguntas()}
-        {activeTab === 'memo' && renderMemo()}
+        display: 'flex', flexDirection: 'row' }}>
+        {renderSidebar()}
+        <div style={{
+          flex: 1, overflow: 'hidden',
+          display: 'flex', flexDirection: 'column',
+        }}>
+          {activeTab === 'dashboard' && renderDashboard()}
+          {activeTab === 'financiero' && renderFinanciero()}
+          {activeTab === 'dataroom' && renderDataRoom()}
+          {activeTab === 'preguntas' && renderPreguntas()}
+          {activeTab === 'memo' && renderMemo()}
+        </div>
       </div>
     </div>
   );
